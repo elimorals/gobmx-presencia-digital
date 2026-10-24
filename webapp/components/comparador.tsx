@@ -61,7 +61,7 @@ export async function Comparador({ filas, municipal, base, searchParams }: {
         );
       })}
 
-      <section className="seccion">
+      <section className="seccion" id="grafica">
         <h2>Digitalización vs presupuesto</h2>
         <form action={base} className="filtros" style={{ marginBottom: 12 }}>
           {estado.sel && <input type="hidden" name="sel" value={estado.sel} />}
@@ -69,7 +69,11 @@ export async function Comparador({ filas, municipal, base, searchParams }: {
           <label>Eje vertical<select name="y" defaultValue={y}>{METRICAS.map((m) => <option key={m.k} value={m.k}>{m.t}</option>)}</select></label>
           <div style={{ display: "flex", alignItems: "end" }}><button className="boton" type="submit">Graficar</button></div>
         </form>
-        <Dispersion filas={filas} x={x} y={y} sel={sel} />
+        <Dispersion filas={filas} x={x} y={y} sel={sel} hrefPunto={(f) => {
+          const k = clave(f);
+          const nuevo = sel.includes(k) ? sel.filter((s) => s !== k) : sel.length < MAX ? [...sel, k] : sel;
+          return urlCon(base, { ...estado, sel: nuevo.join("|") || undefined }) + "#grafica";
+        }} />
         {!municipal && x === "egreso_por_hab" && y === "_digital_100k" && (
           <p className="faint" style={{ marginTop: 8 }}>
             Prueba también: <Link href={urlCon(base, { ...estado, x: "_pef_por_hab", y: "_digital_100k" })}>contra PEF por habitante</Link> ·{" "}

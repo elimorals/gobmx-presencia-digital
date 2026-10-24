@@ -146,12 +146,24 @@ export function Tabla({ filas, municipal, ordenarPor, base, sel, extra }: {
 
 const marcas = (max: number) => [0, 1, 2, 3, 4].map((i) => (max * i) / 4);
 function corto(v: number, f: Fmt) {
+  if (v === 0) return "0";
   if (f === "pesos" || Math.abs(v) >= 10000) return v >= 1e9 ? `${(v / 1e9).toFixed(0)}mm` : v >= 1e6 ? `${(v / 1e6).toFixed(1)}M` : `${Math.round(v / 1000)}k`;
   return v >= 10 ? Math.round(v).toLocaleString("es-MX") : v.toFixed(1);
 }
 
-/** Dispersión con rejilla y marcas; seleccionados en dorado con nombre. Sin dato en un eje = fuera. */
-export function Dispersion({ filas, x, y, sel = [] }: { filas: Fila[]; x: string; y: string; sel?: string[] }) {
+// abreviaturas usuales de las 32 entidades: etiqueta fija junto a cada punto (el tooltip no existe en pantallas táctiles)
+const ABREV: Record<string, string> = {
+  Aguascalientes: "AGS", "Baja California": "BC", "Baja California Sur": "BCS", Campeche: "CAMP", Chiapas: "CHIS",
+  Chihuahua: "CHIH", "Ciudad de México": "CDMX", Coahuila: "COAH", Colima: "COL", Durango: "DGO", Guanajuato: "GTO",
+  Guerrero: "GRO", Hidalgo: "HGO", Jalisco: "JAL", "Estado de México": "MÉX", Michoacán: "MICH", Morelos: "MOR",
+  Nayarit: "NAY", "Nuevo León": "NL", Oaxaca: "OAX", Puebla: "PUE", Querétaro: "QRO", "Quintana Roo": "QROO",
+  "San Luis Potosí": "SLP", Sinaloa: "SIN", Sonora: "SON", Tabasco: "TAB", Tamaulipas: "TAMS", Tlaxcala: "TLAX",
+  Veracruz: "VER", Yucatán: "YUC", Zacatecas: "ZAC",
+};
+
+/** Dispersión con rejilla y marcas; seleccionados en dorado con nombre. Sin dato en un eje = fuera.
+ *  `hrefPunto`: enlace de cada punto (agregar/quitar de la comparación), para que funcione con el dedo. */
+export function Dispersion({ filas, x, y, sel = [], hrefPunto }: { filas: Fila[]; x: string; y: string; sel?: string[]; hrefPunto?: (f: Fila) => string }) {
   const mx = META[x], my = META[y];
   const pts = filas.map((f) => ({ f, x: valor(f, x), y: valor(f, y) })).filter((p) => p.x !== null && p.y !== null) as { f: Fila; x: number; y: number }[];
   if (pts.length < 2) return <p className="dim">Sin datos suficientes para graficar {mx.t.toLowerCase()} contra {my.t.toLowerCase()}.</p>;
@@ -160,6 +172,17 @@ export function Dispersion({ filas, x, y, sel = [] }: { filas: Fila[]; x: string
   const X = (v: number) => m.l + (v / xmax) * (W - m.l - m.r);
   const Y = (v: number) => H - m.b - (v / ymax) * (H - m.t - m.b);
   const orden = [...pts].sort((a, b) => Number(sel.includes(clave(a.f))) - Number(sel.includes(clave(b.f)))); // seleccionados encima
+  // ponytail: evita choques con una pasada voraz (cajas de ~7px por letra); un etiquetado con desplazamiento sería mejor si hace falta
+  const cajas: [number, number, number, number][] = orden.filter((p) => sel.includes(clave(p.f))).map((p) => [X(p.x) - 10, Y(p.y) - 10, 200, 20]);
+  const conEtiqueta = new Set<string>();
+  for (const p of orden) {
+    const ab = !p.f.municipio && !sel.includes(clave(p.f)) ? ABREV[p.f.estado] : undefined;
+    if (!ab) continue;
+    const c: [number, number, number, number] = [X(p.x) + 6, Y(p.y) - 15, ab.length * 7 + 2, 11];
+    if (cajas.some(([x0, y0, w, h]) => c[0] < x0 + w && x0 < c[0] + c[2] && c[1] < y0 + h && y0 < c[1] + c[3])) continue;
+    cajas.push(c);
+    conEtiqueta.add(clave(p.f));
+  }
   return (
     <figure style={{ margin: 0 }}>
       <svg className="grafica" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${my.t} contra ${mx.t}`}>
@@ -180,17 +203,26 @@ export function Dispersion({ filas, x, y, sel = [] }: { filas: Fila[]; x: string
         {orden.map((p) => {
           const on = sel.includes(clave(p.f));
           const der = X(p.x) > W * 0.65;
-          return (
-            <g key={clave(p.f)}>
-              <circle className={`p${on ? " sel" : ""}`} cx={X(p.x)} cy={Y(p.y)} r={on ? 6.5 : 4.5}>
-                <title>{`${clave(p.f)}: ${formato(p.x, mx.f)} · ${formato(p.y, my.f)}`}</title>
-              </circle>
-              {on && <text className="etq" x={X(p.x) + (der ? -10 : 10)} y={Y(p.y) + 4} textAnchor={der ? "end" : "start"}>{p.f.municipio ?? p.f.estado}</text>}
-            </g>
+          const ab = conEtiqueta.has(clave(p.f)) ? ABREV[p.f.estado] : undefined;
+          const punto = (
+            <>
+              <title>{`${clave(p.f)}: ${formato(p.x, mx.f)} · ${formato(p.y, my.f)}${hrefPunto ? (on ? " — toca para quitar" : " — toca para comparar") : ""}`}</title>
+              <circle cx={X(p.x)} cy={Y(p.y)} r={12} fill="transparent" />{/* área táctil */}
+              <circle className={`p${on ? " sel" : ""}`} cx={X(p.x)} cy={Y(p.y)} r={on ? 6.5 : 4.5} />
+              {on
+                ? <text className="etq" x={X(p.x) + (der ? -10 : 10)} y={Y(p.y) + 4} textAnchor={der ? "end" : "start"}>{`${p.f.municipio ?? p.f.estado} · ${formato(p.y, my.f)}`}</text>
+                : ab && <text x={X(p.x) + 7} y={Y(p.y) - 6} fontSize="9">{ab}</text>}
+            </>
           );
+          return hrefPunto
+            ? <a key={clave(p.f)} href={hrefPunto(p.f)} aria-label={`${clave(p.f)}: ${formato(p.y, my.f)}`}>{punto}</a>
+            : <g key={clave(p.f)}>{punto}</g>;
         })}
       </svg>
-      <figcaption className="faint">{pts.length} con dato en ambos ejes. En dorado, los seleccionados; toca o pasa el cursor sobre un punto para ver su nombre y valores.</figcaption>
+      <figcaption className="faint">
+        {pts.length} con dato en ambos ejes. Toca un punto para agregarlo a la comparación: se pinta de dorado con su nombre y
+        valor; tócalo otra vez para quitarlo. Donde hay puntos muy juntos se omiten algunas abreviaturas.
+      </figcaption>
     </figure>
   );
 }
