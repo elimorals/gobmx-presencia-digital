@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { Barras, ORDENES, Paginacion, PODERES, Select } from "@/components/ui";
+import { MatrizAmbito } from "@/components/ambito";
+import { Barras, Paginacion, Select } from "@/components/ui";
 import { conteo, ESTADOS, fmtCompacto, inv, lugar, paginar, sinAcentos, uno, urlCon } from "@/lib/datos";
 
 export const metadata: Metadata = {
@@ -16,14 +17,16 @@ async function Lista({ searchParams }: PageProps<"/apps">) {
   const sp = await searchParams;
   const f = { q: uno(sp.q), orden: uno(sp.orden), poder: uno(sp.poder), estado: uno(sp.estado), sector: uno(sp.sector), estatus: uno(sp.estatus), peligrosos: uno(sp.peligrosos) };
   const q = sinAcentos(f.q);
-  const apps = inv.apps
-    .filter((a) => (!f.orden || a.orden === f.orden) && (!f.poder || a.poder === f.poder) && (!f.estado || a.estado === f.estado))
+  const sinAmbito = inv.apps
+    .filter((a) => !f.estado || a.estado === f.estado)
     .filter((a) => (!f.sector || a.sector === f.sector) && (!f.estatus || a.estatus === f.estatus))
     .filter((a) => !f.peligrosos || (a.permisos?.peligrosos.length ?? 0) > 0)
-    .filter((a) => !q || sinAcentos(`${a.nombre} ${a.dependencia} ${a.siglas} ${a.proposito}`).includes(q))
+    .filter((a) => !q || sinAcentos(`${a.nombre} ${a.dependencia} ${a.siglas} ${a.proposito}`).includes(q));
+  const apps = sinAmbito
+    .filter((a) => (!f.orden || a.orden === f.orden) && (!f.poder || a.poder === f.poder))
     .sort((a, b) => (b.instalaciones ?? 0) - (a.instalaciones ?? 0));
   const pag = paginar(apps, Number(uno(sp.pagina)) || 1, 30);
-  const hayFiltros = Object.entries(f).some(([k, v]) => k !== "q" && v);
+  const hayFiltros = Boolean(f.estado || f.sector || f.estatus || f.peligrosos);
   const barras = (pares: [string, number][], k: string) =>
     pares.slice(0, 8).map(([e, v]) => ({ etiqueta: e, valor: v, href: urlCon("/apps", { ...f, [k]: e === "sin dato" ? undefined : e }) }));
 
@@ -37,8 +40,8 @@ async function Lista({ searchParams }: PageProps<"/apps">) {
         <details className="mas" open={hayFiltros}>
           <summary>Filtrar</summary>
           <div className="filtros">
-            <Select name="orden" label="Orden" valor={f.orden} opciones={ORDENES} />
-            <Select name="poder" label="Poder" valor={f.poder} opciones={PODERES} />
+            <input type="hidden" name="orden" value={f.orden ?? ""} />
+            <input type="hidden" name="poder" value={f.poder ?? ""} />
             <Select name="estado" label="Entidad" valor={f.estado} opciones={ESTADOS} todos="Todas" />
             <Select name="sector" label="Sector" valor={f.sector} opciones={SECTORES} />
             <Select name="estatus" label="Estatus" valor={f.estatus} opciones={ESTATUS} />
@@ -46,10 +49,12 @@ async function Lista({ searchParams }: PageProps<"/apps">) {
           </div>
           <div className="acciones">
             <button className="boton" type="submit">Aplicar</button>
-            {hayFiltros && <a className="boton sec" href="/apps">Quitar filtros</a>}
+            {hayFiltros && <a className="boton sec" href={urlCon("/apps", { q: f.q, orden: f.orden, poder: f.poder })}>Quitar filtros</a>}
           </div>
         </details>
       </form>
+
+      <MatrizAmbito items={sinAmbito} base="/apps" params={f} orden={f.orden} poder={f.poder} que="apps" ceroVerificado />
 
       <div className="dos" style={{ marginBottom: 20 }}>
         <div className="panel"><h3>Por estatus</h3><Barras filas={barras(conteo(apps, (a) => a.estatus), "estatus")} /></div>

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
+import { SelectorTema } from "@/components/tema";
 import "./globals.css";
 
 const sans = IBM_Plex_Sans({ variable: "--f-sans", subsets: ["latin"], weight: ["400", "600"] });
@@ -17,7 +18,14 @@ export const metadata: Metadata = {
   openGraph: { type: "website", locale: "es_MX", siteName: "gobmx · presencia digital" },
 };
 
-export const viewport: Viewport = { themeColor: "#fbf8f1", colorScheme: "light" };
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fbf8f1" },
+    { media: "(prefers-color-scheme: dark)", color: "#1b1815" },
+  ],
+};
+
+const SCRIPT_TEMA = `(function(){try{var t=localStorage.getItem("tema");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
 
 const NAV = [
   ["/tramites", "Trámites"],
@@ -33,11 +41,17 @@ const NAV = [
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es-MX" className={`${sans.variable} ${mono.variable} ${disp.variable}`}>
+    <html lang="es-MX" className={`${sans.variable} ${mono.variable} ${disp.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA }} />
+      </head>
       <body>
         <header className="cabecera">
           <div className="contenedor">
-            <Link href="/" className="marca">gob<b>mx</b> · presencia digital</Link>
+            <div className="fila">
+              <Link href="/" className="marca">gob<b>mx</b><span className="sub"> · presencia digital</span></Link>
+              <SelectorTema />
+            </div>
             <nav className="nav" aria-label="Principal">
               {NAV.map(([href, txt]) => <Link key={href} href={href}>{txt}</Link>)}
             </nav>

@@ -74,6 +74,7 @@ export function tramite(id: number) {
 export type Filtros = {
   q?: string;
   orden?: string;
+  poder?: string;
   estado?: string;
   municipio?: string;
   en_linea?: string; // si | no | sin_dato
@@ -89,14 +90,16 @@ export function paginar<T>(items: T[], pagina: number, porPagina = POR_PAGINA) {
   return { total, paginas, pagina: p, items: items.slice((p - 1) * porPagina, p * porPagina) };
 }
 
-export function buscar(f: Filtros, pagina = 1) {
+/** Trámites que pasan los filtros. `sinAmbito` ignora orden y poder (para contar la matriz orden × poder). */
+export function filtrar(f: Filtros, sinAmbito = false) {
   const { lista, texto } = cargar();
   const palabras = sinAcentos(f.q).split(/\s+/).filter(Boolean);
   const mun = sinAcentos(f.municipio);
   const res: Tramite[] = [];
   for (let i = 0; i < lista.length; i++) {
     const t = lista[i];
-    if (f.orden && t.orden !== f.orden) continue;
+    if (!sinAmbito && f.orden && t.orden !== f.orden) continue;
+    if (!sinAmbito && f.poder && t.poder !== f.poder) continue;
     if (f.estado && t.estado !== f.estado) continue;
     if (mun && !sinAcentos(t.municipio).includes(mun)) continue;
     if (f.en_linea === "si" && t.en_linea !== true) continue;
@@ -105,6 +108,11 @@ export function buscar(f: Filtros, pagina = 1) {
     if (palabras.length && !palabras.every((p) => texto[i].includes(p))) continue;
     res.push(t);
   }
+  return res;
+}
+
+export function buscar(f: Filtros, pagina = 1) {
+  const res = filtrar(f);
   if (f.orden_por === "reciente") res.sort((a, b) => (b.fecha_actualizacion ?? "").localeCompare(a.fecha_actualizacion ?? ""));
   else res.sort((a, b) => (b.frecuencia ?? -1) - (a.frecuencia ?? -1)); // por defecto: lo más solicitado primero
   return paginar(res, pagina);

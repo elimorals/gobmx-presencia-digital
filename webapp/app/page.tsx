@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Barras, Cifra, MatrizOrdenPoder } from "@/components/ui";
-import { fmt, fmtCompacto, inv, slug } from "@/lib/datos";
+import { MatrizAmbito } from "@/components/ambito";
+import { Barras, Cifra } from "@/components/ui";
+import { filtrar, fmt, fmtCompacto, inv, slug } from "@/lib/datos";
 
 export default function Inicio() {
   const r = inv.resumen;
@@ -71,11 +72,11 @@ export default function Inicio() {
 
       <section className="seccion">
         <h2>Presencia por orden de gobierno y poder</h2>
-        <p className="dim texto">{inv.cobertura_ceros}</p>
+        <p className="dim texto">Toca una celda para ver ese ámbito: por ejemplo, el poder judicial estatal o los autónomos nacionales.</p>
         <div className="dos">
-          <MatrizOrdenPoder titulo="Trámites" m={inv.orden_poder.tramites} />
-          <MatrizOrdenPoder titulo="Apps" m={inv.orden_poder.apps} />
-          <MatrizOrdenPoder titulo="Sitios" m={inv.orden_poder.sitios} />
+          <MatrizAmbito items={filtrar({}, true)} base="/tramites" params={{}} que="trámites" />
+          <MatrizAmbito items={inv.apps} base="/apps" params={{}} que="apps" ceroVerificado />
+          <MatrizAmbito items={inv.sitios} base="/sitios" params={{}} que="sitios" ceroVerificado />
         </div>
       </section>
 

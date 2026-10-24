@@ -15,8 +15,9 @@ async function Ficha({ params }: PageProps<"/tramites/[id]">) {
   const t = tramite(Number((await params).id));
   if (!t) notFound();
   const canales = [t.presencial && "Presencial", t.en_linea && "En línea", t.telefono && "Por teléfono"].filter(Boolean);
-  // ponytail: búsqueda web de la homoclave; enlazar la ficha oficial directa cuando se verifique su patrón de URL
-  const buscarGob = `https://www.google.com/search?q=${encodeURIComponent(`"${t.homoclave}" site:gob.mx`)}`;
+  // ficha pública de gob.mx por homoclave; verificado 2026-10-24: 30/30 al azar (los tres órdenes) abren,
+  // pero algunos de CDMX dan 404 (4 de 10). No se puede saber de antemano: el aviso lo explica.
+  const ficha = `https://www.gob.mx/public/tramites/detalleTramite.xhtml?homoclave=${encodeURIComponent(t.homoclave)}`;
 
   return (
     <article className="ficha">
@@ -61,9 +62,14 @@ async function Ficha({ params }: PageProps<"/tramites/[id]">) {
         </p>
       )}
 
-      <div className="aviso" style={{ marginTop: 20 }}>
-        Requisitos, costos y fundamento legal están en la ficha oficial.{" "}
-        <a href={buscarGob} rel="noopener">Buscar la homoclave en sitios .gob.mx</a>. Confirma con la dependencia antes de acudir.
+      <div className="panel" style={{ marginTop: 20 }}>
+        <p style={{ marginBottom: 12 }}>Requisitos, costos, pasos y fundamento legal están en la ficha oficial.</p>
+        <a className="boton" href={ficha} rel="noopener">Ver ficha oficial en gob.mx</a>
+        <p className="faint" style={{ marginTop: 12, marginBottom: 0 }}>
+          Si la ficha no abre, el trámite no está publicado en gob.mx: búscalo en el portal de {t.siglas ?? t.dependencia}
+          {t.hosts?.length ? <> (por ejemplo <a href={`https://${t.hosts[0]}`} rel="nofollow noopener">{t.hosts[0]}</a>)</> : null}{" "}
+          con la homoclave <span className="mono">{t.homoclave}</span>. Confirma con la dependencia antes de acudir.
+        </p>
       </div>
     </article>
   );
