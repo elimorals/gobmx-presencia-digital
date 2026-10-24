@@ -1,0 +1,1302 @@
+{
+ "generado": "2026-10-24",
+ "base": "https://gobmx-presencia-digital.vercel.app",
+ "remoto": {
+  "servidor": "gobmx-inventario 1.0.0",
+  "instrucciones": "Inventario abierto y no oficial de la presencia digital del gobierno de México: trámites de los tres órdenes, apps, sitios y subdominios. Solo lectura. Para un trámite: buscar_tramites → tramite(id) → ficha_oficial (gob.mx) para requisitos y costos. Para comparar: comparar(orden='estatal'|'municipal'); el orden federal no se compara.",
+  "tools": [
+   {
+    "nombre": "stats",
+    "titulo": "Resumen del inventario",
+    "descripcion": "Totales (trámites, apps, sitios, subdominios), trámites por orden, poder y canal, matrices orden × poder de trámites, apps y sitios, y la fecha de corte de los trámites.",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {}
+    },
+    "ejemplo": {},
+    "respuesta": {
+     "resumen": {
+      "apps": 519,
+      "sitios": 394,
+      "subdominios": {
+       "total": 12867,
+       "activos": 4910
+      },
+      "servicios": 35810,
+      "tramites": 31802,
+      "permisos": 387,
+      "tramites_por_orden": {
+       "federal": 5583,
+       "estatal": 14608,
+       "municipal": 11611
+      },
+      "tramites_por_poder": {
+       "ejecutivo": 30994,
+       "judicial": 534,
+       "autonomo": 218,
+       "legislativo": 56
+      },
+      "tramites_por_canal": {
+       "en_linea": 5161,
+       "no_en_linea": 25098,
+       "sin_dato": 1543
+      }
+     },
+     "orden_poder": {
+      "apps": {
+       "federal": {
+        "ejecutivo": 102,
+        "legislativo": 4,
+        "judicial": 5,
+        "autonomo": 24
+       },
+       "estatal": {
+        "ejecutivo": 258,
+        "legislativo": 8,
+        "judicial": 24,
+        "autonomo": 26
+       },
+       "municipal": {
+        "ejecutivo": 64,
+        "legislativo": 0,
+        "judicial": 0,
+        "autonomo": 0
+       },
+       "sin_orden(no_oficial)": {
+        "null": 4
+       }
+      },
+      "sitios": {
+       "federal": {
+        "ejecutivo": 50,
+        "legislativo": 4,
+        "judicial": 3,
+        "autonomo": 9
+       },
+       "estatal": {
+        "ejecutivo": 143,
+        "legislativo": 32,
+        "judicial": 32,
+        "autonomo": 96
+       },
+       "municipal": {
+        "ejecutivo": 25,
+        "legislativo": 0,
+        "judicial": 0,
+        "autonomo": 0
+       },
+       "sin_orden(no_oficial)": {
+        "null": 0
+       }
+      },
+      "tramites": {
+       "federal": {
+        "ejecutivo": 5370,
+        "legislativo": 8,
+        "judicial": 38,
+        "autonomo": 167
+       },
+       "estatal": {
+        "ejecutivo": 14013,
+        "legislativo": 48,
+        "judicial": 496,
+        "autonomo": 51
+       },
+       "municipal": {
+        "ejecutivo": 11611,
+        "legislativo": 0,
+        "judicial": 0,
+        "autonomo": 0
+       },
+       "sin_orden(no_oficial)": {
+        "null": 0
+       }
+      }
+     },
+     "corte_tramites": "2026-10-23",
+     "nota_ceros": "Los ceros de la matriz de apps están respaldados por una búsqueda dirigida en Google Play y App Store (apps/inventario/BUSQUEDA-PODERES.md); los de sitios, por sitios/poderes-autonomos.json."
+    },
+    "error": false
+   },
+   {
+    "nombre": "buscar_tramites",
+    "titulo": "Buscar trámites",
+    "descripcion": "Busca entre ~35.8 mil trámites y servicios federales, estatales y municipales de México. Devuelve 25 por página, de más a menos solicitados, con id para pedir la ficha con `tramite`. en_linea: si | no | sin_dato (el registro no reporta canal; no es lo mismo que 'no').",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {
+      "texto": {
+       "description": "Palabras a buscar en nombre, dependencia, siglas u homoclave",
+       "type": "string"
+      },
+      "orden": {
+       "description": "Orden de gobierno",
+       "type": "string",
+       "enum": [
+        "federal",
+        "estatal",
+        "municipal"
+       ]
+      },
+      "poder": {
+       "description": "Poder",
+       "type": "string",
+       "enum": [
+        "ejecutivo",
+        "legislativo",
+        "judicial",
+        "autonomo"
+       ]
+      },
+      "estado": {
+       "description": "Entidad con su nombre corto, p. ej. 'Yucatán', 'Estado de México', 'Veracruz'. Los federales tienen 'Nacional'",
+       "type": "string"
+      },
+      "municipio": {
+       "description": "Municipio (coincidencia parcial, sin acentos)",
+       "type": "string"
+      },
+      "en_linea": {
+       "type": "string",
+       "enum": [
+        "si",
+        "no",
+        "sin_dato"
+       ]
+      },
+      "orden_por": {
+       "default": "frecuencia",
+       "type": "string",
+       "enum": [
+        "frecuencia",
+        "reciente"
+       ]
+      },
+      "pagina": {
+       "default": 1,
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 9007199254740991
+      }
+     }
+    },
+    "ejemplo": {
+     "texto": "licencia",
+     "estado": "Tabasco"
+    },
+    "respuesta": {
+     "total": 94,
+     "pagina": 1,
+     "paginas": 4,
+     "items": [
+      {
+       "id": 130677,
+       "homoclave": "SSYPC-2021-5427-002-Z",
+       "nombre": "Renovación de licencia vencida de chófer",
+       "dependencia": "Secretaria de Seguridad y Protección Ciudadana",
+       "siglas": "SSYPC",
+       "orden": "estatal",
+       "poder": "ejecutivo",
+       "estado": "Tabasco",
+       "municipio": null,
+       "en_linea": true,
+       "frecuencia": 78840
+      },
+      {
+       "id": 176311,
+       "homoclave": "SSYPC-2021-5427-002-R",
+       "nombre": "Expedición de licencia de chofer",
+       "dependencia": "Secretaria de Seguridad y Protección Ciudadana",
+       "siglas": "SSYPC",
+       "orden": "estatal",
+       "poder": "ejecutivo",
+       "estado": "Tabasco",
+       "municipio": null,
+       "en_linea": true,
+       "frecuencia": 13259
+      },
+      "… 23 más"
+     ]
+    },
+    "error": false
+   },
+   {
+    "nombre": "tramite",
+    "titulo": "Ficha de un trámite",
+    "descripcion": "Ficha completa de un trámite por id (de buscar_tramites): descripción, canales, dependencia, solicitudes reportadas, sitios citados y el enlace a la ficha oficial de gob.mx (requisitos y costos). Algunas fichas de gob.mx dan 404 (p. ej. parte de CDMX): el trámite no está publicado ahí.",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {
+      "id": {
+       "type": "integer",
+       "minimum": -9007199254740991,
+       "maximum": 9007199254740991,
+       "description": "id del trámite; negativo = registro del dataset federal de la SFP"
+      }
+     },
+     "required": [
+      "id"
+     ]
+    },
+    "ejemplo": {
+     "id": 94922
+    },
+    "respuesta": {
+     "id": 94922,
+     "homoclave": "SEMOVI-2023-8802-129-A",
+     "nombre_tramite": "Expedición, Renovación y Reposición de Licencia para conducir Tipo A, A1 y A2 y Permanente",
+     "tipo_registro": "tramite",
+     "tipo": "Licencia",
+     "categoria": null,
+     "dependencia": "Secretaría de Movilidad",
+     "siglas": "SEMOVI",
+     "unidad_administrativa": "Dirección General de Licencias y Operación del Transporte Vehicular",
+     "nivel": "estatal",
+     "estado": "Ciudad de México",
+     "orden": "estatal",
+     "poder": "ejecutivo",
+     "subtipo": null,
+     "municipio": null,
+     "nivel_gobierno_detalle": "Administración Pública Estatal",
+     "en_linea": null,
+     "presencial": null,
+     "telefono": null,
+     "canales_txt": null,
+     "frecuencia": 98217,
+     "dirigido": "Social",
+     "fecha_actualizacion": "2023-11-01",
+     "descripcion_ciudadana": null,
+     "descripcion": "Si ya realizaste tu renovación digital y ahora quieres obtener tu licencia física para conducir vehículos particulares.",
+     "_fuente": "cnartys",
+     "ficha_oficial": "https://www.gob.mx/public/tramites/detalleTramite.xhtml?homoclave=SEMOVI-2023-8802-129-A"
+    },
+    "error": false
+   },
+   {
+    "nombre": "matriz_orden_poder_tramites",
+    "titulo": "Trámites por orden y poder",
+    "descripcion": "Cuenta trámites por orden × poder con los mismos filtros de buscar_tramites (sin orden ni poder). Un 0 significa que no hay trámites en ese cruce.",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {
+      "texto": {
+       "type": "string"
+      },
+      "estado": {
+       "type": "string"
+      },
+      "municipio": {
+       "type": "string"
+      },
+      "en_linea": {
+       "type": "string",
+       "enum": [
+        "si",
+        "no",
+        "sin_dato"
+       ]
+      }
+     }
+    },
+    "ejemplo": {
+     "estado": "Yucatán"
+    },
+    "respuesta": {
+     "estatal": {
+      "ejecutivo": 0,
+      "legislativo": 0,
+      "judicial": 35,
+      "autonomo": 0
+     },
+     "municipal": {
+      "ejecutivo": 374,
+      "legislativo": 0,
+      "judicial": 0,
+      "autonomo": 0
+     }
+    },
+    "error": false
+   },
+   {
+    "nombre": "brechas_volumen",
+    "titulo": "Mucha demanda, sin opción en línea",
+    "descripcion": "Los trámites con más solicitudes reportadas que el registro marca sin opción en línea, cruzados con las apps y sitios de la misma dependencia (si existen, el canal está pero el trámite no se ofrece por él).",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {
+      "orden": {
+       "description": "Orden de gobierno",
+       "type": "string",
+       "enum": [
+        "federal",
+        "estatal",
+        "municipal"
+       ]
+      },
+      "estado": {
+       "type": "string"
+      },
+      "limite": {
+       "default": 30,
+       "description": "Máximo de resultados (≤ 200)",
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 200
+      }
+     }
+    },
+    "ejemplo": {
+     "orden": "estatal",
+     "limite": 3
+    },
+    "respuesta": [
+     {
+      "homoclave": "SEDIF-2024-3248-003-A",
+      "nombre_tramite": "Programa de Alimentación Escolar Modalidad Caliente",
+      "dependencia": "Sistema para el Desarrollo Integral de la Familia del Estado de Puebla",
+      "siglas": "SEDIF",
+      "orden": "estatal",
+      "estado": "Puebla",
+      "municipio": null,
+      "frecuencia": 37423974,
+      "canales_txt": "Presencial",
+      "apps_dependencia": [],
+      "sitios_dependencia": [],
+      "brecha": "sin canal en línea y sin app ni sitio de la dependencia en el inventario"
+     },
+     {
+      "homoclave": "SITMA-2024-11584-004-A",
+      "nombre_tramite": "Transporte Público Masivo de Pasajeros Tuzobús.",
+      "dependencia": "Sistema Integrado de Transporte Masivo de Hidalgo",
+      "siglas": "SITMA",
+      "orden": "estatal",
+      "estado": "Hidalgo",
+      "municipio": null,
+      "frecuencia": 21096550,
+      "canales_txt": "Presencial",
+      "apps_dependencia": [],
+      "sitios_dependencia": [],
+      "brecha": "sin canal en línea y sin app ni sitio de la dependencia en el inventario"
+     },
+     "… 1 más"
+    ],
+    "error": false
+   },
+   {
+    "nombre": "comparar",
+    "titulo": "Comparar entidades o municipios",
+    "descripcion": "Compara entidades (orden='estatal', las 32) o municipios (orden='municipal'): trámites y % en línea, apps, sitios, subdominios, cobertura de poderes, población, egreso INEGI y (entidades) transferencias del PEF Ramo 28+33, con tasas por 100 mil habitantes y por mil millones de pesos. null = sin dato, nunca cero. RECHAZA el orden federal: su presupuesto, extensión y población no son comparables.",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {
+      "orden": {
+       "type": "string",
+       "description": "'estatal' o 'municipal'"
+      },
+      "nombres": {
+       "description": "Lista separada por comas, p. ej. 'Campeche, Tlaxcala'; vacío = todos",
+       "type": "string"
+      },
+      "ordenar_por": {
+       "description": "Métrica con ruta de punto para un ranking descendente: tramites, pct_tramites_en_linea, apps, por_100k_hab.apps, por_mil_mdp.sitios, egreso_por_hab, transferencias_pef_mxn…",
+       "type": "string"
+      }
+     },
+     "required": [
+      "orden"
+     ]
+    },
+    "ejemplo": {
+     "orden": "estatal",
+     "nombres": "Campeche, Tlaxcala",
+     "ordenar_por": "transferencias_pef_mxn"
+    },
+    "respuesta": {
+     "orden": "estatal",
+     "metodologia": "Solo estatal↔estatal o municipal↔municipal (nunca federal). Tasas por 100 mil habitantes (Censo 2020 INEGI) y por cada mil millones de pesos de egreso (INEGI EFIPEM). null = dato no disponible, nunca cero. cobertura_pode…",
+     "referencia_federal": {
+      "tramites": 5583,
+      "tramites_en_linea": 2306,
+      "tramites_sin_dato_canal": 1,
+      "pct_tramites_en_linea": 41.3
+     },
+     "filas": [
+      {
+       "estado": "Tlaxcala",
+       "cve_ent": "29",
+       "apps": 9,
+       "apps_activas": 8,
+       "sitios": 6,
+       "subdominios": 319,
+       "tramites": 33,
+       "tramites_en_linea": 4,
+       "tramites_sin_dato_canal": 0,
+       "pct_tramites_en_linea": 12.1,
+       "instalaciones": 65969,
+       "subdominios_activos": 30,
+       "poderes": {
+        "ejecutivo": 10,
+        "legislativo": 1,
+        "judicial": 1,
+        "autonomo": 3
+       },
+       "cobertura_poderes": 4,
+       "poblacion_2020": 1342977,
+       "egresos_mxn": 30422325823,
+       "egresos_anio": 2024,
+       "egreso_por_hab": 22652.902,
+       "transferencias_pef_mxn": 27511789197,
+       "transferencias_pef_anio": 2026,
+       "presupuesto_notas": null,
+       "por_100k_hab": {
+        "apps": 0.67,
+        "apps_activas": 0.596,
+        "sitios": 0.447,
+        "subdominios": 23.753,
+        "tramites": 2.457
+       },
+       "instalaciones_por_hab": 0.049,
+       "por_mil_mdp": {
+        "apps": 0.296,
+        "apps_activas": 0.263,
+        "sitios": 0.197,
+        "subdominios": 10.486,
+        "tramites": 1.085
+       }
+      },
+      {
+       "estado": "Campeche",
+       "cve_ent": "04",
+       "apps": 11,
+       "apps_activas": 10,
+       "sitios": 11,
+       "subdominios": 88,
+       "tramites": 578,
+       "tramites_en_linea": 61,
+       "tramites_sin_dato_canal": 0,
+       "pct_tramites_en_linea": 10.6,
+       "instalaciones": 115618,
+       "subdominios_activos": 15,
+       "poderes": {
+        "ejecutivo": 16,
+        "legislativo": 1,
+        "judicial": 1,
+        "autonomo": 4
+       },
+       "cobertura_poderes": 4,
+       "poblacion_2020": 928363,
+       "egresos_mxn": 28284368911,
+       "egresos_anio": 2024,
+       "egreso_por_hab": 30466.928,
+       "transferencias_pef_mxn": 20452135805,
+       "transferencias_pef_anio": 2026,
+       "presupuesto_notas": null,
+       "por_100k_hab": {
+        "apps": 1.185,
+        "apps_activas": 1.077,
+        "sitios": 1.185,
+        "subdominios": 9.479,
+        "tramites": 62.26
+       },
+       "instalaciones_por_hab": 0.125,
+       "por_mil_mdp": {
+        "apps": 0.389,
+        "apps_activas": 0.354,
+        "sitios": 0.389,
+        "subdominios": 3.111,
+        "tramites": 20.435
+       }
+      }
+     ]
+    },
+    "error": false
+   },
+   {
+    "nombre": "buscar_apps",
+    "titulo": "Buscar apps de gobierno",
+    "descripcion": "Apps móviles de gobierno (519) con estatus, instalaciones, calificaciones y análisis de permisos (peligrosos y rastreadores) cuando hay versión Android.",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {
+      "texto": {
+       "type": "string"
+      },
+      "orden": {
+       "description": "Orden de gobierno",
+       "type": "string",
+       "enum": [
+        "federal",
+        "estatal",
+        "municipal"
+       ]
+      },
+      "poder": {
+       "description": "Poder",
+       "type": "string",
+       "enum": [
+        "ejecutivo",
+        "legislativo",
+        "judicial",
+        "autonomo"
+       ]
+      },
+      "estado": {
+       "type": "string"
+      },
+      "sector": {
+       "type": "string"
+      },
+      "estatus": {
+       "description": "activa | retirada | 'sin actualizar >2 años' | desconocido",
+       "type": "string"
+      },
+      "solo_permisos_peligrosos": {
+       "default": false,
+       "type": "boolean"
+      },
+      "limite": {
+       "default": 30,
+       "description": "Máximo de resultados (≤ 200)",
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 200
+      }
+     }
+    },
+    "ejemplo": {
+     "orden": "estatal",
+     "poder": "judicial",
+     "limite": 2
+    },
+    "respuesta": [
+     {
+      "clave": "com.pjedomex.pjedomex",
+      "nombre": "PJEdomex",
+      "siglas": "PJEdomex",
+      "dependencia": "Poder Judicial del Estado de México",
+      "orden": "estatal",
+      "poder": "judicial",
+      "subtipo": null,
+      "municipio": null,
+      "estado": "Estado de México",
+      "sector": "trámites",
+      "estatus": "activa",
+      "android": "com.pjedomex.pjedomex",
+      "ios": "1398575467",
+      "requiere_cuenta": null,
+      "desarrollador": "Poder Judicial del Estado de México",
+      "funciones": [],
+      "notas": "Play 50.000+, 2026-09; iOS 2026-09. Cuenta Play con correo gmail. Verificado en tiendas MX 2026-10-21.",
+      "instalaciones": 68154,
+      "instalaciones_txt": "50.000+",
+      "play_score": 3.26,
+      "play_ratings": 187,
+      "play_version": "3.0.5",
+      "ios_score": 0,
+      "ios_ratings": 0,
+      "proposito": "Servicios del Poder Judicial del Estado de México en una sola app.",
+      "permisos": {
+       "total": 15,
+       "peligrosos": [
+        "READ_EXTERNAL_STORAGE",
+        "RECORD_AUDIO",
+        "… 1 más"
+       ],
+       "trackers": [],
+       "notas": "Permisos de Google Play (es). Clasificación mecánica de peligrosos; trackers no verificados (Exodus requiere token).",
+       "fecha": "2026-10-21"
+      }
+     },
+     {
+      "clave": "com.test.tribunalvirtual",
+      "nombre": "Tribunal Virtual",
+      "siglas": "PJENL",
+      "dependencia": "Poder Judicial del Estado de Nuevo León",
+      "orden": "estatal",
+      "poder": "judicial",
+      "subtipo": null,
+      "municipio": null,
+      "estado": "Nuevo León",
+      "sector": "trámites",
+      "estatus": "activa",
+      "android": "com.test.tribunalvirtual",
+      "ios": "870659641",
+      "requiere_cuenta": null,
+      "desarrollador": "Poder Judicial del Estado de Nuevo León",
+      "funciones": [],
+      "notas": "Play 10.000+, 2024-07; iOS 2023-09. El package conserva 'com.test'. Verificado en tiendas MX 2026-10-21.",
+      "instalaciones": 43546,
+      "instalaciones_txt": "10.000+",
+      "play_score": 4.11,
+      "play_ratings": 210,
+      "play_version": "Varies with device",
+      "ios_score": 3.20833,
+      "ios_ratings": 24,
+      "proposito": "Consulta de expedientes autorizados.",
+      "permisos": {
+       "total": 6,
+       "peligrosos": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "… 1 más"
+       ],
+       "trackers": [],
+       "notas": "Permisos de Google Play (es). Clasificación mecánica de peligrosos; trackers no verificados (Exodus requiere token).",
+       "fecha": "2026-10-21"
+      }
+     }
+    ],
+    "error": false
+   },
+   {
+    "nombre": "buscar_sitios",
+    "titulo": "Buscar portales web de gobierno",
+    "descripcion": "Portales web de gobierno (394) con plataforma, protección anti-bot, autenticación y evidencia fechada de si responden.",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {
+      "texto": {
+       "type": "string"
+      },
+      "orden": {
+       "description": "Orden de gobierno",
+       "type": "string",
+       "enum": [
+        "federal",
+        "estatal",
+        "municipal"
+       ]
+      },
+      "poder": {
+       "description": "Poder",
+       "type": "string",
+       "enum": [
+        "ejecutivo",
+        "legislativo",
+        "judicial",
+        "autonomo"
+       ]
+      },
+      "estado": {
+       "type": "string"
+      },
+      "limite": {
+       "default": 30,
+       "description": "Máximo de resultados (≤ 200)",
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 200
+      }
+     }
+    },
+    "ejemplo": {
+     "texto": "sat",
+     "limite": 2
+    },
+    "respuesta": [
+     {
+      "dependencia": "Secretaría de Hacienda y Crédito Público",
+      "siglas": "SHCP",
+      "orden": "federal",
+      "poder": "ejecutivo",
+      "subtipo": null,
+      "municipio": null,
+      "estado": "Nacional",
+      "url": "https://www.gob.mx/hacienda",
+      "tipo": "portal_institucional",
+      "plataforma": "gob.mx (CMS federal)",
+      "anti_bot": "desconocido",
+      "autenticacion": "ninguna",
+      "servicios_en_linea": [
+       "información",
+       "presupuesto y finanzas públicas"
+      ],
+      "api_publica": null,
+      "evidencia": [
+       {
+        "fecha": "2026-10-20",
+        "url": "https://www.gob.mx/hacienda",
+        "resultado": "200, CMS federal"
+       }
+      ],
+      "resultado": "200, CMS federal",
+      "proposito": "Rectora de las finanzas públicas; de ella dependen el SAT, la CNBV y la CONDUSEF.",
+      "notas": "SAT, CNBV y CONDUSEF se documentan aparte."
+     },
+     {
+      "dependencia": "Servicio de Administración Tributaria",
+      "siglas": "SAT",
+      "orden": "federal",
+      "poder": "ejecutivo",
+      "subtipo": "desconcentrado",
+      "municipio": null,
+      "estado": "Nacional",
+      "url": "https://www.sat.gob.mx",
+      "tipo": "portal_institucional",
+      "plataforma": "nginx (frontend) + aplicaciones Java/.NET internas",
+      "anti_bot": "desconocido",
+      "autenticacion": "RFC+contraseña / e.firma",
+      "servicios_en_linea": [
+       "consulta/descarga de CFDI",
+       "constancia de situación fiscal",
+       "… 4 más"
+      ],
+      "api_publica": "web services de validación de CFDI y LCO (mp_sat_ws)",
+      "evidencia": [
+       {
+        "fecha": "2026-10-20",
+        "url": "https://www.sat.gob.mx",
+        "resultado": "200, Server nginx, sin WAF en cookies de portada"
+       }
+      ],
+      "resultado": "200, Server nginx, sin WAF en cookies de portada",
+      "proposito": "Administración tributaria federal; portal de trámites fiscales, facturación y declaraciones.",
+      "notas": "243 subdominios en Certificate Transparency (ver sitios/subdominios/sat.txt). ANOMALIA: numerosos entornos NO productivos expuestos públicamente en CT: digitaldev, digitaluat, cloudadev, cloudappuat, buzondigitaldev.clou…"
+     }
+    ],
+    "error": false
+   },
+   {
+    "nombre": "buscar_subdominio",
+    "titulo": "Buscar subdominios .gob.mx",
+    "descripcion": "Busca en ~12.8 mil subdominios .gob.mx (Certificate Transparency, dotgob-mx y citados en trámites). 'activo' = respondió a HTTP/S en el último barrido de dotgob-mx.",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {
+      "texto": {
+       "description": "Parte del host",
+       "type": "string"
+      },
+      "solo_activos": {
+       "default": false,
+       "type": "boolean"
+      },
+      "estado": {
+       "type": "string"
+      },
+      "limite": {
+       "default": 100,
+       "description": "Máximo de resultados (≤ 500)",
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 500
+      }
+     }
+    },
+    "ejemplo": {
+     "texto": "predial",
+     "solo_activos": true,
+     "limite": 3
+    },
+    "respuesta": [
+     {
+      "host": "api.predialtuxpan.gob.mx",
+      "fuente": "dotgob-mx",
+      "activo": "activo",
+      "dep": "predialtuxpan",
+      "estado": null,
+      "municipio": null
+     },
+     {
+      "host": "autodiscover.predialtuxpan.gob.mx",
+      "fuente": "dotgob-mx",
+      "activo": "activo",
+      "dep": "predialtuxpan",
+      "estado": null,
+      "municipio": null
+     },
+     "… 1 más"
+    ],
+    "error": false
+   },
+   {
+    "nombre": "catalogo_tramites",
+    "titulo": "Corte de los trámites",
+    "descripcion": "Metadatos del corte de trámites cargado: fecha, archivo de origen, sha256, conteos, duplicados quitados y la regla de descarga diaria.",
+    "esquema": {
+     "type": "object",
+     "$schema": "https://json-schema.org/draft/2020-12/schema",
+     "properties": {}
+    },
+    "ejemplo": {},
+    "respuesta": {
+     "fuente": "Catálogo Nacional de Regulaciones, Trámites y Servicios (CONAMER), CSV público diario",
+     "url": "https://www.catalogonacional.gob.mx/sujetosobligados/TramitesPublicadosCSV/tramites_publicados_23_10_2026.csv",
+     "archivo": "tramites_publicados_23_10_2026.csv",
+     "fecha_corte": "2026-10-23",
+     "normalizado": "2026-10-24T18:51:53+00:00",
+     "sha256": "60287b5db29b9c8cd56da0dc43c6bc9335cb1e2189c8a398ced344a27f115101",
+     "registros": 31802,
+     "por_orden": {
+      "federal": 5583,
+      "estatal": 14608,
+      "municipal": 11611
+     },
+     "por_poder": {
+      "ejecutivo": 30994,
+      "judicial": 534,
+      "autonomo": 218,
+      "legislativo": 56
+     },
+     "entidades_con_registros": 31,
+     "municipios_con_registros": 76,
+     "con_canal_en_linea": 5161,
+     "sin_dato_de_canal": 1543,
+     "duplicados_internos_quitados": 364,
+     "ligados_sfp_por_homoclave": 1976,
+     "ligados_sfp_por_nombre_siglas": 157,
+     "hosts_gob_mx": 68,
+     "regla_descarga": "el archivo del día D aparece ~02:31 UTC del día D+1; el servidor guarda solo los 2 últimos"
+    },
+    "error": false
+   }
+  ]
+ },
+ "local": [
+  {
+   "nombre": "stats",
+   "descripcion": "Resumen del inventario: totales, conteos por nivel/sector/estatus y la matriz\norden×poder de apps, sitios y servicios (todas las celdas, incluidas las de 0), de qué\nbúsqueda respalda los ceros y qué parte de los subdominios está asignada a entidad/municipio.",
+   "esquema": {
+    "properties": {},
+    "title": "statsArguments",
+    "type": "object"
+   }
+  },
+  {
+   "nombre": "buscar_apps",
+   "descripcion": "Busca apps. Filtros opcionales: orden (federal/estatal/municipal), poder\n(ejecutivo/legislativo/judicial/autonomo), nivel (campo heredado), estado (entidad),\nsector (seguridad/movilidad/salud/fiscal/identidad...), estatus (activa/retirada/\n'sin actualizar >2 años'), texto (nombre/dependencia/propósito).",
+   "esquema": {
+    "properties": {
+     "nivel": {
+      "default": "",
+      "title": "Nivel",
+      "type": "string"
+     },
+     "estado": {
+      "default": "",
+      "title": "Estado",
+      "type": "string"
+     },
+     "sector": {
+      "default": "",
+      "title": "Sector",
+      "type": "string"
+     },
+     "estatus": {
+      "default": "",
+      "title": "Estatus",
+      "type": "string"
+     },
+     "texto": {
+      "default": "",
+      "title": "Texto",
+      "type": "string"
+     },
+     "orden": {
+      "default": "",
+      "title": "Orden",
+      "type": "string"
+     },
+     "poder": {
+      "default": "",
+      "title": "Poder",
+      "type": "string"
+     },
+     "limite": {
+      "default": 50,
+      "title": "Limite",
+      "type": "integer"
+     }
+    },
+    "title": "buscar_appsArguments",
+    "type": "object"
+   }
+  },
+  {
+   "nombre": "buscar_sitios",
+   "descripcion": "Busca portales web de gobierno. Filtros: orden, poder, nivel, estado, texto (dependencia/url/propósito).",
+   "esquema": {
+    "properties": {
+     "nivel": {
+      "default": "",
+      "title": "Nivel",
+      "type": "string"
+     },
+     "estado": {
+      "default": "",
+      "title": "Estado",
+      "type": "string"
+     },
+     "texto": {
+      "default": "",
+      "title": "Texto",
+      "type": "string"
+     },
+     "orden": {
+      "default": "",
+      "title": "Orden",
+      "type": "string"
+     },
+     "poder": {
+      "default": "",
+      "title": "Poder",
+      "type": "string"
+     },
+     "limite": {
+      "default": 50,
+      "title": "Limite",
+      "type": "integer"
+     }
+    },
+    "title": "buscar_sitiosArguments",
+    "type": "object"
+   }
+  },
+  {
+   "nombre": "buscar_servicios",
+   "descripcion": "Busca trámites/servicios de los tres órdenes: ~32k del Catálogo Nacional (CNARTyS: federal, estatal\ny municipal), los federales de la SFP que no están en él, el catálogo curado y las brechas.\ntexto busca en nombre/dependencia/siglas/homoclave. Filtros: orden (federal/estatal/municipal), poder,\nestado (entidad; los federales tienen 'Nacional'), municipio, en_linea ('si' | 'no' | 'sin_dato' = el\ncatálogo no reporta canal), min_frecuencia (volumen reportado por el CNARTyS); por_frecuencia ordena\nde mayor a menor volumen. Cada trámite CNARTyS trae canales (en_linea/presencial/telefono), frecuencia,\ndescripción, fecha_actualizacion, hosts .gob.mx mencionados y, si es federal y casa por homoclave,\nnivel_digitalizacion_sfp.",
+   "esquema": {
+    "properties": {
+     "texto": {
+      "default": "",
+      "title": "Texto",
+      "type": "string"
+     },
+     "orden": {
+      "default": "",
+      "title": "Orden",
+      "type": "string"
+     },
+     "poder": {
+      "default": "",
+      "title": "Poder",
+      "type": "string"
+     },
+     "estado": {
+      "default": "",
+      "title": "Estado",
+      "type": "string"
+     },
+     "municipio": {
+      "default": "",
+      "title": "Municipio",
+      "type": "string"
+     },
+     "en_linea": {
+      "default": "",
+      "title": "En Linea",
+      "type": "string"
+     },
+     "min_frecuencia": {
+      "default": 0,
+      "title": "Min Frecuencia",
+      "type": "integer"
+     },
+     "por_frecuencia": {
+      "default": false,
+      "title": "Por Frecuencia",
+      "type": "boolean"
+     },
+     "limite": {
+      "default": 50,
+      "title": "Limite",
+      "type": "integer"
+     }
+    },
+    "title": "buscar_serviciosArguments",
+    "type": "object"
+   }
+  },
+  {
+   "nombre": "brechas_volumen",
+   "descripcion": "Brechas con peso: trámites de mayor volumen (campo frecuencia del CNARTyS) que el catálogo declara\nsin canal en línea, cruzados con las apps y sitios de la misma dependencia (por siglas y, si no es\nfederal, mismo estado). 'brecha' distingue si la dependencia ya tiene app/sitio (el trámite no se\nofrece ahí) o no tiene ninguno en el inventario. Filtros: orden, estado.",
+   "esquema": {
+    "properties": {
+     "orden": {
+      "default": "",
+      "title": "Orden",
+      "type": "string"
+     },
+     "estado": {
+      "default": "",
+      "title": "Estado",
+      "type": "string"
+     },
+     "limite": {
+      "default": 30,
+      "title": "Limite",
+      "type": "integer"
+     }
+    },
+    "title": "brechas_volumenArguments",
+    "type": "object"
+   }
+  },
+  {
+   "nombre": "catalogo_tramites",
+   "descripcion": "Metadatos del corte del Catálogo Nacional de trámites cargado: fecha de corte, archivo, sha256,\nconteos por orden/poder, regla de descarga. sondear=true consulta además al servidor (HEAD) qué\narchivos diarios existen en los últimos 7 días (el servidor guarda solo los 2 más recientes; el del\ndía D aparece ~02:31 UTC del día D+1). Solo lectura: para refrescar, `gobmx catalogo --actualizar`.",
+   "esquema": {
+    "properties": {
+     "sondear": {
+      "default": false,
+      "title": "Sondear",
+      "type": "boolean"
+     }
+    },
+    "title": "catalogo_tramitesArguments",
+    "type": "object"
+   }
+  },
+  {
+   "nombre": "dependencia",
+   "descripcion": "Todo lo de una dependencia: sus apps (con permisos si los hay) y sus sitios.\n'nombre' hace match en dependencia o siglas.",
+   "esquema": {
+    "properties": {
+     "nombre": {
+      "title": "Nombre",
+      "type": "string"
+     }
+    },
+    "required": [
+     "nombre"
+    ],
+    "title": "dependenciaArguments",
+    "type": "object"
+   }
+  },
+  {
+   "nombre": "permisos",
+   "descripcion": "Análisis de permisos y privacidad de apps. Cada entrada trae permisos_peligrosos,\ntrackers (si hay) y notas. Filtros: orden, poder, nivel, estado (entidad), sector, texto\n(nombre/dependencia/android_id); solo_peligrosos deja solo las que tienen algún permiso peligroso.",
+   "esquema": {
+    "properties": {
+     "nivel": {
+      "default": "",
+      "title": "Nivel",
+      "type": "string"
+     },
+     "estado": {
+      "default": "",
+      "title": "Estado",
+      "type": "string"
+     },
+     "sector": {
+      "default": "",
+      "title": "Sector",
+      "type": "string"
+     },
+     "texto": {
+      "default": "",
+      "title": "Texto",
+      "type": "string"
+     },
+     "orden": {
+      "default": "",
+      "title": "Orden",
+      "type": "string"
+     },
+     "poder": {
+      "default": "",
+      "title": "Poder",
+      "type": "string"
+     },
+     "solo_peligrosos": {
+      "default": false,
+      "title": "Solo Peligrosos",
+      "type": "boolean"
+     },
+     "limite": {
+      "default": 50,
+      "title": "Limite",
+      "type": "integer"
+     }
+    },
+    "title": "permisosArguments",
+    "type": "object"
+   }
+  },
+  {
+   "nombre": "comparar",
+   "descripcion": "Compara entidades federativas (orden='estatal') o municipios (orden='municipal') con\nmétricas normalizadas: apps, apps activas, instalaciones, sitios, subdominios, cobertura de\npoderes y, si hay datos de presupuesto, tasas por 100 mil habitantes y por cada mil millones\nde pesos de egreso, egreso por habitante (INEGI EFIPEM) y transferencias PEF Ramos 28+33\n(complementario; con año y notas, p. ej. CDMX usa el dato trimestral preliminar).\nnombres: lista separada por comas ('Jalisco, Nuevo León'); vacío = todos.\nordenar_por: ranking descendente por métrica ('apps', 'por_100k_hab.sitios', 'por_mil_mdp.apps',\n'egreso_por_hab', 'instalaciones_por_hab'…); sin dato al final.\nRECHAZA orden='federal': su presupuesto, extensión y población no son comparables.",
+   "esquema": {
+    "properties": {
+     "orden": {
+      "title": "Orden",
+      "type": "string"
+     },
+     "nombres": {
+      "default": "",
+      "title": "Nombres",
+      "type": "string"
+     },
+     "ordenar_por": {
+      "default": "",
+      "title": "Ordenar Por",
+      "type": "string"
+     }
+    },
+    "required": [
+     "orden"
+    ],
+    "title": "compararArguments",
+    "type": "object"
+   }
+  },
+  {
+   "nombre": "buscar_subdominio",
+   "descripcion": "Busca en los 12k+ subdominios .gob.mx consolidados (CT + dotgob-mx).\n'texto' hace match en el host; 'solo_activos' filtra los marcados activos por dotgob-mx.\nCada fila trae además estado/municipio cuando el slug de dominio está mapeado (si no, null).",
+   "esquema": {
+    "properties": {
+     "texto": {
+      "default": "",
+      "title": "Texto",
+      "type": "string"
+     },
+     "solo_activos": {
+      "default": false,
+      "title": "Solo Activos",
+      "type": "boolean"
+     },
+     "limite": {
+      "default": 100,
+      "title": "Limite",
+      "type": "integer"
+     }
+    },
+    "title": "buscar_subdominioArguments",
+    "type": "object"
+   }
+  }
+ ],
+ "cli": [
+  {
+   "comando": "stats",
+   "ayuda": "usage: gobmx stats [-h]\n\noptions:\n  -h, --help  show this help message and exit",
+   "ejemplo": "python3 gobmx.py stats",
+   "salida": "APPS: 519  |  SITIOS: 394  |  SERVICIOS: 35810 (CNARTyS 31802, corte 2026-10-23)  |  PERMISOS: 387\n\napps por nivel: {'estatal': 316, 'federal': 71, 'municipal': 64, 'paraestatal': 38, 'autonomo': 26, 'no_oficial': 4}\napps por sector: {'otro': 118, 'seguridad': 100, 'movilidad': 52, 'trámites': 43, 'educación': 37, 'salud': 33, 'turismo': 23, 'finanzas': 19, 'fiscal': 15, 'elecciones': 15, 'identidad': 14, 'clima': 13, 'trabajo': 13, 'vivienda': 13, 'energía': 11}\napps por estatus: {'activa': 333, 'sin actualizar >2 años': 85, 'desconocido': 81, 'retirada': 20}\napps con Android: 387 | con iOS: 371\n\nAPPS (orden × poder)\n                 ejecutivo legislativo    judicial    autonomo\n  federal              102           4           5          24\n  estatal              258           8          24          26\n  municipal             64           0           0           0\n  no_oficial (orden/poder null): 4\n\n… (16 líneas más)"
+  },
+  {
+   "comando": "servicios",
+   "ayuda": "usage: gobmx servicios [-h] [--nivel NIVEL] [--estado ESTADO]\n                       [--sector SECTOR] [--orden {federal,estatal,municipal}]\n                       [--poder {ejecutivo,legislativo,judicial,autonomo}]\n                       [--estatus ESTATUS] [--busca BUSCA] [--json]\n                       [--municipio MUNICIPIO] [--en-linea {si,no,sin_dato}]\n                       [--min-frecuencia MIN_FRECUENCIA] [--por-frecuencia]\n                       [--limite LIMITE]\n\noptions:\n  -h, --help            show this help message and exit\n  --nivel NIVEL         campo heredado (federal, estatal, municipal,\n                        paraestatal, autonomo…); mejor usa --orden/--poder\n  --estado ESTADO       entidad, coincidencia parcial sin mayúsculas (los\n                        federales tienen 'Nacional')\n  --sector SECTOR       sector de la app o servicio (seguridad, movilidad,\n                        salud, fiscal…), parcial\n  --orden {federal,estatal,municipal}\n                        orden de gobierno (exacto)\n  --poder {ejecutivo,legislativo,judicial,autonomo}\n                        poder (exacto)\n  --estatus ESTATUS     apps: activa | retirada | 'sin actualizar >2 años' |\n                        desconocido (parcial)\n  --busca BUSCA         texto libre en nombre, dependencia, siglas…\n  --json                salida JSON completa en vez de una línea por registro\n  --municipio MUNICIPIO\n                        municipio, coincidencia parcial sin acentos\n  --en-linea {si,no,sin_dato}\n                        canal en línea; sin_dato = el catálogo no reporta\n                        canal (no es 'no')\n  --min-frecuencia MIN_FRECUENCIA\n                        solo trámites con al menos N solicitudes reportadas\n  --por-frecuencia      ordena por frecuencia descendente\n  --limite LIMITE       muestra solo los primeros N",
+   "ejemplo": "python3 gobmx.py servicios --estado Tabasco --busca licencia --por-frecuencia --limite 5",
+   "salida": "5 resultados\n\n• ·  Renovación de licencia vencida de chófer  SSYPC-2021-5427-002-Z  estatal  ejecutivo  Tabasco  ·  True  78840  ·\n• ·  Expedición de licencia de chofer  SSYPC-2021-5427-002-R  estatal  ejecutivo  Tabasco  ·  True  13259  ·\n• ·  Expedición de licencia de motociclista  SSYPC-2021-5427-002-U  estatal  ejecutivo  Tabasco  ·  True  12680  ·\n• ·  Renovación de licencia vencida de automovilista  SSYPC-2021-5427-002-AC  estatal  ejecutivo  Tabasco  ·  True  11852  ·\n• ·  Renovación de licencia vencida de motociclista  SSYPC-2021-5427-002-AF  estatal  ejecutivo  Tabasco  ·  True  10031  ·"
+  },
+  {
+   "comando": "brechas",
+   "ayuda": "usage: gobmx brechas [-h] [--orden {federal,estatal,municipal}]\n                     [--estado ESTADO] [--limite LIMITE] [--json]\n\noptions:\n  -h, --help            show this help message and exit\n  --orden {federal,estatal,municipal}\n  --estado ESTADO\n  --limite LIMITE\n  --json",
+   "ejemplo": "python3 gobmx.py brechas --orden estatal --limite 4",
+   "salida": "4 trámites de mayor volumen sin canal en línea (CNARTyS, corte 2026-10-23)\n\n•   37,423,974  SEDIF (Puebla) — Programa de Alimentación Escolar Modalidad Caliente\n      sin canal en línea y sin app ni sitio de la dependencia en el inventario\n•   21,096,550  SITMA (Hidalgo) — Transporte Público Masivo de Pasajeros Tuzobús.\n      sin canal en línea y sin app ni sitio de la dependencia en el inventario\n•   11,623,306  DSA (Guanajuato) — Servicio de Fotocopiado\n      sin canal en línea y sin app ni sitio de la dependencia en el inventario\n•    9,500,000  DIF (Durango) — Alimentación para menores escolarizados\n      sin canal en línea y sin app ni sitio de la dependencia en el inventario"
+  },
+  {
+   "comando": "catalogo",
+   "ayuda": "usage: gobmx catalogo [-h] [--sondear] [--actualizar] [--csv CSV]\n\noptions:\n  -h, --help    show this help message and exit\n  --sondear     consulta al servidor (HEAD) qué archivos diarios hay en los\n                últimos 7 días\n  --actualizar  baja el de ayer (o el más reciente) y lo normaliza en\n                servicios/cnartys/\n  --csv CSV     normaliza un CSV ya descargado en vez de bajarlo",
+   "ejemplo": "python3 gobmx.py catalogo",
+   "salida": "{\n \"fuente\": \"Catálogo Nacional de Regulaciones, Trámites y Servicios (CONAMER), CSV público diario\",\n \"url\": \"https://www.catalogonacional.gob.mx/sujetosobligados/TramitesPublicadosCSV/tramites_publicados_23_10_2026.csv\",\n \"archivo\": \"tramites_publicados_23_10_2026.csv\",\n \"fecha_corte\": \"2026-10-23\",\n \"normalizado\": \"2026-10-24T18:51:53+00:00\",\n \"sha256\": \"60287b5db29b9c8cd56da0dc43c6bc9335cb1e2189c8a398ced344a27f115101\",\n \"registros\": 31802,\n \"por_orden\": {\n  \"federal\": 5583,\n  \"estatal\": 14608,\n  \"municipal\": 11611\n },\n \"por_poder\": {\n… (15 líneas más)"
+  },
+  {
+   "comando": "comparar",
+   "ayuda": "usage: gobmx comparar [-h] --orden ORDEN [--nombres NOMBRES]\n                      [--ordenar ORDENAR] [--json]\n\noptions:\n  -h, --help         show this help message and exit\n  --orden ORDEN      estatal | municipal (federal se rechaza)\n  --nombres NOMBRES  lista separada por comas; vacío = todos\n  --ordenar ORDENAR  ranking por métrica: apps, sitios, por_100k_hab.apps,\n                     por_mil_mdp.sitios, egreso_por_hab,\n                     instalaciones_por_hab…\n  --json",
+   "ejemplo": "python3 gobmx.py comparar --orden estatal --nombres \"Campeche,Tlaxcala,Yucatán\"",
+   "salida": "Solo estatal↔estatal o municipal↔municipal (nunca federal). Tasas por 100 mil habitantes (Censo 2020 INEGI) y por cada mil millones de pesos de egreso (INEGI EFIPEM). null = dato no disponible, nunca cero. cobertura_poderes = poderes (de 4) con ≥1 app o sitio del orden comparado. tramites = registros del CNARTyS de ese orden y lugar: mide cuánto captura cada entidad en el catálogo, no cuántos trámites tiene (Jalisco publica 1). pct_tramites_en_linea se calcula solo sobre los que reportan canal; tramites_sin_dato_canal dice cuántos no lo reportan. \n\nreferencia federal (no comparable, solo contexto): 5583 trámites, 41.3 % en línea\n\nlugar                                      apps apps_activas instalacione       sitios  subdominios cobertura_po     tramites pct_tramites   /100k apps   /mmdp apps egreso_por_h\nCampeche                                     11           10       115618           11           88            4          578         10.6        1.185        0.389    30466.928\nTlaxcala                                      9            8        65969            6          319            4           33         12.1         0.67        0.296    22652.902\nYucatán                                       4            3      1295993            6           83            4           35         34.3        0.172        0.072    23905.483"
+  },
+  {
+   "comando": "apps",
+   "ayuda": "usage: gobmx apps [-h] [--nivel NIVEL] [--estado ESTADO] [--sector SECTOR]\n                  [--orden {federal,estatal,municipal}]\n                  [--poder {ejecutivo,legislativo,judicial,autonomo}]\n                  [--estatus ESTATUS] [--busca BUSCA] [--json]\n\noptions:\n  -h, --help            show this help message and exit\n  --nivel NIVEL         campo heredado (federal, estatal, municipal,\n                        paraestatal, autonomo…); mejor usa --orden/--poder\n  --estado ESTADO       entidad, coincidencia parcial sin mayúsculas (los\n                        federales tienen 'Nacional')\n  --sector SECTOR       sector de la app o servicio (seguridad, movilidad,\n                        salud, fiscal…), parcial\n  --orden {federal,estatal,municipal}\n                        orden de gobierno (exacto)\n  --poder {ejecutivo,legislativo,judicial,autonomo}\n                        poder (exacto)\n  --estatus ESTATUS     apps: activa | retirada | 'sin actualizar >2 años' |\n                        desconocido (parcial)\n  --busca BUSCA         texto libre en nombre, dependencia, siglas…\n  --json                salida JSON completa en vez de una línea por registro",
+   "ejemplo": "python3 gobmx.py apps --orden estatal --poder judicial",
+   "salida": "24 resultados\n\n• Poder en Líne@  PJECZ  estatal  judicial  Coahuila  trámites  sin actualizar >2 años  gob.pjecz.poder_en_linea_app\n• Mujer Segura (Coahuila)  PJECZ  estatal  judicial  Coahuila  seguridad  desconocido  ·\n• PJESinaloa  STJ Sinaloa  estatal  judicial  Sinaloa  otro  activa  stj_sin.gob.mx.pjesinaloa\n• Soy PJ Tamaulipas  PJET  estatal  judicial  Tamaulipas  otro  activa  mx.gob.pjetam.soypjtamaulipas\n• PJYucatan  PJY  estatal  judicial  Yucatán  otro  activa  mx.gob.poderjudicialyucatan\n• Firma.Judicial  PJCDMX  estatal  judicial  Ciudad de México  identidad  activa  mx.gob.cdmx.pjcdmx.firmajudicial\n… (18 líneas más)"
+  },
+  {
+   "comando": "sitios",
+   "ayuda": "usage: gobmx sitios [-h] [--nivel NIVEL] [--estado ESTADO] [--sector SECTOR]\n                    [--orden {federal,estatal,municipal}]\n                    [--poder {ejecutivo,legislativo,judicial,autonomo}]\n                    [--estatus ESTATUS] [--busca BUSCA] [--json]\n\noptions:\n  -h, --help            show this help message and exit\n  --nivel NIVEL         campo heredado (federal, estatal, municipal,\n                        paraestatal, autonomo…); mejor usa --orden/--poder\n  --estado ESTADO       entidad, coincidencia parcial sin mayúsculas (los\n                        federales tienen 'Nacional')\n  --sector SECTOR       sector de la app o servicio (seguridad, movilidad,\n                        salud, fiscal…), parcial\n  --orden {federal,estatal,municipal}\n                        orden de gobierno (exacto)\n  --poder {ejecutivo,legislativo,judicial,autonomo}\n                        poder (exacto)\n  --estatus ESTATUS     apps: activa | retirada | 'sin actualizar >2 años' |\n                        desconocido (parcial)\n  --busca BUSCA         texto libre en nombre, dependencia, siglas…\n  --json                salida JSON completa en vez de una línea por registro",
+   "ejemplo": "python3 gobmx.py sitios --orden federal --poder autonomo",
+   "salida": "9 resultados\n\n• INE  Instituto Nacional Electoral  federal  autonomo  Nacional  https://www.ine.mx\n• INEGI  Instituto Nacional de Estadística y Geografía  federal  autonomo  Nacional  https://www.inegi.org.mx\n• Banxico  Banco de México  federal  autonomo  Nacional  https://www.banxico.org.mx\n• CNDH  Comisión Nacional de los Derechos Humanos  federal  autonomo  Nacional  https://www.cndh.org.mx\n• COFECE  Comisión Federal de Competencia Económica  federal  autonomo  Nacional  https://www.cofece.mx\n• IFT  Instituto Federal de Telecomunicaciones (EXTINTO)  federal  autonomo  Nacional  https://www.ift.org.mx\n… (3 líneas más)"
+  },
+  {
+   "comando": "permisos",
+   "ayuda": "usage: gobmx permisos [-h] [--nivel NIVEL] [--estado ESTADO] [--sector SECTOR]\n                      [--orden {federal,estatal,municipal}]\n                      [--poder {ejecutivo,legislativo,judicial,autonomo}]\n                      [--estatus ESTATUS] [--busca BUSCA] [--json]\n\noptions:\n  -h, --help            show this help message and exit\n  --nivel NIVEL         campo heredado (federal, estatal, municipal,\n                        paraestatal, autonomo…); mejor usa --orden/--poder\n  --estado ESTADO       entidad, coincidencia parcial sin mayúsculas (los\n                        federales tienen 'Nacional')\n  --sector SECTOR       sector de la app o servicio (seguridad, movilidad,\n                        salud, fiscal…), parcial\n  --orden {federal,estatal,municipal}\n                        orden de gobierno (exacto)\n  --poder {ejecutivo,legislativo,judicial,autonomo}\n                        poder (exacto)\n  --estatus ESTATUS     apps: activa | retirada | 'sin actualizar >2 años' |\n                        desconocido (parcial)\n  --busca BUSCA         texto libre en nombre, dependencia, siglas…\n  --json                salida JSON completa en vez de una línea por registro",
+   "ejemplo": "python3 gobmx.py permisos --busca IMSS",
+   "salida": "1 apps con análisis de permisos\n\n• IMSS Digital (salud) — 10 permisos peligrosos\n     ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION, CAMERA, GET_ACCOUNTS, READ_CALENDAR, READ_EXTERNAL_STORAGE, READ_PHONE_STATE, RECORD_AUDIO, WRITE_CALENDAR, WRITE_EXTERNAL_STORAGE"
+  },
+  {
+   "comando": "dep",
+   "ayuda": "usage: gobmx dep [-h] texto\n\npositional arguments:\n  texto       nombre o siglas de la dependencia (parcial), p. ej. IMSS\n\noptions:\n  -h, --help  show this help message and exit",
+   "ejemplo": "python3 gobmx.py dep IMSS",
+   "salida": "== IMSS ==\nApps (2):\n  • IMSS Digital — st.android.imsspublico\n  • App Servicio Universal de Salud — sin ID\nSitios (1):\n  • https://www.imss.gob.mx — portal_institucional"
+  }
+ ],
+ "api": {
+  "url": "https://gobmx-presencia-digital.vercel.app/api/tramites?q=predial&estado=Yucat%C3%A1n&en_linea=si",
+  "respuesta": {
+   "total": 8,
+   "paginas": 1,
+   "pagina": 1,
+   "items": [
+    {
+     "id": 108321,
+     "homoclave": "FIT-2023-11025-022-A",
+     "nombre_tramite": "Pago del Impuesto Predial base Valor Catastral (predio)",
+     "tipo_registro": "tramite",
+     "tipo": "Recibo oficial",
+     "categoria": "No sectorizado",
+     "dependencia": "Dirección de Finanzas y Tesorería Municipal",
+     "siglas": "FIT",
+     "unidad_administrativa": "Finanzas y Tesorería",
+     "nivel": "municipal",
+     "estado": "Yucatán",
+     "orden": "municipal",
+     "poder": "ejecutivo",
+     "subtipo": null,
+     "municipio": "Mérida",
+     "nivel_gobierno_detalle": "Municipio o Alcaldía",
+     "en_linea": true,
+     "presencial": true,
+     "telefono": false,
+     "canales_txt": "Presencial | Medios electrónicos",
+     "frecuencia": 303436,
+     "dirigido": "Ambos",
+     "fecha_actualizacion": "2024-02-22",
+     "descripcion_ciudadana": "Realizar el pago del Impuesto Predial base Valor Catastral (predio) siempre y cuando no cause sobre la base de la Contraprestación (rentas)",
+     "descripcion": "Cuando el contribuyente deba realizar el pago mensual o anual del Impuesto base Valor Catastral de su predio",
+     "_fuente": "cnartys"
+    },
+    {
+     "id": 108379,
+     "homoclave": "FIT-2023-11025-003-A",
+     "nombre_tramite": "Información del Estado de Cuenta del Impuesto Predial base Valor Catastral de los predios ubicados en el Municipio de Mérida",
+     "tipo_registro": "tramite",
+     "tipo": "Estado de cuenta",
+     "categoria": "No sectorizado",
+     "dependencia": "Dirección de Finanzas y Tesorería Municipal",
+     "siglas": "FIT",
+     "unidad_administrativa": "Finanzas y Tesorería",
+     "nivel": "municipal",
+     "estado": "Yucatán",
+     "orden": "municipal",
+     "poder": "ejecutivo",
+     "subtipo": null,
+     "municipio": "Mérida",
+     "nivel_gobierno_detalle": "Municipio o Alcaldía",
+     "en_linea": true,
+     "presencial": true,
+     "telefono": true,
+     "canales_txt": "Presencial | Medios electrónicos | Medios alternativos: vía telefónica",
+     "frecuencia": 10470,
+     "dirigido": "Ambos",
+     "fecha_actualizacion": "2024-02-21",
+     "descripcion_ciudadana": "En otorgar el estado de cuenta del predio solicitado",
+     "descripcion": "Cuando el contribuyente requiera conocer el importe a pagar del impuesto del predio solicitado",
+     "_fuente": "cnartys"
+    },
+    "… 6 más"
+   ]
+  }
+ }
+}

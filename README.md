@@ -199,7 +199,13 @@ claude mcp list   # debe decir: gobmx-inventario ... ✔ Connected
 scripts/regenerar.sh   # subdominios + clasifica orden/poder + consolida apps + QA + dashboard
 SIN_RED=1 scripts/regenerar.sh   # igual, sin consultar tiendas
 python3 -I scripts/test_orden_poder.py   # comprobación del clasificador y de comparar
+.venv/bin/python -I scripts/build_guia.py   # ejemplos reales (MCP y CLI) para /guia; correr tras cambiar tools o flags
 ```
+
+La documentación de uso vive en la web: [`/guia`](https://gobmx-presencia-digital.vercel.app/guia) (cuál usar y solución de
+problemas), [`/guia/mcp`](https://gobmx-presencia-digital.vercel.app/guia/mcp) (cada tool con parámetros y respuesta real,
+recetas, remoto vs local), [`/guia/cli`](https://gobmx-presencia-digital.vercel.app/guia/cli) (cada comando con salida real)
+y [`/guia/api`](https://gobmx-presencia-digital.vercel.app/guia/api) (API, campos de cada registro, datos crudos).
 
 Un **GitHub Action** (`.github/workflows/refresh-subdominios.yml`) refresca los subdominios por
 Certificate Transparency y reconstruye `web/data.js` una vez al mes. Otro
