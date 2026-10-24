@@ -1,57 +1,48 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { fmt, inv, slug } from "@/lib/datos";
+import { Suspense } from "react";
+import { Dispersion, METRICAS, ordenar, SelectorMetrica, Tabla } from "@/components/comparar";
+import { fmt, inv, uno } from "@/lib/datos";
 
 export const metadata: Metadata = {
   title: "Comparar entidades",
-  description: "Las 32 entidades comparadas: trámites publicados, porcentaje en línea, apps, sitios y subdominios.",
+  description: "Las 32 entidades comparadas: trámites, porcentaje en línea, apps, sitios, subdominios y presupuesto.",
 };
 
-const v = (x: number | null | undefined, suf = "") => (x === null || x === undefined ? "s/d" : `${fmt.format(x)}${suf}`);
+const valida = (k: string | undefined, d: string) => (k && METRICAS.some((m) => m.k === k) ? k : d);
 
-export default function Entidades() {
-  const filas = [...inv.entidades].sort((a, b) => b.tramites - a.tramites);
+async function Contenido({ searchParams }: PageProps<"/entidades">) {
+  const sp = await searchParams;
+  const ord = valida(uno(sp.ordenar), "tramites");
+  const x = valida(uno(sp.x), "egreso_por_hab");
+  const y = valida(uno(sp.y), "por_100k_hab.apps");
+  return (
+    <>
+      <SelectorMetrica base="/entidades" ordenar={ord} x={x} y={y} />
+      <Tabla filas={ordenar(inv.entidades, ord)} ordenarPor={ord} base="/entidades" />
+      <h2 style={{ marginTop: 28 }}>Gráfica</h2>
+      <Dispersion filas={inv.entidades} x={x} y={y} />
+    </>
+  );
+}
+
+export default function Entidades(props: PageProps<"/entidades">) {
   return (
     <section className="seccion">
       <h1>Entidades</h1>
-      <p className="dim" style={{ maxWidth: "75ch" }}>
-        Solo se compara entidad con entidad. <b>Trámites</b> cuenta lo que cada gobierno estatal publica en el Catálogo
-        Nacional: mide cuánto captura cada entidad, no cuántos trámites tiene (Jalisco publica 1). El % en línea se
-        calcula solo sobre los trámites que reportan canal. Referencia federal: {fmt.format(inv.referencia_federal.tramites)}{" "}
-        trámites, {inv.referencia_federal.pct_tramites_en_linea} % en línea.
-      </p>
-      <div className="tabla-scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>Entidad</th>
-              <th className="n">Trámites</th>
-              <th className="n">% en línea</th>
-              <th className="n">Sin dato de canal</th>
-              <th className="n">Apps</th>
-              <th className="n">Apps activas</th>
-              <th className="n">Sitios</th>
-              <th className="n">Subdominios</th>
-              <th className="n">Apps / 100 mil hab.</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filas.map((e) => (
-              <tr key={e.estado}>
-                <td><Link href={`/entidades/${slug(e.estado)}`}>{e.estado}</Link></td>
-                <td className="n">{fmt.format(e.tramites)}</td>
-                <td className="n">{v(e.pct_tramites_en_linea, " %")}</td>
-                <td className="n">{fmt.format(e.tramites_sin_dato_canal)}</td>
-                <td className="n">{e.apps}</td>
-                <td className="n">{e.apps_activas}</td>
-                <td className="n">{e.sitios}</td>
-                <td className="n">{fmt.format(e.subdominios)}</td>
-                <td className="n">{v(e.por_100k_hab?.apps)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="texto dim">
+        <p>
+          Solo se compara entidad con entidad. Las tasas usan población del Censo 2020 (INEGI) y egresos de INEGI EFIPEM;
+          “s/d” es dato no disponible, nunca cero.
+        </p>
+        <p>
+          <b>Trámites</b> cuenta lo que cada gobierno estatal publica en el registro nacional de trámites: mide cuánto captura
+          cada entidad, no cuántos trámites tiene (Jalisco publica 1). El % en línea se calcula sobre los trámites que reportan
+          canal. Referencia federal: {fmt.format(inv.referencia_federal.tramites)} trámites, {inv.referencia_federal.pct_tramites_en_linea} % en línea.
+        </p>
       </div>
+      <Suspense fallback={<p className="cargando">Cargando…</p>}>
+        <Contenido {...props} />
+      </Suspense>
     </section>
   );
 }

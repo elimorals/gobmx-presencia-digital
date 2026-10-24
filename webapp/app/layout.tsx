@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Newsreader } from "next/font/google";
-import { inv } from "@/lib/datos";
 import "./globals.css";
 
 const sans = IBM_Plex_Sans({ variable: "--f-sans", subsets: ["latin"], weight: ["400", "600"] });
@@ -14,16 +13,23 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITIO),
   title: { default: "Trámites y gobierno digital de México", template: "%s · gobmx" },
   description:
-    "Busca entre los trámites federales, estatales y municipales del Catálogo Nacional, y compara la presencia digital de los gobiernos de México: apps, sitios y trámites en línea.",
+    "Busca trámites federales, estatales y municipales y compara la presencia digital de los gobiernos de México: apps, sitios, subdominios y trámites en línea.",
   openGraph: { type: "website", locale: "es_MX", siteName: "gobmx · presencia digital" },
 };
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbf8f1" },
-    { media: "(prefers-color-scheme: dark)", color: "#1b1815" },
-  ],
-};
+export const viewport: Viewport = { themeColor: "#fbf8f1", colorScheme: "light" };
+
+const NAV = [
+  ["/tramites", "Trámites"],
+  ["/entidades", "Entidades"],
+  ["/municipios", "Municipios"],
+  ["/apps", "Apps"],
+  ["/sitios", "Sitios"],
+  ["/subdominios", "Subdominios"],
+  ["/brechas", "Brechas"],
+  ["/guia", "Guía"],
+  ["/acerca", "Acerca"],
+];
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -33,24 +39,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <div className="contenedor">
             <Link href="/" className="marca">gob<b>mx</b> · presencia digital</Link>
             <nav className="nav" aria-label="Principal">
-              <Link href="/tramites">Trámites</Link>
-              <Link href="/entidades">Entidades</Link>
-              <Link href="/brechas">Brechas</Link>
-              <Link href="/apps">Apps</Link>
-              <Link href="/acerca">Acerca</Link>
+              {NAV.map(([href, txt]) => <Link key={href} href={href}>{txt}</Link>)}
             </nav>
           </div>
         </header>
         <main className="contenedor">{children}</main>
         <footer className="pie">
           <div className="contenedor">
-            <p>
-              Datos públicos: Catálogo Nacional de Regulaciones, Trámites y Servicios (CONAMER), corte{" "}
-              {inv.catalogo.fecha_corte}; tiendas de apps; Certificate Transparency. Proyecto independiente, no oficial.
-            </p>
+            <p>Proyecto independiente y no oficial, construido con datos públicos.</p>
             <p>
               <a href="https://github.com/elimorals/gobmx-presencia-digital">Código y datos (MIT)</a> ·{" "}
-              <Link href="/acerca">Metodología</Link>
+              <Link href="/acerca">Fuentes y metodología</Link> · <Link href="/guia">CLI, MCP y API</Link>
             </p>
           </div>
         </footer>

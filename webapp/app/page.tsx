@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Barras, Cifra } from "@/components/ui";
+import { Barras, Cifra, MatrizOrdenPoder } from "@/components/ui";
 import { fmt, fmtCompacto, inv, slug } from "@/lib/datos";
 
 export default function Inicio() {
@@ -66,6 +66,16 @@ export default function Inicio() {
           <p style={{ marginTop: 12 }}>
             <Link href="/brechas">Ver las 200 brechas →</Link>
           </p>
+        </div>
+      </section>
+
+      <section className="seccion">
+        <h2>Presencia por orden de gobierno y poder</h2>
+        <p className="dim texto">{inv.cobertura_ceros}</p>
+        <div className="dos">
+          <MatrizOrdenPoder titulo="Trámites" m={inv.orden_poder.tramites} />
+          <MatrizOrdenPoder titulo="Apps" m={inv.orden_poder.apps} />
+          <MatrizOrdenPoder titulo="Sitios" m={inv.orden_poder.sitios} />
         </div>
       </section>
 

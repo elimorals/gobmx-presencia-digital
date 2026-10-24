@@ -68,8 +68,8 @@ export default async function Entidad({ params }: PageProps<"/entidades/[slug]">
           <h2>Apps</h2>
           <ul className="lista">
             {apps.map((a) => (
-              <li className="item" key={`${a.nombre}-${a.android ?? a.ios}`}>
-                <h3>{a.nombre}</h3>
+              <li className="item" key={a.clave}>
+                <h3><Link href={`/apps/${encodeURIComponent(a.clave)}`}>{a.nombre}</Link></h3>
                 <div className="meta">
                   <span>{a.siglas ?? a.dependencia}</span>
                   <span>{a.estatus}</span>

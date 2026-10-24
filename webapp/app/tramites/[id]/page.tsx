@@ -20,29 +20,29 @@ async function Ficha({ params }: PageProps<"/tramites/[id]">) {
 
   return (
     <article className="ficha">
-      <p className="faint">
+      <p className="migas">
         <Link href="/tramites">Trámites</Link>
         {t.orden !== "federal" && <> · <Link href={`/entidades/${slug(t.estado)}`}>{t.estado}</Link></>}
       </p>
       <h1>{t.nombre_tramite}</h1>
-      <p className="meta" style={{ marginBottom: 16 }}>
+      <div className="chips" style={{ marginBottom: 16 }}>
         <Canal en_linea={t.en_linea} />
         <span className="chip">{t.tipo_registro === "servicio" ? "Servicio" : "Trámite"}</span>
         {t.programa_social && <span className="chip oro">Programa social</span>}
-      </p>
-      {t.descripcion_ciudadana && <p style={{ fontSize: "1.1rem", maxWidth: "70ch" }}>{t.descripcion_ciudadana}</p>}
+      </div>
+      {t.descripcion_ciudadana && <p className="texto" style={{ fontSize: "1.08rem" }}>{t.descripcion_ciudadana}</p>}
 
       <div className="panel" style={{ margin: "20px 0" }}>
         <dl>
           <dt>Dependencia</dt><dd>{t.dependencia}{t.siglas ? ` (${t.siglas})` : ""}</dd>
           {t.unidad_administrativa && <><dt>Área</dt><dd>{t.unidad_administrativa}</dd></>}
           <dt>Dónde aplica</dt><dd>{lugar(t)}</dd>
-          <dt>Cómo se hace</dt><dd>{canales.length ? canales.join(" · ") : "El catálogo no lo reporta"}</dd>
+          <dt>Cómo se hace</dt><dd>{canales.length ? canales.join(" · ") : "Sin dato"}</dd>
           {t.dirigido && <><dt>Dirigido a</dt><dd>{t.dirigido}</dd></>}
           {t.frecuencia ? <><dt>Solicitudes reportadas</dt><dd>{fmt.format(t.frecuencia)}</dd></> : null}
           <dt>Homoclave</dt><dd className="mono">{t.homoclave}</dd>
-          {t.nivel_digitalizacion_sfp && <><dt>Digitalización (SFP)</dt><dd>{t.nivel_digitalizacion_sfp}</dd></>}
-          <dt>Actualizado en el catálogo</dt><dd>{t.fecha_actualizacion ?? "sin fecha"}</dd>
+          {t.nivel_digitalizacion_sfp && <><dt>Nivel de digitalización (SFP)</dt><dd>{t.nivel_digitalizacion_sfp}</dd></>}
+          {t.fecha_actualizacion && <><dt>Última actualización</dt><dd>{t.fecha_actualizacion}</dd></>}
           {t.hosts?.length ? <><dt>Sitios citados</dt><dd>{t.hosts.map((h) => <div key={h}><a href={`https://${h}`} rel="nofollow noopener">{h}</a></div>)}</dd></> : null}
         </dl>
       </div>
@@ -50,12 +50,18 @@ async function Ficha({ params }: PageProps<"/tramites/[id]">) {
       {t.descripcion && t.descripcion !== t.descripcion_ciudadana && (
         <>
           <h2>Descripción oficial</h2>
-          <p style={{ maxWidth: "70ch" }}>{t.descripcion}</p>
+          <p className="texto">{t.descripcion}</p>
         </>
       )}
       {t.modalidad && <p className="dim">Modalidad: {t.modalidad}</p>}
+      {t.fuente === "sfp" && (
+        <p className="aviso">
+          Registro del dataset federal de la SFP, con menos detalle: sin descripción ni canales.
+          {t.posible_duplicado ? " Puede ser una versión anterior de otro trámite con el mismo nombre." : ""}
+        </p>
+      )}
 
-      <div className="aviso" style={{ marginTop: 24 }}>
+      <div className="aviso" style={{ marginTop: 20 }}>
         Requisitos, costos y fundamento legal están en la ficha oficial.{" "}
         <a href={buscarGob} rel="noopener">Buscar la homoclave en sitios .gob.mx</a>. Confirma con la dependencia antes de acudir.
       </div>
