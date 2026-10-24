@@ -1,18 +1,19 @@
 # Despliegue por CLI desde la raíz (Root Directory = webapp). La web solo necesita webapp/ y
 # servicios/cnartys/tramites.json (lo copia webapp/scripts/copiar-datos.mjs en prebuild).
-.venv
-.remember
-.impeccable
-.playwright-mcp
-apps
-sitios
-analisis
-datos
-mcp
-mcp-server
-web
-og.png
-servicios/cnts-federal.json
-webapp/node_modules
-webapp/.next
-webapp/data/tramites.json
+# Rutas ancladas con "/": sin ella, "apps" también excluye webapp/app/apps.
+/.venv
+/.remember
+/.impeccable
+/.playwright-mcp
+/apps
+/sitios
+/analisis
+/datos
+/mcp
+/mcp-server
+/web
+/og.png
+/servicios/cnts-federal.json
+/webapp/node_modules
+/webapp/.next
+/webapp/data/tramites.json
