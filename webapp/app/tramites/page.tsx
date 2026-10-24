@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { ORDENES, Paginacion, Select, TramiteItem } from "@/components/ui";
-import { buscar, ESTADOS, fmt, uno, urlCon, type Filtros } from "@/lib/datos";
+import { MatrizAmbito } from "@/components/ambito";
+import { Paginacion, Select, TramiteItem } from "@/components/ui";
+import { buscar, ESTADOS, filtrar, fmt, uno, urlCon, type Filtros } from "@/lib/datos";
 
 export const metadata: Metadata = {
   title: "Buscar trámites",
@@ -11,11 +12,11 @@ export const metadata: Metadata = {
 async function Resultados({ searchParams }: PageProps<"/tramites">) {
   const sp = await searchParams;
   const f: Filtros = {
-    q: uno(sp.q), orden: uno(sp.orden), estado: uno(sp.estado), municipio: uno(sp.municipio),
+    q: uno(sp.q), orden: uno(sp.orden), poder: uno(sp.poder), estado: uno(sp.estado), municipio: uno(sp.municipio),
     en_linea: uno(sp.en_linea), orden_por: uno(sp.orden_por),
   };
   const r = buscar(f, Number(uno(sp.pagina)) || 1);
-  const hayFiltros = Boolean(f.orden || f.estado || f.municipio || f.en_linea || f.orden_por);
+  const hayFiltros = Boolean(f.estado || f.municipio || f.en_linea || f.orden_por);
 
   return (
     <>
@@ -27,7 +28,8 @@ async function Resultados({ searchParams }: PageProps<"/tramites">) {
         <details className="mas" open={hayFiltros}>
           <summary>Filtrar por lugar y canal</summary>
           <div className="filtros">
-            <Select name="orden" label="Orden de gobierno" valor={f.orden} opciones={ORDENES} />
+            <input type="hidden" name="orden" value={f.orden ?? ""} />
+            <input type="hidden" name="poder" value={f.poder ?? ""} />
             <Select name="estado" label="Entidad" valor={f.estado} opciones={ESTADOS} todos="Todas" />
             <label>Municipio
               <input type="text" name="municipio" defaultValue={f.municipio} placeholder="Ej. Mérida" />
@@ -39,10 +41,13 @@ async function Resultados({ searchParams }: PageProps<"/tramites">) {
           </div>
           <div className="acciones">
             <button className="boton" type="submit">Aplicar</button>
-            {hayFiltros && <a className="boton sec" href={urlCon("/tramites", { q: f.q })}>Quitar filtros</a>}
+            {hayFiltros && <a className="boton sec" href={urlCon("/tramites", { q: f.q, orden: f.orden, poder: f.poder })}>Quitar filtros</a>}
           </div>
         </details>
       </form>
+
+      <MatrizAmbito items={filtrar(f, true)} base="/tramites" params={f as Record<string, string | undefined>}
+        orden={f.orden} poder={f.poder} que="trámites" />
 
       <p className="dim" aria-live="polite">{fmt.format(r.total)} resultados</p>
       {r.total === 0 ? (

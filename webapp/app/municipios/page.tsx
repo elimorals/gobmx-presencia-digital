@@ -1,41 +1,24 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Dispersion, METRICAS, ordenar, SelectorMetrica, Tabla } from "@/components/comparar";
-import { inv, uno } from "@/lib/datos";
+import { Comparador } from "@/components/comparador";
+import { inv } from "@/lib/datos";
 
 export const metadata: Metadata = {
   title: "Comparar municipios",
-  description: "Municipios comparados: trámites, porcentaje en línea, apps, sitios, subdominios y presupuesto.",
+  description: "Compara municipios: trámites, porcentaje en línea, apps, sitios, subdominios y egreso.",
 };
-
-const valida = (k: string | undefined, d: string) => (k && METRICAS.some((m) => m.k === k) ? k : d);
-
-async function Contenido({ searchParams }: PageProps<"/municipios">) {
-  const sp = await searchParams;
-  const ord = valida(uno(sp.ordenar), "tramites");
-  const x = valida(uno(sp.x), "poblacion_2020");
-  const y = valida(uno(sp.y), "apps");
-  return (
-    <>
-      <SelectorMetrica base="/municipios" ordenar={ord} x={x} y={y} />
-      <Tabla filas={ordenar(inv.municipios, ord)} municipal ordenarPor={ord} base="/municipios" />
-      <h2 style={{ marginTop: 28 }}>Gráfica</h2>
-      <Dispersion filas={inv.municipios} x={x} y={y} municipal />
-    </>
-  );
-}
 
 export default function Municipios(props: PageProps<"/municipios">) {
   return (
     <section className="seccion">
       <h1>Municipios</h1>
       <p className="texto dim">
-        Solo municipio con municipio. Aparecen los {inv.municipios.length} municipios con algún registro: app, sitio,
-        subdominio mapeado, trámites publicados o datos de presupuesto. El presupuesto solo existe para{" "}
-        {inv.municipios.filter((m) => m.egresos_mxn).length} de ellos; en el resto las tasas salen “s/d”.
+        Elige de 2 a 6 municipios. Aparecen los {inv.municipios.length} con algún registro: app, sitio, subdominio
+        mapeado, trámites publicados o presupuesto. El egreso (INEGI EFIPEM) solo existe para{" "}
+        {inv.municipios.filter((m) => m.egresos_mxn).length} de ellos; el PEF no se desglosa por municipio.
       </p>
       <Suspense fallback={<p className="cargando">Cargando…</p>}>
-        <Contenido {...props} />
+        <Comparador filas={inv.municipios} municipal base="/municipios" searchParams={props.searchParams} />
       </Suspense>
     </section>
   );

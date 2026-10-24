@@ -1,12 +1,32 @@
-/* Modo claro, mobile first: los estilos base son para teléfono; las media queries (min-width) amplían. */
+/* Mobile first: los estilos base son para teléfono; las media queries (min-width) amplían.
+   Tema: sigue al sistema; data-theme="light"|"dark" en <html> (selector del encabezado) lo fija. */
 :root {
   --bg: #f3ede2; --panel: #fbf8f1; --panel2: #efe7d8; --line: #e2d7c3;
   --ink: #271f1b; --ink-dim: #6c5f52; --ink-faint: #8f8170;
-  --guinda: #9d2449; --guinda-deep: #7c1c38; --oro: #7d5e18;
+  --guinda: #9d2449; --guinda-deep: #7c1c38; --oro: #7d5e18; --oro-punto: #c99a2e;
   --ok: #2f6b4c; --warn: #96561a; --bad: #a32f2f;
+  --ok-bg: #eef5f0; --ok-line: #b9d3c3; --bad-bg: #f8eded; --bad-line: #e3bcbc; --oro-bg: #f7f0de; --oro-line: #e0cfa3;
   --radius: 10px;
   --ancho: 1120px;
   color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #13110f; --panel: #1b1815; --panel2: #24201b; --line: #36302a;
+    --ink: #ece4d8; --ink-dim: #b0a596; --ink-faint: #81776b;
+    --guinda: #d0577b; --guinda-deep: #e27596; --oro: #d6ac52; --oro-punto: #e0b452;
+    --ok: #74b893; --warn: #d79a4c; --bad: #e07a7a;
+    --ok-bg: #18261e; --ok-line: #2d4a39; --bad-bg: #2c1717; --bad-line: #5a2b2b; --oro-bg: #2a2214; --oro-line: #5b4a24;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #13110f; --panel: #1b1815; --panel2: #24201b; --line: #36302a;
+  --ink: #ece4d8; --ink-dim: #b0a596; --ink-faint: #81776b;
+  --guinda: #d0577b; --guinda-deep: #e27596; --oro: #d6ac52; --oro-punto: #e0b452;
+  --ok: #74b893; --warn: #d79a4c; --bad: #e07a7a;
+  --ok-bg: #18261e; --ok-line: #2d4a39; --bad-bg: #2c1717; --bad-line: #5a2b2b; --oro-bg: #2a2214; --oro-line: #5b4a24;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -35,7 +55,9 @@ pre { background: var(--panel2); border: 1px solid var(--line); border-radius: 8
 /* cabecera: en teléfono la navegación es una fila desplazable */
 .cabecera { border-bottom: 1px solid var(--line); background: var(--panel); position: sticky; top: 0; z-index: 10; }
 .cabecera .contenedor { display: flex; flex-direction: column; padding-top: 10px; }
-.marca { font-family: var(--f-disp), serif; font-weight: 700; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+.marca { font-family: var(--f-disp), serif; font-weight: 700; font-size: 1.05rem; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.marca .sub { display: none; }
+@media (min-width: 480px) { .marca .sub { display: inline; } }
 .marca b { color: var(--guinda); }
 .nav { display: flex; gap: 2px; overflow-x: auto; margin: 4px -16px 0; padding: 0 12px 6px; scrollbar-width: none; }
 .nav::-webkit-scrollbar { display: none; }
@@ -85,10 +107,42 @@ details.mas > summary { cursor: pointer; color: var(--guinda); font-weight: 600;
 
 .chip { display: inline-block; font-size: .75rem; font-weight: 600; padding: 2px 8px; border-radius: 999px;
   border: 1px solid var(--line); background: var(--panel2); color: var(--ink-dim); white-space: nowrap; }
-.chip.ok { color: var(--ok); border-color: #b9d3c3; background: #eef5f0; }
-.chip.no { color: var(--bad); border-color: #e3bcbc; background: #f8eded; }
-.chip.oro { color: var(--oro); border-color: #e0cfa3; background: #f7f0de; }
-.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip.ok { color: var(--ok); border-color: var(--ok-line); background: var(--ok-bg); }
+.chip.no { color: var(--bad); border-color: var(--bad-line); background: var(--bad-bg); }
+.chip.oro { color: var(--oro); border-color: var(--oro-line); background: var(--oro-bg); }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+a.chip { text-decoration: none; }
+a.chip:hover { border-color: var(--guinda); color: var(--guinda); }
+
+/* selector de tema */
+.tema { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.tema button { font: inherit; font-size: .8rem; background: transparent; color: var(--ink-dim); border: 0; padding: 6px 10px; min-height: 32px; cursor: pointer; }
+.tema button[aria-pressed="true"] { background: var(--guinda); color: #fff; }
+.cabecera .fila { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+/* matriz orden × poder (filtro): ceros = ausencia real, borde punteado */
+.mx { display: grid; grid-template-columns: minmax(78px, auto) repeat(4, minmax(56px, 1fr)) minmax(48px, auto); gap: 6px; font-size: .85rem; }
+.mx a, .mx span { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px; border-radius: 8px; text-decoration: none; text-align: center; padding: 4px; }
+.mx .h { color: var(--ink-dim); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+.mx .r { justify-content: center; align-items: flex-start; color: var(--ink-dim); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; border: 1px solid transparent; }
+.mx .c { background: var(--panel2); border: 1px solid var(--line); color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.mx .c small { font-weight: 400; font-size: .62rem; color: var(--ink-faint); text-transform: uppercase; }
+.mx .c.z { background: transparent; border: 1px dashed var(--bad); color: var(--bad); }
+.mx .t { color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.mx a:hover { border-color: var(--guinda); }
+.mx .on { outline: 2px solid var(--oro-punto); outline-offset: 1px; }
+.mx .nac.on, .mx .r.on { background: var(--guinda); color: #fff; }
+.mx .largo { display: none; }
+.mx-leyenda { font-size: .8rem; color: var(--ink-faint); margin: 10px 0 0; }
+.mx-leyenda b { color: var(--bad); }
+
+/* gráficas SVG */
+.grafica { width: 100%; height: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.grafica .rejilla-g { stroke: var(--line); }
+.grafica text { fill: var(--ink-dim); font-size: 11px; font-family: var(--f-mono), monospace; }
+.grafica .etq { fill: var(--ink); font-family: var(--f-sans), sans-serif; font-size: 12px; font-weight: 600; }
+.grafica .p { fill: var(--guinda); fill-opacity: .7; }
+.grafica .p.sel { fill: var(--oro-punto); fill-opacity: 1; }
 
 /* barras */
 .barras { display: grid; gap: 10px; }
@@ -117,6 +171,8 @@ tr:last-child td { border-bottom: 0; }
 .migas { font-size: .875rem; color: var(--ink-faint); margin-bottom: 6px; }
 
 @media (min-width: 600px) {
+  .mx .largo { display: inline; }
+  .mx .corto { display: none; }
   h1 { font-size: 2.3rem; }
   h2 { font-size: 1.5rem; }
   .rejilla { grid-template-columns: repeat(3, 1fr); }
