@@ -2,6 +2,11 @@
 
 **Corte: 2026-10-20**
 
+> **2026-10-24:** el catálogo completo (federal, estatal y municipal) sí se descarga directo, en el CSV
+> diario `www.catalogonacional.gob.mx/sujetosobligados/TramitesPublicadosCSV/tramites_publicados_DD_MM_YYYY.csv`
+> (sin reto de Akamai en esa ruta). Está integrado en `servicios/cnartys/`; ver `harvest-subnacional.md`.
+> Este documento describe solo `cnts-federal.json` (dataset de la SFP), que se conserva por su `nivel_digitalizacion`.
+
 ## Qué fuente se usó y por qué
 
 El portal canónico del **Catálogo Nacional de Regulaciones, Trámites y Servicios (CNARTyS,

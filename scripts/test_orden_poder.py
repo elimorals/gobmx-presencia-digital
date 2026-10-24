@@ -37,4 +37,20 @@ assert all(x.get("municipio") for x in gobmx.metricas("municipal"))
 m = gobmx.matriz_orden_poder([{"orden": "federal", "poder": "ejecutivo"}, {"orden": None, "poder": None}])
 assert m["municipal"]["legislativo"] == 0 and m["federal"]["ejecutivo"] == 1 and m["sin_orden(no_oficial)"]["null"] == 1
 assert {s["orden"] for s in gobmx.servicios() if s.get("_id") is not None} == {"federal"}  # cnts clasificado al cargar
+import cnartys  # noqa: E402
+cnartys._autoprueba()
+if gobmx.tramites():  # capa CNARTyS: orden/poder del origen, métricas y brechas
+    t = gobmx.tramites()
+    assert {x["orden"] for x in t} <= set(gobmx.ORDENES) and {x["poder"] for x in t} <= set(gobmx.PODERES)
+    assert all(x["estado"] in gobmx.ENTIDADES for x in t if x["orden"] != "federal")
+    hc = {x["homoclave"] for x in t}
+    assert not any(s.get("_id") is not None and s["homoclave"] in hc for s in gobmx.servicios())  # sin duplicar cnts
+    for f in gobmx.metricas("estatal"):
+        p = f["pct_tramites_en_linea"]
+        assert (p is None) == (f["tramites"] - f["tramites_sin_dato_canal"] == 0) and (p is None or 0 <= p <= 100)
+    ref = gobmx.comparar("estatal")["referencia_federal"]
+    assert ref["tramites"] > 0 and 0 <= ref["pct_tramites_en_linea"] <= 100
+    b = gobmx.brechas_volumen(limite=10)
+    fr = [x["frecuencia"] for x in b]
+    assert fr and all(fr) and fr == sorted(fr, reverse=True)
 print("test_orden_poder: OK")

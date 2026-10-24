@@ -1,0 +1,49 @@
+name: refresh-tramites
+
+# Baja el CSV diario del Catálogo Nacional de trámites (CNARTyS) y lo normaliza en servicios/cnartys/.
+# El archivo del día D aparece ~02:31 UTC del día D+1 y el servidor guarda solo los 2 más recientes,
+# así que se corre a diario a las 04:30 UTC: baja el de ayer y, si no está (p. ej. fin de semana),
+# retrocede día por día hasta 7 (scripts/cnartys.py). Si ninguno sirve, el job FALLA a propósito.
+# Solo commitea si cambió tramites.json (meta.json cambia en cada corrida por la hora de normalizado).
+# No corre merge_subdominios.py: sin el clon de dotgob-mx borraría esas filas del consolidado.
+
+on:
+  schedule:
+    - cron: "30 4 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Qué archivos hay hoy en el servidor
+        run: python3 -I scripts/cnartys.py sondear --dias 7
+
+      - name: Descargar y normalizar el más reciente
+        run: python3 -I scripts/cnartys.py actualizar --dias 7
+
+      - name: Pruebas y dashboard
+        run: |
+          python3 -I scripts/test_orden_poder.py
+          python3 -I scripts/build_dashboard_data.py
+          python3 -I scripts/build_web_data.py   # webapp/data/inventario.json (web en Vercel)
+
+      - name: Commit si cambiaron los trámites
+        run: |
+          if git diff --quiet -- servicios/cnartys/tramites.json; then
+            echo "tramites.json sin cambios: no se commitea"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add servicios/cnartys/ sitios/subdominios-consolidado.csv web/data.js webapp/data/inventario.json
+          git commit -m "chore: corte diario del catálogo nacional de trámites ($(jq -r .fecha_corte servicios/cnartys/meta.json))"
+          git push

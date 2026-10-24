@@ -12,6 +12,10 @@ export SSL_CERT_FILE="$($PY -c 'import certifi;print(certifi.where())' 2>/dev/nu
 echo "==> 1/6 subdominios (CT propio + dotgob-mx si está en /tmp/dotgob-mx)"
 $PY -I scripts/merge_subdominios.py || echo "  (merge omitido)"
 
+echo "==> 1b catálogo nacional de trámites (CNARTyS: baja el de ayer, o el más reciente)"
+if [ "${SIN_RED:-0}" = "1" ]; then echo "  (SIN_RED: se usa servicios/cnartys/ tal cual)"
+else $PY -I scripts/cnartys.py actualizar | grep -E '"(fecha_corte|registros|hosts_agregados_a_subdominios)"'; fi
+
 echo "==> 2/6 clasificar orden/poder/subtipo/municipio (solo agrega campos que faltan)"
 $PY -I scripts/clasificar_orden_poder.py
 
@@ -26,5 +30,6 @@ $PY -I scripts/stats.py | head -6
 
 echo "==> 6/6 dashboard (web/data.js)"
 $PY -I scripts/build_dashboard_data.py
+$PY -I scripts/build_web_data.py
 
 echo "listo. Revisa git diff antes de commitear."

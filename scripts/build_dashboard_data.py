@@ -55,7 +55,7 @@ def sitios():
 
 def servicios():
     out = []
-    for s in gobmx.servicios():
+    for s in gobmx.servicios(cnartys=False):  # los 32k del CNARTyS no van fila por fila (peso): ver tramites_resumen
         if "nombre_tramite" in s and "servicio" not in s:  # catálogo federal CONAMER (cnts): recortado
             out.append({
                 "_fuente": "cnts",
@@ -90,6 +90,16 @@ def subdominios():
             "mapeo_lugar": cobertura}
 
 
+def tramites_resumen():
+    """Agregados del CNARTyS (los conteos por entidad/municipio ya van en entidades/municipios)."""
+    t = gobmx.tramites()
+    return {"meta": gobmx.catalogo_meta(), "total": len(t),
+            "orden_poder": gobmx.matriz_orden_poder(t),
+            "por_canal": dict(Counter("sin_dato" if x["en_linea"] is None else "en_linea" if x["en_linea"]
+                                      else "no_en_linea" for x in t)),
+            "brechas_volumen": gobmx.brechas_volumen(limite=50)}
+
+
 A, S = apps(), sitios()
 crudos_a, crudos_s = gobmx.apps(), gobmx.sitios()
 data = {"apps": A, "sitios": S, "servicios": servicios(),
@@ -100,6 +110,7 @@ data = {"apps": A, "sitios": S, "servicios": servicios(),
         "comparacion": {"metodologia": gobmx.METODOLOGIA,
                         "presupuesto_entidades": bool(gobmx.presupuesto("entidades")),
                         "presupuesto_municipios": bool(gobmx.presupuesto("municipios"))},
+        "tramites_resumen": tramites_resumen(),
         "corte": "2026-10-21"}
 (R / "web").mkdir(exist_ok=True)
 js = "window.GOBMX = " + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n"

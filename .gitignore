@@ -5,3 +5,4 @@ datos/*
 !datos/presupuesto/
 .playwright-mcp/
 web/.playwright-mcp/
+.vercel

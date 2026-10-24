@@ -21,7 +21,8 @@ async def main():
             tools = (await s.list_tools()).tools
             print("tools:", [t.name for t in tools])
             assert {"stats", "buscar_apps", "buscar_sitios", "buscar_servicios",
-                    "dependencia", "buscar_subdominio", "permisos", "comparar"} <= {t.name for t in tools}
+                    "dependencia", "buscar_subdominio", "permisos", "comparar",
+                    "brechas_volumen", "catalogo_tramites"} <= {t.name for t in tools}
 
             llamadas = [
                 ("stats", {}),
@@ -39,6 +40,10 @@ async def main():
                 ("comparar", {"orden": "estatal", "nombres": "Jalisco, Nuevo León"}),
                 ("comparar", {"orden": "municipal", "nombres": "Monterrey"}),
                 ("comparar", {"orden": "federal"}),
+                ("buscar_servicios", {"orden": "municipal", "municipio": "Mérida", "en_linea": "si", "limite": 3}),
+                ("buscar_servicios", {"estado": "Tabasco", "texto": "vehicular", "por_frecuencia": True, "limite": 3}),
+                ("brechas_volumen", {"orden": "estatal", "limite": 5}),
+                ("catalogo_tramites", {}),
             ]
             for nombre, args in llamadas:
                 res = await s.call_tool(nombre, args)
@@ -47,7 +52,9 @@ async def main():
                 if nombre == "comparar" and args["orden"] == "federal":
                     assert "no son comparables" in txt, txt
                 if nombre == "stats":
-                    assert "apps_orden_poder" in txt
+                    assert "apps_orden_poder" in txt and "tramites_cnartys" in txt
+                if nombre == "catalogo_tramites":
+                    assert "fecha_corte" in txt, txt
                 print(f"OK {nombre}({args}) -> {len(txt)} chars")
     print("\n✅ todas las tools respondieron por el protocolo MCP")
 
