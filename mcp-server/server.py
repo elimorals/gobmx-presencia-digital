@@ -32,7 +32,8 @@ def stats() -> dict:
     búsqueda respalda los ceros y qué parte de los subdominios está asignada a entidad/municipio."""
     a, s, r = gobmx.apps(), gobmx.sitios(), gobmx.resumen()
     return {
-        "apps": len(a), "sitios": len(s), "servicios": len(gobmx.cargar("servicios")),
+        "apps": len(a), "sitios": len(s), "servicios": r["servicios"],
+        "tramites_cnartys": r["tramites_cnartys"], "catalogo_corte": r["catalogo_corte"],
         "permisos": len(gobmx.permisos()),
         "apps_por_nivel": dict(Counter((x.get("nivel") or "—") for x in a).most_common()),
         "apps_por_sector": dict(Counter((x.get("sector") or "—") for x in a).most_common()),
@@ -69,12 +70,44 @@ def buscar_sitios(nivel: str = "", estado: str = "", texto: str = "", orden: str
 
 
 @mcp.tool()
-def buscar_servicios(texto: str = "", orden: str = "", poder: str = "", limite: int = 50) -> list:
-    """Busca trámites/servicios (catálogo CONAMER y brechas). texto busca en nombre/dependencia;
-    orden/poder filtran (los 6k trámites CONAMER son orden federal, poder ejecutivo)."""
-    r = _filtra(gobmx.servicios(), texto=texto, orden=orden, poder=poder,
-                campos=("servicio", "nombre_tramite", "dependencia", "brecha", "siglas"))
+def buscar_servicios(texto: str = "", orden: str = "", poder: str = "", estado: str = "", municipio: str = "",
+                     en_linea: str = "", min_frecuencia: int = 0, por_frecuencia: bool = False,
+                     limite: int = 50) -> list:
+    """Busca trámites/servicios de los tres órdenes: ~32k del Catálogo Nacional (CNARTyS: federal, estatal
+    y municipal), los federales de la SFP que no están en él, el catálogo curado y las brechas.
+    texto busca en nombre/dependencia/siglas/homoclave. Filtros: orden (federal/estatal/municipal), poder,
+    estado (entidad; los federales tienen 'Nacional'), municipio, en_linea ('si' | 'no' | 'sin_dato' = el
+    catálogo no reporta canal), min_frecuencia (volumen reportado por el CNARTyS); por_frecuencia ordena
+    de mayor a menor volumen. Cada trámite CNARTyS trae canales (en_linea/presencial/telefono), frecuencia,
+    descripción, fecha_actualizacion, hosts .gob.mx mencionados y, si es federal y casa por homoclave,
+    nivel_digitalizacion_sfp."""
+    r = _filtra(gobmx.servicios(), estado=estado, texto=texto, orden=orden, poder=poder,
+                campos=("servicio", "nombre_tramite", "dependencia", "brecha", "siglas", "homoclave"))
+    r = gobmx.filtra_servicios(r, municipio, en_linea, min_frecuencia, por_frecuencia)
     return r[:limite]
+
+
+@mcp.tool()
+def brechas_volumen(orden: str = "", estado: str = "", limite: int = 30) -> list:
+    """Brechas con peso: trámites de mayor volumen (campo frecuencia del CNARTyS) que el catálogo declara
+    sin canal en línea, cruzados con las apps y sitios de la misma dependencia (por siglas y, si no es
+    federal, mismo estado). 'brecha' distingue si la dependencia ya tiene app/sitio (el trámite no se
+    ofrece ahí) o no tiene ninguno en el inventario. Filtros: orden, estado."""
+    return gobmx.brechas_volumen(orden or None, estado or None, limite)
+
+
+@mcp.tool()
+def catalogo_tramites(sondear: bool = False) -> dict:
+    """Metadatos del corte del Catálogo Nacional de trámites cargado: fecha de corte, archivo, sha256,
+    conteos por orden/poder, regla de descarga. sondear=true consulta además al servidor (HEAD) qué
+    archivos diarios existen en los últimos 7 días (el servidor guarda solo los 2 más recientes; el del
+    día D aparece ~02:31 UTC del día D+1). Solo lectura: para refrescar, `gobmx catalogo --actualizar`."""
+    out = {"meta": gobmx.catalogo_meta()}
+    if sondear:
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import cnartys  # noqa: E402
+        out["disponibles"] = [dict(zip(("fecha", "http", "bytes", "last_modified"), f)) for f in cnartys.sondear()]
+    return out
 
 
 @mcp.tool()

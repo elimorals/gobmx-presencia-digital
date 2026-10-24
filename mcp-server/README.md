@@ -6,8 +6,8 @@ Mismo dato que el CLI `gobmx.py`; reusa su lógica (`import gobmx`), no duplica 
 
 - **Estado real:** instalado y validado en vivo el 2026-10-20 en macOS (Darwin 25.6.0), Python 3.13,
   `mcp 1.x`. `claude mcp list` → `✔ Connected`. Prueba end-to-end por protocolo (stdio JSON-RPC):
-  las tools responden sin error (`mcp-server/test_smoke.py`; 8 tools desde 2026-10-21 con `comparar`).
-- **Sin red, sin escritura:** solo lee los JSON/CSV del repo. No sale a internet ni modifica nada.
+  las tools responden sin error (`mcp-server/test_smoke.py`; 8 tools desde 2026-10-21 con `comparar`, 10 desde 2026-10-24 con `brechas_volumen` y `catalogo_tramites`).
+- **Sin escritura y casi sin red:** solo lee los JSON/CSV del repo. La única salida a internet es `catalogo_tramites(sondear=True)` (HEAD al catálogo nacional).
 
 ---
 
@@ -64,15 +64,35 @@ buscar_sitios(nivel="federal")
 buscar_sitios(estado="Veracruz")          → incluye el hallazgo de TLS inválido
 ```
 
-### `buscar_servicios(texto="", orden="", poder="", limite=50) -> list`
-Busca trámites/servicios: el catálogo CONAMER (`catalogo-conamer.json`, `cnts-federal.json`) y las
-brechas (`brechas.json`). `texto` busca en `servicio`/`nombre_tramite`/`dependencia`/`brecha`/`siglas`.
-`orden`/`poder` filtran; los 6,125 trámites CNTS se clasifican al cargar (orden federal, poder ejecutivo).
+### `buscar_servicios(texto="", orden="", poder="", estado="", municipio="", en_linea="", min_frecuencia=0, por_frecuencia=False, limite=50) -> list`
+Busca trámites/servicios de los tres órdenes: los 31,802 del Catálogo Nacional (`servicios/cnartys/`),
+los federales de la SFP que no están en él (`cnts-federal.json`), el catálogo curado y las brechas.
+`texto` busca en `servicio`/`nombre_tramite`/`dependencia`/`brecha`/`siglas`/`homoclave`.
+- `orden`/`poder`: exactos. `estado`: parcial (los federales tienen `Nacional`). `municipio`: parcial, sin acentos.
+- `en_linea`: `si` · `no` · `sin_dato` (el catálogo no reporta canal; no es lo mismo que `no`).
+- `min_frecuencia`, `por_frecuencia`: volumen que reporta el catálogo; ordena de mayor a menor.
 
 ```
 buscar_servicios(texto="CURP")
-buscar_servicios(texto="pasaporte")
+buscar_servicios(orden="municipal", municipio="Mérida", en_linea="si")
+buscar_servicios(estado="Tabasco", texto="vehicular", por_frecuencia=True)
 ```
+
+### `brechas_volumen(orden="", estado="", limite=30) -> list`
+Trámites de mayor `frecuencia` que el catálogo marca **sin** canal en línea (los `sin_dato` no entran),
+cruzados por siglas (y mismo estado si no es federal) con apps y sitios del inventario. Cada fila trae
+`apps_dependencia`, `sitios_dependencia` y `brecha`: si la dependencia ya tiene app/sitio y el trámite no
+se ofrece ahí, o si no tiene ninguno.
+
+```
+brechas_volumen(limite=10)                 → IMSS: consulta de medicina familiar (157M), tiene IMSS Digital
+brechas_volumen(orden="estatal", estado="Puebla")
+```
+
+### `catalogo_tramites(sondear=False) -> dict`
+Metadatos del corte cargado (`servicios/cnartys/meta.json`: fecha de corte, archivo, sha256, conteos).
+Con `sondear=True` hace un HEAD al servidor por cada uno de los últimos 7 días y dice cuáles existen
+(**única tool que sale a la red**). El refresco no se hace desde el MCP: `gobmx catalogo --actualizar`.
 
 ### `dependencia(nombre) -> dict`
 Todo lo de una dependencia en un solo llamado: `{apps: [...], sitios: [...]}`.
@@ -103,8 +123,10 @@ Compara **entidades** (`orden="estatal"`, las 32) o **municipios** (`orden="muni
 **Rechaza `orden="federal"`** (devuelve `{"error": ...}`): su presupuesto, extensión y población no
 son comparables con los de una entidad o un municipio.
 
-Devuelve `{orden, metodologia, ordenado_por, presupuesto_disponible, filas}`. Cada fila: `estado`, `cve_ent`,
-(`municipio`, `cve_mun` en municipal), `apps`, `apps_activas`, `instalaciones`, `sitios`,
+Devuelve `{orden, metodologia, ordenado_por, referencia_federal, catalogo_corte, presupuesto_disponible, filas}`.
+Cada fila: `estado`, `cve_ent`,
+(`municipio`, `cve_mun` en municipal), `apps`, `apps_activas`, `instalaciones`, `sitios`, `tramites`,
+`tramites_en_linea`, `tramites_sin_dato_canal`, `pct_tramites_en_linea` (sobre los que reportan canal),
 `subdominios`, `subdominios_activos`, `poderes` (conteo por poder), `cobertura_poderes` (0-4),
 `poblacion_2020`, `egresos_mxn`, `egresos_anio`, `egreso_por_hab`, `transferencias_pef_mxn` (Ramos 28+33),
 `transferencias_pef_anio`, `presupuesto_notas` (p. ej. CDMX con dato trimestral preliminar), `por_100k_hab`,
@@ -169,7 +191,7 @@ Copia el bloque de [`example.mcp.json`](example.mcp.json) a la config de tu clie
 ## Probar
 
 ```bash
-# prueba end-to-end por el protocolo MCP (handshake + llamada a las 8 tools, incluido comparar rechazando federal)
+# prueba end-to-end por el protocolo MCP (handshake + llamada a las 10 tools, incluido comparar rechazando federal)
 uv run --no-project --with "mcp<2" python mcp-server/test_smoke.py
 ```
 

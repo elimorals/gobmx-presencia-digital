@@ -1,51 +1,54 @@
-# Servicios estatales y municipales — por qué siguen casi vacíos (#2)
+# Servicios estatales y municipales: dónde están (#2)
 
-**Fecha:** 2026-10-21. **Método:** navegador real (Chrome, extensión claude-in-chrome) para pasar el
-Akamai que bloquea a `curl`/WebFetch. Solo lectura pasiva del catálogo público.
+> **Actualización 2026-10-24: la conclusión anterior estaba equivocada.** El catálogo nacional SÍ
+> publica los trámites estatales y municipales de forma central, en un CSV diario. Ya están integrados
+> en `servicios/cnartys/` (31,802 trámites: 5,583 federales, 14,608 estatales, 11,611 municipales).
+> Abajo queda lo que se intentó el 2026-10-21 y por qué falló, porque sigue siendo útil.
 
-## Qué se intentó
+## La fuente que sí funciona (2026-10-24)
 
-El objetivo era llenar la capa subnacional de `servicios/` (hoy: 6,125 trámites **federales** vía el
-dataset abierto de la SFP, y 0 estatales/municipales útiles) consultando el **Catálogo Nacional de
-Regulaciones, Trámites y Servicios** (CNARTyS), `catalogonacional.gob.mx`, que por ley debe integrar
-los tres órdenes de gobierno.
+```
+https://www.catalogonacional.gob.mx/sujetosobligados/TramitesPublicadosCSV/tramites_publicados_DD_MM_YYYY.csv
+```
 
-## Qué se encontró
+Comprobado el 2026-10-24 con `curl` y `urllib` desde una IP residencial en México:
 
-1. **El Akamai sí se pasa con navegador real.** `curl`/WebFetch reciben 403 "Challenge Validation";
-   el Chrome real carga el portal completo. Esto es reproducible y es la vía para cualquier cosecha futura.
+| Hecho | Evidencia |
+|---|---|
+| Descarga directa, sin reto de Akamai en esta ruta | HTTP 200, 28,168,411 bytes, `application/octet-stream` |
+| El archivo del día D se genera a las **~02:31 UTC del día D+1** (20:31 hora del centro, día D) | `Last-Modified: Sat, 24 Oct 2026 02:31:37 GMT` para `23_10_2026`; `Fri, 23 Oct 2026 02:31:05 GMT` para `22_10_2026` |
+| El servidor **solo guarda los 2 más recientes** | el 24/10: `23_10` y `22_10` → 200; `21_10` a `01_10` y `02_04_2025` → 404 |
+| El de hoy todavía no existe durante el día | `24_10_2026` → 404 el 24/10 a las 18:35 UTC |
+| `catalogonacional.gob.mx` redirige (308) a `www.` | se usa `www.` directo |
+| Akamai da 403 a un User-Agent propio | `gobmx-inventario (+github…)` → 403; el de urllib, `curl/8.x` o `Mozilla/5.0` → 200 |
+| `22_10` y `23_10` eran idénticos byte a byte | mismo tamaño y hash: no siempre hay cambios de un día a otro |
 
-2. **El portal expone filtros estatal y municipal** (dropdowns Estado → Municipio/alcaldía →
-   Nivel de gobierno), y un API interno llamable desde el propio navegador (hereda la sesión Akamai):
-   ```
-   GET /Buscador/SearchInspeccionResult?search=&txtTipo=Todos&nivelId=-1&estadoId=<ID>&municipioId=-1&dependenciaId=-1&tem=<tema>
-   (header X-Requested-With: XMLHttpRequest; devuelve HTML con tarjetas de resultado)
-   ```
+**Regla de descarga:** hoy (UTC) se baja el de ayer; si no está, se retrocede día por día (hasta 7).
+Lo hace `scripts/cnartys.py`, y `.github/workflows/refresh-tramites.yml` lo corre a diario a las 04:30 UTC.
 
-3. **Pero el contenido subnacional está vacío.** Barrido de los 32 estados (`estadoId` 1–32) por ese
-   API, el 2026-10-21:
-   - **Federación** (`estadoId=0`) y "todos" (`estadoId=-1`): devuelven datos (≈9 tarjetas/página, 34 KB).
-   - **Los 32 estados, uno por uno: "No hay información disponible"** (0 resultados en todos).
-   - El API no está roto (federal y búsqueda por texto sí responden); el subnacional simplemente no está cargado.
+**Pendiente de verificar:**
+- **Fines de semana.** Los archivos de fines de semana pasados ya no se pueden consultar (solo quedan
+  2), así que no se sabe si el sábado y el domingo se generan. Se sabrá el 25/10 después de las 02:31
+  UTC: si existe `24_10_2026` (sábado), sí. Mientras tanto, el respaldo de 7 días cubre los dos casos.
+  Para checarlo: `python3 -I scripts/cnartys.py sondear`.
+- **Desde el runner de GitHub (IP de datacenter).** Solo se probó desde IP residencial. Las tiendas de
+  apps bloquean IPs de datacenter; si Akamai hace lo mismo aquí, el workflow falla de forma visible
+  (no commitea nada) y el refresco se corre en local con `gobmx catalogo --actualizar`.
 
-4. **Además, el CNARTyS cataloga Regulaciones / Inspecciones / Inspectores**, no trámites ciudadanos.
-   Los trámites federales ya los teníamos del dataset de la SFP; este portal es un registro paralelo (RNIR).
+## Calidad del dato (léase antes de comparar)
 
-## Conclusión
+- **Cobertura muy desigual por entidad.** CDMX 3,712 registros, Estado de México 3,108; Jalisco 1,
+  Baja California 4, Nayarit 17. Mide cuánto captura cada entidad en el catálogo, no cuántos trámites tiene.
+- **Municipios:** solo 76 de ~2,470 tienen registros.
+- **Canal sin dato:** 1,543 registros no dicen cómo se realiza el trámite (1,532 son de CDMX); para
+  esos `en_linea` es `null`, no `false`.
+- `informacionadicional` y las columnas de lenguas indígenas vienen vacías. El CSV no trae
+  requisitos, costos ni fundamento legal (eso solo está en la ficha web).
 
-**Los trámites y servicios estatales y municipales NO están publicados de forma central y utilizable.**
-Lo confirman tres fuentes independientes: el dataset abierto de la SFP (99% federal), el agente previo de
-CONAMER, y ahora el propio catálogo nacional en vivo (los 32 estados vacíos). No es un límite de nuestra
-herramienta: el dato no existe centralizado.
+## Lo que se intentó el 2026-10-21 (y por qué no encontró nada)
 
-## Dónde vive realmente (para una cosecha futura)
-
-La data subnacional está dispersa en **32 RETS estatales** (Registro Estatal de Trámites y Servicios, uno
-por entidad, cada uno con su propio portal y a veces su propio anti-bot) **+ portales municipales**. Eso es
-un harvest multi-portal (32+ sitios, sin esquema común) = proyecto aparte, no una consulta central. Para
-cada estado, el punto de partida es su RETS (p.ej. "RETyS <estado>") o la ventanilla única estatal ya
-listada en `sitios/estatal-ab.json` / `sitios/estatal-c-cdmx-municipal.json`.
-
-Lo que sí quedó como capa subnacional estructurada son las **brechas** por servicio en
-[`brechas.json`](brechas.json) (DIF, agua, transporte, salud, fiscalía, pagos), derivadas del cruce
-apps × sitios.
+El buscador del portal (`/Buscador/SearchInspeccionResult?...&estadoId=<ID>`, detrás de Akamai, llamado
+desde Chrome real) devolvía "No hay información disponible" para los 32 estados. Ese buscador lista
+**regulaciones, inspecciones e inspectores**, no trámites ciudadanos, así que su vacío no decía nada sobre
+los trámites. El dataset abierto de la SFP (`cnts-federal.json`) es 99% federal. El error fue generalizar
+"el buscador no tiene datos subnacionales" a "el dato no existe centralizado".

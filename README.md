@@ -17,11 +17,12 @@ ni login con credenciales ajenas, ni envío de datos personales.
 | Apps móviles | **519** (387 Android · 371 iOS · 274 en ambas) |
 | Sitios web | **394** portales |
 | Subdominios `.gob.mx` | **12,812** (CT + dotgob-mx) |
-| Servicios / trámites | **6,141** (6,125 federales CONAMER + 16 brechas/clave) |
+| Servicios / trámites | **35,810**: 31,802 del Catálogo Nacional (CNARTyS, corte 2026-10-23: 5,583 federales · **14,608 estatales** · **11,611 municipales**) + 3,992 federales de la SFP que no están en él + 16 brechas/clave |
 | Apps con análisis de permisos | **387** (todas las que tienen Android; 338 con permisos peligrosos) |
 
-No existe un equivalente oficial: los catálogos del gobierno están en silos separados y el
-nivel subnacional no se publica de forma central (ver `analisis/benchmark-existentes.md`).
+No existe un equivalente oficial: los catálogos del gobierno están en silos separados. Los trámites
+estatales y municipales **sí** se publican de forma central, en el CSV diario del Catálogo Nacional,
+aunque con cobertura muy desigual por entidad (ver `servicios/harvest-subnacional.md`).
 
 ## Estructura
 
@@ -42,12 +43,16 @@ gobmx-presencia-digital/
 ├── servicios/
 │   ├── brechas.json             ← servicios que faltan o solo existen en un canal (cruce apps×sitios)
 │   ├── catalogo-conamer.json    ← trámites de alto uso con homoclave (CONAMER)
-│   └── cnts-federal.json        ← catálogo federal completo (6,125 trámites)
+│   ├── cnts-federal.json        ← catálogo federal de la SFP (6,125 trámites, con nivel_digitalizacion)
+│   ├── cnartys/                 ← Catálogo Nacional completo, 3 órdenes (genera scripts/cnartys.py)
+│   │   ├── tramites.json        ← 31,802 trámites normalizados, uno por línea
+│   │   ├── meta.json            ← corte, archivo, sha256, conteos
+│   │   └── hosts.txt            ← hosts .gob.mx citados en los trámites
+│   └── harvest-subnacional.md   ← de dónde sale lo estatal/municipal y la regla de descarga diaria
 ├── analisis/
 │   ├── comparacion.md           ← documento final: comparación a detalle
 │   ├── seguridad.md             ← hallazgos transversales (paquetes de prueba, anti-bot, incidentes)
 │   ├── benchmark-existentes.md  ← qué otros directorios/catálogos existen y qué les falta
-│   └── harvest-subnacional.md   ← por qué los trámites estatales/municipales no están centralizados
 ├── web/                         ← dashboard (index.html + data.js) y bundler
 ├── gobmx.py                     ← CLI para consultar el inventario
 ├── mcp-server/                  ← MCP server (FastMCP) con 8 tools de consulta + README y prueba e2e
@@ -79,7 +84,36 @@ python3 gobmx.py comparar --orden estatal --nombres "Jalisco,Nuevo León"
 python3 gobmx.py comparar --orden municipal --nombres Monterrey,Guadalajara
 python3 gobmx.py comparar --orden estatal --ordenar por_100k_hab.apps   # ranking de las 32
 python3 gobmx.py comparar --orden federal  # se rechaza: no es comparable
+python3 gobmx.py comparar --orden estatal --ordenar pct_tramites_en_linea   # % de trámites en línea
+
+# trámites (CNARTyS + SFP + brechas)
+python3 gobmx.py servicios --orden municipal --municipio Mérida --en-linea si
+python3 gobmx.py servicios --estado Tabasco --busca vehicular --por-frecuencia --limite 10
+python3 gobmx.py brechas --limite 20         # mayor volumen sin canal en línea × apps/sitios de la dependencia
+python3 gobmx.py catalogo --sondear          # corte cargado y qué archivos diarios hay hoy en el servidor
+python3 gobmx.py catalogo --actualizar       # baja el de ayer (o el más reciente) y lo normaliza
 ```
+
+## Trámites de los tres órdenes (Catálogo Nacional)
+
+`scripts/cnartys.py` baja `tramites_publicados_DD_MM_YYYY.csv` del Catálogo Nacional (CONAMER) y lo
+normaliza en `servicios/cnartys/`. El archivo del día D aparece ~02:31 UTC del día D+1 y el servidor
+guarda solo los 2 más recientes, así que **hoy se baja el de ayer** y, si no está, se retrocede hasta 7
+días. Lo corre a diario `.github/workflows/refresh-tramites.yml`. Detalle, evidencia y lo pendiente de
+verificar (fines de semana, IP del runner) en `servicios/harvest-subnacional.md`.
+
+- `orden` y `poder` salen directo de `nivelGobierno` / `nivelGobiernoDetalle` del catálogo.
+- Complementa a `cnts-federal.json` (SFP), no lo reemplaza: 2,133 federales se ligan (1,976 por homoclave,
+  157 por nombre+siglas único). Esos llevan `nivel_digitalizacion_sfp` y `servicios()` no los duplica.
+  El catálogo trae 364 registros repetidos (versión vieja + nueva); queda la más reciente. Detalle en
+  `servicios/README.md` § Sin duplicados.
+- `comparar` suma `tramites`, `tramites_en_linea`, `tramites_sin_dato_canal` y `pct_tramites_en_linea`
+  por entidad/municipio, más una `referencia_federal` de contexto. **Ojo:** el conteo mide cuánto captura
+  cada entidad en el catálogo (Jalisco publica 1), y el % se calcula solo sobre los que reportan canal.
+- `brechas` / tool `brechas_volumen`: trámites de mayor `frecuencia` (volumen que reporta el catálogo)
+  marcados sin canal en línea, cruzados por siglas con apps y sitios del inventario.
+- Los hosts `.gob.mx` citados en los trámites entran a `sitios/subdominios-consolidado.csv` con
+  `fuente=cnartys-tramites`.
 
 ## Orden de gobierno, poder y comparación
 
@@ -99,7 +133,7 @@ EFIPEM). Sin dato, las tasas son `null`, nunca 0. CLI (`comparar`), MCP (`compar
 
 ## MCP — `gobmx-inventario`
 
-Servidor [MCP](https://modelcontextprotocol.io) de solo lectura: expone el inventario como 8 tools
+Servidor [MCP](https://modelcontextprotocol.io) de solo lectura: expone el inventario como 10 tools
 consultables desde Claude u otro cliente. Instalación, referencia de tools y prueba end-to-end en
 [`mcp-server/README.md`](mcp-server/README.md).
 
@@ -126,13 +160,16 @@ python3 -I scripts/test_orden_poder.py   # comprobación del clasificador y de c
 ```
 
 Un **GitHub Action** (`.github/workflows/refresh-subdominios.yml`) refresca los subdominios por
-Certificate Transparency y reconstruye `web/data.js` una vez al mes.
+Certificate Transparency y reconstruye `web/data.js` una vez al mes. Otro
+(`.github/workflows/refresh-tramites.yml`) baja a diario el corte del Catálogo Nacional de trámites.
 
 ## Créditos y fuentes
 
 - Subdominios `.gob.mx`: Certificate Transparency (crt.sh) + [dotgob-mx](https://github.com/AlejandroTC/dotgob-mx)
   de Alejandro TC (licencia MIT), de donde se integró su lista y su marca de actividad.
-- Trámites: Catálogo Nacional de Regulaciones, Trámites y Servicios (CONAMER).
+- Trámites: Catálogo Nacional de Regulaciones, Trámites y Servicios (CONAMER), CSV público diario
+  `catalogonacional.gob.mx/sujetosobligados/TramitesPublicadosCSV/`; trámites federales con nivel de
+  digitalización: dataset abierto de la SFP (datos.gob.mx).
 - Métricas de apps: Google Play y App Store (MX). Permisos: Google Play.
 
 ### Por qué así

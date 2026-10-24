@@ -7,6 +7,7 @@ host,fuente,activo_dotgob,dependencia_o_estado
 070-api.nl.gob.mx,nuestro-CT,,nuevo-leon
 070-gateway.nl.gob.mx,nuestro-CT,,nuevo-leon
 070.nl.gob.mx,nuestro-CT,,nuevo-leon
+072.pueblacapital.gob.mx,cnartys-tramites,,pueblacapital
 072cdmx.gob.mx,dotgob-mx,inactivo,072cdmx
 09ushm9uwb7gc9tou2ae.pagostepeapulco.gob.mx,dotgob-mx,inactivo,pagostepeapulco
 0b6f5iryl2zrz88f5wgz.pagostepeapulco.gob.mx,dotgob-mx,inactivo,pagostepeapulco
@@ -1554,6 +1555,7 @@ apps.aropa.sat.gob.mx,nuestro-CT,,sat
 apps.aropb.sat.gob.mx,nuestro-CT,,sat
 apps.asebc.gob.mx,dotgob-mx,activo:https,asebc
 apps.c5.cdmx.gob.mx,nuestro-CT,,cdmx
+apps.cjf.gob.mx,cnartys-tramites,,cjf
 apps.conamed.gob.mx,dotgob-mx,activo:https,conamed
 apps.culiacan.gob.mx,dotgob-mx,activo:https,culiacan
 apps.cursos.aprende.gob.mx,dotgob-mx,activo:https,aprende
@@ -3675,6 +3677,7 @@ becascoahuila.gob.mx,dotgob-mx,activo:https,becascoahuila
 becascontigo.apodaca.gob.mx,dotgob-mx,activo:http,apodaca
 becascontigoposgrado.apodaca.gob.mx,dotgob-mx,activo:https,apodaca
 becascozcyt.zacatecas.gob.mx,nuestro-CT,,zacatecas
+becasedeq.queretaro.gob.mx,cnartys-tramites,,queretaro
 becasnuevaera2025.nld.gob.mx,dotgob-mx,inactivo,nld
 becasparalatransformacion.seph.gob.mx,dotgob-mx,inactivo,seph
 becasycredito.gob.mx,dotgob-mx,inactivo,becasycredito
@@ -3928,6 +3931,7 @@ bunker.sazacatecas.gob.mx,dotgob-mx,activo:https,sazacatecas
 burgos.gob.mx,dotgob-mx,activo:https,burgos
 bus.edomex.gob.mx,nuestro-CT,,estado-de-mexico
 buscador.admin.dgsjl.tfja.gob.mx,dotgob-mx,activo:https,tfja
+buscador.becasbenitojuarez.gob.mx,cnartys-tramites,,becasbenitojuarez
 buscador.celaya.gob.mx,dotgob-mx,activo:https,celaya
 buscador.dgsjl.tfja.gob.mx,dotgob-mx,activo:https,tfja
 buscadorindigena.poderjudicialchiapas.gob.mx,dotgob-mx,activo:https,poderjudicialchiapas
@@ -4592,6 +4596,7 @@ cedipiem.edomex.gob.mx,ambos,activo:https,estado-de-mexico
 cedn.gob.mx,dotgob-mx,activo:http,cedn
 cedoc.semujeresdigital.cdmx.gob.mx,ambos,inactivo,cdmx
 cedral-slp.gob.mx,dotgob-mx,activo:https,cedral-slp
+cedspi.hidalgo.gob.mx,cnartys-tramites,,hidalgo
 cedulaimpulso.hidalgo.gob.mx,nuestro-CT,,hidalgo
 cedulaprofesional.nayarit.gob.mx,nuestro-CT,,nayarit
 cedulasp.poderjudicialchiapas.gob.mx,dotgob-mx,activo:https,poderjudicialchiapas
@@ -4636,6 +4641,7 @@ celula.naucalpan.gob.mx,dotgob-mx,activo:https,naucalpan
 cem.implanags.gob.mx,dotgob-mx,activo:https,implanags
 cementerios.cdmx.gob.mx,ambos,inactivo,cdmx
 cemer.edomex.gob.mx,ambos,activo:https,estado-de-mexico
+cemer.morelos.gob.mx,cnartys-tramites,,morelos
 cemer.qroo.gob.mx,ambos,inactivo,quintana-roo
 cemer2.morelos.gob.mx,nuestro-CT,,morelos
 cemerge.gob.mx,dotgob-mx,activo:https,cemerge
@@ -5013,11 +5019,13 @@ cismun.lapaz.gob.mx,dotgob-mx,activo:https,lapaz
 cit.zacatecas.gob.mx,dotgob-mx,activo:https,zacatecas
 cita.ima.nl.gob.mx,nuestro-CT,,nuevo-leon
 cita.mineraldelareforma.gob.mx,dotgob-mx,activo:https,mineraldelareforma
+citamedica.issste.gob.mx,cnartys-tramites,,issste
 citamedicadigital.imss.gob.mx,nuestro-CT,,imss
 citas-admin-api-key.justiciadigital.gob.mx,dotgob-mx,activo:https,justiciadigital
 citas-api-oauth2.justiciadigital.gob.mx,dotgob-mx,activo:http,justiciadigital
 citas.agenda-ciudadana.gob.mx,dotgob-mx,inactivo,agenda-ciudadana
 citas.asechiapas.gob.mx,dotgob-mx,activo:https,asechiapas
+citas.becasbenitojuarez.gob.mx,cnartys-tramites,,becasbenitojuarez
 citas.bocadelrio.gob.mx,dotgob-mx,activo:https,bocadelrio
 citas.ccleh.gob.mx,dotgob-mx,activo:https,ccleh
 citas.cdmx.gob.mx,ambos,inactivo,cdmx
@@ -5643,6 +5651,7 @@ conmutador.cordoba.gob.mx,dotgob-mx,inactivo,cordoba
 conmutador.juarez.gob.mx,dotgob-mx,inactivo,juarez
 conoce.edomex.gob.mx,ambos,activo:https,estado-de-mexico
 conoceabasolo.gob.mx,dotgob-mx,activo:https,conoceabasolo
+conocer.gob.mx,cnartys-tramites,,conocer
 conocimientojuridico.scjn.gob.mx,dotgob-mx,activo:https,scjn
 conpalsesiones.inah.gob.mx,dotgob-mx,activo:https,inah
 conradwm.oomapasc.gob.mx,dotgob-mx,activo:https,oomapasc
@@ -5816,10 +5825,12 @@ contraloria.sh.guanajuato.gob.mx,ambos,inactivo,guanajuato
 contraloria.sidec.durango.gob.mx,ambos,activo:https,durango
 contraloria.tepic.gob.mx,dotgob-mx,inactivo,tepic
 contraloria.tlaxcala.gob.mx,nuestro-CT,,tlaxcala
+contraloria.uruapan.gob.mx,cnartys-tramites,,uruapan
 contraloriasocial.nl.gob.mx,nuestro-CT,,nuevo-leon
 contraloriasocial.sh.guanajuato.gob.mx,nuestro-CT,,guanajuato
 contraloriasocial.strc.guanajuato.gob.mx,nuestro-CT,,guanajuato
 contraloriasocial.zacatecas.gob.mx,dotgob-mx,activo:https,zacatecas
+contrataciones.chihuahua.gob.mx,cnartys-tramites,,chihuahua
 contratistas.seduo.edomex.gob.mx,nuestro-CT,,estado-de-mexico
 contratoarrendamiento.cdmx.gob.mx,nuestro-CT,,cdmx
 contratosmarco.atencion.gob.mx,dotgob-mx,inactivo,atencion
@@ -6288,6 +6299,7 @@ db-apitramitesdigitales.oaxaca.gob.mx,nuestro-CT,,oaxaca
 dc.api.monterrey.gob.mx,nuestro-CT,,monterrey
 dcggs.qroo.gob.mx,nuestro-CT,,quintana-roo
 ddsisem.edomex.gob.mx,nuestro-CT,,estado-de-mexico
+dduia.puebla.gob.mx,cnartys-tramites,,puebla
 decideadip.cdmx.gob.mx,nuestro-CT,,cdmx
 decidimos.isp1.gce.apismty.gob.mx,dotgob-mx,activo:http,apismty
 decidimos.monterrey.gob.mx,ambos,activo:https,monterrey
@@ -7083,6 +7095,7 @@ foliosedarpa.veracruz.gob.mx,nuestro-CT,,veracruz
 foliosomg.tlaxcala.gob.mx,nuestro-CT,,tlaxcala
 fomentoeconomicodigital.hidalgo.gob.mx,nuestro-CT,,hidalgo
 fonay.nayarit.gob.mx,nuestro-CT,,nayarit
+foncaenlinea.cultura.gob.mx,cnartys-tramites,,cultura
 fondeco.cdmx.gob.mx,nuestro-CT,,cdmx
 fondeco.sicopi.cdmx.gob.mx,nuestro-CT,,cdmx
 fondeso.cdmx.gob.mx,nuestro-CT,,cdmx
@@ -7441,6 +7454,7 @@ idpse.jalisco.gob.mx,nuestro-CT,,jalisco
 idse.imss.gob.mx,nuestro-CT,,imss
 idse.jalisco.gob.mx,nuestro-CT,,jalisco
 idu.cdmx.gob.mx,nuestro-CT,,cdmx
+ieef.gob.mx,cnartys-tramites,,ieef
 ieeja.qroo.gob.mx,nuestro-CT,,quintana-roo
 ieesspp.michoacan.gob.mx,nuestro-CT,,michoacan
 iem.tlaxcala.gob.mx,nuestro-CT,,tlaxcala
@@ -7810,6 +7824,7 @@ jobs.llave.gob.mx,dotgob-mx,activo:https,llave
 jornada.dgrt.consejeria.cdmx.gob.mx,nuestro-CT,,cdmx
 jovenes.altamira.gob.mx,dotgob-mx,activo:https,altamira
 jovenesconbienestar.edomex.gob.mx,nuestro-CT,,estado-de-mexico
+jovenesconstruyendoelfuturo.stps.gob.mx,cnartys-tramites,,stps
 jr.omrhapps.queretaro.gob.mx,nuestro-CT,,queretaro
 jsc.mun.appsmty.gob.mx,dotgob-mx,activo:https,appsmty
 juanita.monterrey.gob.mx,nuestro-CT,,monterrey
@@ -7909,6 +7924,7 @@ llave.cdmx.gob.mx,nuestro-CT,,cdmx
 llave.gob.mx,dotgob-mx,activo:http,llave
 llave.pruebas.campeche.gob.mx,nuestro-CT,,campeche
 llave.seg.cdmx.gob.mx,nuestro-CT,,cdmx
+llave.tabasco.gob.mx,cnartys-tramites,,tabasco
 llave.tlaxcala.gob.mx,nuestro-CT,,tlaxcala
 llave.val.cdmx.gob.mx,nuestro-CT,,cdmx
 llm.atdt.gob.mx,dotgob-mx,activo:https,atdt
@@ -8316,6 +8332,7 @@ mitaxielectrico.nl.gob.mx,nuestro-CT,,nuevo-leon
 mitrabajotransforma.hidalgo.gob.mx,nuestro-CT,,hidalgo
 mitransporte.jalisco.gob.mx,nuestro-CT,,jalisco
 miunidad.cdmx.gob.mx,nuestro-CT,,cdmx
+miveracruz.veracruzmunicipio.gob.mx,cnartys-tramites,,veracruzmunicipio
 mochila.sinaloa.gob.mx,nuestro-CT,,sinaloa
 mochiladigital.sinaloa.gob.mx,nuestro-CT,,sinaloa
 modalidades.tramite.cdmx.gob.mx,nuestro-CT,,cdmx
@@ -8857,6 +8874,7 @@ periodico.icti.chiapas.gob.mx,nuestro-CT,,chiapas
 periodico.tlaxcala.gob.mx,nuestro-CT,,tlaxcala
 periodico.zacatecas.gob.mx,dotgob-mx,inactivo,zacatecas
 periodico23.altamira.gob.mx,dotgob-mx,inactivo,altamira
+periodicooficial.campeche.gob.mx,cnartys-tramites,,campeche
 periodicooficial.durango.gob.mx,nuestro-CT,,durango
 periodicooficial.nayarit.gob.mx,nuestro-CT,,nayarit
 periodicooficial.puebla.gob.mx,nuestro-CT,,puebla
@@ -8867,6 +8885,7 @@ permisosparquimetros.cdmx.gob.mx,nuestro-CT,,cdmx
 personal.segiagua.cdmx.gob.mx,nuestro-CT,,cdmx
 personal.strc.guanajuato.gob.mx,nuestro-CT,,guanajuato
 personasmh.sibiso.cdmx.gob.mx,nuestro-CT,,cdmx
+pesbcs.gob.mx,cnartys-tramites,,pesbcs
 petc.educacion.durango.gob.mx,nuestro-CT,,durango
 peticiones.nayarit.gob.mx,nuestro-CT,,nayarit
 peu.ope.asea.gob.mx,dotgob-mx,activo:https,asea
@@ -9594,6 +9613,7 @@ repositoriodecodigo.atdt.gob.mx,dotgob-mx,inactivo,atdt
 repositorioincytea.aguascalientes.gob.mx,ambos,inactivo,aguascalientes
 repositorionacional.atdt.gob.mx,dotgob-mx,activo:https,atdt
 repospatrimonio.cultura.cdmx.gob.mx,nuestro-CT,,cdmx
+repuve.gob.mx,cnartys-tramites,,repuve
 repuve.michoacan.gob.mx,nuestro-CT,,michoacan
 requisicion.altamira.gob.mx,dotgob-mx,activo:https,altamira
 requisiciones-front.stg.tlaxcala.gob.mx,nuestro-CT,,tlaxcala
@@ -9701,6 +9721,7 @@ rutastranporte.jalisco.gob.mx,nuestro-CT,,jalisco
 rutsh.hidalgo.gob.mx,nuestro-CT,,hidalgo
 rvoe.sectei.cdmx.gob.mx,nuestro-CT,,cdmx
 s-cedspi.hidalgo.gob.mx,nuestro-CT,,hidalgo
+s-contraloria.hidalgo.gob.mx,cnartys-tramites,,hidalgo
 s-cultura.hidalgo.gob.mx,nuestro-CT,,hidalgo
 s2018.asen.gob.mx,dotgob-mx,activo:https,asen
 s3.juarez.gob.mx,dotgob-mx,inactivo,juarez
@@ -9872,6 +9893,7 @@ sdl-obras-infraestructura.zacatecas.gob.mx,nuestro-CT,,zacatecas
 sdrsanidad.puebla.gob.mx,nuestro-CT,,puebla
 sds.cdmx.gob.mx,nuestro-CT,,cdmx
 sds.nayarit.gob.mx,nuestro-CT,,nayarit
+se.puebla.gob.mx,cnartys-tramites,,puebla
 seaasmaspce.chihuahua.gob.mx,nuestro-CT,,chihuahua
 seafi.campeche.gob.mx,nuestro-CT,,campeche
 seag.jalisco.gob.mx,nuestro-CT,,jalisco
@@ -10126,6 +10148,7 @@ serviciosdtif.jalisco.gob.mx,nuestro-CT,,jalisco
 serviciose.guanajuato.gob.mx,nuestro-CT,,guanajuato
 servicioselectronicos.sf.tabasco.gob.mx,nuestro-CT,,tabasco
 serviciosenlinea.bcs.gob.mx,nuestro-CT,,baja-california-sur
+serviciosfinanzas.villahermosa.gob.mx,cnartys-tramites,,villahermosa
 serviciosfirma.sonora.gob.mx,nuestro-CT,,sonora
 serviciosgob.cetic.michoacan.gob.mx,nuestro-CT,,michoacan
 serviciosj.hidalgo.gob.mx,nuestro-CT,,hidalgo
@@ -10199,6 +10222,7 @@ shf.gob.mx,dotgob-mx,inactivo,shf
 shfmyshfdes.shf.gob.mx,dotgob-mx,inactivo,shf
 si.tlaxcala.gob.mx,nuestro-CT,,tlaxcala
 sia-ssp.guanajuato.gob.mx,nuestro-CT,,guanajuato
+siaat.stps.gob.mx,cnartys-tramites,,stps
 siac.nayarit.gob.mx,nuestro-CT,,nayarit
 siac2.veracruz.gob.mx,nuestro-CT,,veracruz
 siacam.finanzas.campeche.gob.mx,nuestro-CT,,campeche
@@ -10325,6 +10349,7 @@ siga.monterrey.gob.mx,nuestro-CT,,monterrey
 siga.nayarit.gob.mx,nuestro-CT,,nayarit
 siga.nl.gob.mx,nuestro-CT,,nuevo-leon
 siga.puebla.gob.mx,nuestro-CT,,puebla
+sigaacej.tsj-tabasco.gob.mx,cnartys-tramites,,tsj-tabasco
 sigaapi.asea.gob.mx,dotgob-mx,activo:https,asea
 sigaapidev.asea.gob.mx,dotgob-mx,activo:https,asea
 sigaapiqa.asea.gob.mx,dotgob-mx,activo:https,asea
@@ -10663,6 +10688,8 @@ srb.sf.tabasco.gob.mx,nuestro-CT,,tabasco
 src.sf.tabasco.gob.mx,nuestro-CT,,tabasco
 srh.seg.guanajuato.gob.mx,nuestro-CT,,guanajuato
 sri.consejeria.cdmx.gob.mx,nuestro-CT,,cdmx
+srpceh.contraloriahidalgo.gob.mx,cnartys-tramites,,contraloriahidalgo
+srpcehcontraloria.hidalgo.gob.mx,cnartys-tramites,,hidalgo
 srs.sonora.gob.mx,nuestro-CT,,sonora
 srtd.sicopi.cdmx.gob.mx,nuestro-CT,,cdmx
 srtn.nayarit.gob.mx,nuestro-CT,,nayarit
@@ -11009,6 +11036,7 @@ tramites.durango.gob.mx,nuestro-CT,,durango
 tramites.michoacan.gob.mx,nuestro-CT,,michoacan
 tramites.miregistrocivil.gob.mx,dotgob-mx,inactivo,miregistrocivil
 tramites.monterrey.gob.mx,ambos,activo:https,monterrey
+tramites.morelos.gob.mx,cnartys-tramites,,morelos
 tramites.nayarit.gob.mx,nuestro-CT,,nayarit
 tramites.nl.gob.mx,nuestro-CT,,nuevo-leon
 tramites.puebla.gob.mx,nuestro-CT,,puebla
@@ -11103,6 +11131,7 @@ transporteaet.nl.gob.mx,nuestro-CT,,nuevo-leon
 transportes.durango.gob.mx,nuestro-CT,,durango
 trasladoaridos.agepsa.cdmx.gob.mx,nuestro-CT,,cdmx
 trasladorah.agepsa.cdmx.gob.mx,nuestro-CT,,cdmx
+traslanet.municipiodequeretaro.gob.mx,cnartys-tramites,,municipiodequeretaro
 travel.cdmx.gob.mx,nuestro-CT,,cdmx
 trayectoriaeducativa.seg.guanajuato.gob.mx,nuestro-CT,,guanajuato
 trazabilidadeducativa.seg.guanajuato.gob.mx,nuestro-CT,,guanajuato
@@ -11312,12 +11341,14 @@ ventanilla.discapacidad.cdmx.gob.mx,nuestro-CT,,cdmx
 ventanilla.imss.gob.mx,nuestro-CT,,imss
 ventanilla.qroo.gob.mx,nuestro-CT,,quintana-roo
 ventanilla.rcivil.cdmx.gob.mx,nuestro-CT,,cdmx
+ventanilla.sach.gob.mx,cnartys-tramites,,sach
 ventanilla.slp.gob.mx,nuestro-CT,,slp
 ventanilla.veracruz.gob.mx,nuestro-CT,,veracruz
 ventanillaagraria.gob.mx,dotgob-mx,inactivo,ventanillaagraria
 ventanilladeingresospropios.michoacan.gob.mx,nuestro-CT,,michoacan
 ventanilladev.rcivil.cdmx.gob.mx,nuestro-CT,,cdmx
 ventanilladigital.monterrey.gob.mx,nuestro-CT,,monterrey
+ventanilladigital.puebla.gob.mx,cnartys-tramites,,puebla
 ventanilladigital.qroo.gob.mx,nuestro-CT,,quintana-roo
 ventanilladigital.zacatecas.gob.mx,nuestro-CT,,zacatecas
 ventanilladigitaldetramites.michoacan.gob.mx,nuestro-CT,,michoacan
@@ -11874,6 +11905,7 @@ www.captralir.cdmx.gob.mx,nuestro-CT,,cdmx
 www.capturaacta.adyt.gob.mx,dotgob-mx,activo:https,adyt
 www.capturaacta.atdt.gob.mx,dotgob-mx,activo:https,atdt
 www.cartilladerechosdelasmujeres.gob.mx,dotgob-mx,activo:https,cartilladerechosdelasmujeres
+www.casadelasartesaniaschiapas.gob.mx,cnartys-tramites,,casadelasartesaniaschiapas
 www.casadesalud.almoloyadejuarez.gob.mx,dotgob-mx,inactivo,almoloyadejuarez
 www.cat.michoacan.gob.mx,nuestro-CT,,michoacan
 www.catalogonacional.gob.mx,dotgob-mx,activo:https,catalogonacional
@@ -11944,6 +11976,8 @@ www.cmdhbb.gob.mx.acaponetanayarit.gob.mx,dotgob-mx,inactivo,cmdhbb
 www.cms.run.apismty.gob.mx,dotgob-mx,activo:https,apismty
 www.cms.run.dev.apismty.gob.mx,dotgob-mx,inactivo,apismty
 www.cmscct.cdmx.gob.mx,nuestro-CT,,cdmx
+www.cne.gob.mx,cnartys-tramites,,cne
+www.cnh.gob.mx,cnartys-tramites,,cnh
 www.cni-dev.atdt.gob.mx,dotgob-mx,inactivo,atdt
 www.coahuila.gob.mx,nuestro-CT,,coahuila
 www.cobroapp.altamira.gob.mx,dotgob-mx,activo:https,altamira
@@ -11958,6 +11992,7 @@ www.comisionparalareconstruccion.cdmx.gob.mx,nuestro-CT,,cdmx
 www.comiteferia.nayarit.gob.mx,nuestro-CT,,nayarit
 www.compendiojuridico.asechiapas.gob.mx,dotgob-mx,activo:http,asechiapas
 www.comprobanteenfermedad.cdmx.gob.mx,nuestro-CT,,cdmx
+www.condusef.gob.mx,cnartys-tramites,,condusef
 www.confirmatorias-cnts.atdt.gob.mx,dotgob-mx,activo:https,atdt
 www.consejeria.cdmx.gob.mx,nuestro-CT,,cdmx
 www.constanciaeci.cdmx.gob.mx,nuestro-CT,,cdmx
@@ -12095,7 +12130,9 @@ www.dif.santamariadeloro.nayarit.gob.mx,nuestro-CT,,nayarit
 www.dif.slp.gob.mx,nuestro-CT,,slp
 www.digital.veracruz.gob.mx,nuestro-CT,,veracruz
 www.diplomadochd-cenatra.atdt.gob.mx,dotgob-mx,activo:http,atdt
+www.diputados.gob.mx,cnartys-tramites,,diputados
 www.directorio.nayarit.gob.mx,nuestro-CT,,nayarit
+www.dof.gob.mx,cnartys-tramites,,dof
 www.donarcodigo.atdt.gob.mx,dotgob-mx,activo:https,atdt
 www.donavida-cenatra.atdt.gob.mx,dotgob-mx,activo:http,atdt
 www.drive.atdt.gob.mx,dotgob-mx,activo:https,atdt
@@ -12120,6 +12157,7 @@ www.embrace.bcs.gob.mx,nuestro-CT,,baja-california-sur
 www.embraceit.bcs.gob.mx,nuestro-CT,,baja-california-sur
 www.empleo.agenda-ciudadana.gob.mx,dotgob-mx,inactivo,agenda-ciudadana
 www.empleo.altamira.gob.mx,dotgob-mx,activo:https,altamira
+www.empleo.gob.mx,cnartys-tramites,,empleo
 www.encuentrobandas.morelos.gob.mx,nuestro-CT,,morelos
 www.encuentronacional.atdt.gob.mx,dotgob-mx,activo:https,atdt
 www.encuestaempresa.atdt.gob.mx,dotgob-mx,activo:https,atdt
@@ -12170,6 +12208,7 @@ www.fogarenay.nayarit.gob.mx,nuestro-CT,,nayarit
 www.fonacot.gob.mx,dotgob-mx,activo:https,fonacot
 www.fondeco.cdmx.gob.mx,nuestro-CT,,cdmx
 www.fondeso.cdmx.gob.mx,nuestro-CT,,cdmx
+www.fondomorelos.gob.mx,cnartys-tramites,,fondomorelos
 www.fondopensiones.nayarit.gob.mx,nuestro-CT,,nayarit
 www.formacionia.atdt.gob.mx,dotgob-mx,activo:https,atdt
 www.formulariotmec.atdt.gob.mx,dotgob-mx,inactivo,atdt
@@ -12216,9 +12255,12 @@ www.i4ch-capitalhumanodev.cdmx.gob.mx,nuestro-CT,,cdmx
 www.iaes.sonora.gob.mx,nuestro-CT,,sonora
 www.iapa.cdmx.gob.mx,nuestro-CT,,cdmx
 www.icat.cdmx.gob.mx,nuestro-CT,,cdmx
+www.icate.bcs.gob.mx,cnartys-tramites,,bcs
+www.icatebcs.gob.mx,cnartys-tramites,,icatebcs
 www.iced.durango.gob.mx,nuestro-CT,,durango
 www.identidadbc.bajacalifornia.gob.mx,nuestro-CT,,baja-california
 www.idoneidad-cnts.atdt.gob.mx,dotgob-mx,activo:https,atdt
+www.iedm.morelos.gob.mx,cnartys-tramites,,morelos
 www.iems.cdmx.gob.mx,nuestro-CT,,cdmx
 www.ifp.cdmx.gob.mx,nuestro-CT,,cdmx
 www.ifseslp.gob.mx,dotgob-mx,activo:https,ifseslp
@@ -12246,6 +12288,7 @@ www.informelabores.atdt.gob.mx,dotgob-mx,activo:https,atdt
 www.infotec.atdt.gob.mx,dotgob-mx,inactivo,atdt
 www.infraestructura.atdt.gob.mx,dotgob-mx,inactivo,atdt
 www.ingresos.morelos.gob.mx,nuestro-CT,,morelos
+www.inin.gob.mx,cnartys-tramites,,inin
 www.injuve.cdmx.gob.mx,nuestro-CT,,cdmx
 www.injuve.nayarit.gob.mx,nuestro-CT,,nayarit
 www.inm.gob.mx,dotgob-mx,activo:https,inm
@@ -12361,6 +12404,7 @@ www.mtydigital.monterrey.gob.mx,nuestro-CT,,monterrey
 www.mujeres.ahome.gob.mx,dotgob-mx,activo:https,ahome
 www.mujeres.cdmx.gob.mx,nuestro-CT,,cdmx
 www.mundialsocial.gob.mx,dotgob-mx,activo:http,mundialsocial
+www.municipiochihuahua.gob.mx,cnartys-tramites,,municipiochihuahua
 www.museo.chiapas.gob.mx,nuestro-CT,,chiapas
 www.museodelestanquillo.cdmx.gob.mx,nuestro-CT,,cdmx
 www.museosbcs.administracionisc.gob.mx,dotgob-mx,inactivo,administracionisc
@@ -12375,6 +12419,7 @@ www.nuestroshumedales.chiapas.gob.mx,nuestro-CT,,chiapas
 www.obras.cdmx.gob.mx,nuestro-CT,,cdmx
 www.obraspublicas.amatitan.gob.mx,dotgob-mx,activo:https,amatitan
 www.obraspublicas.sinaloa.gob.mx,nuestro-CT,,sinaloa
+www.observatoriolaboral.gob.mx,cnartys-tramites,,observatoriolaboral
 www.ocspsat.atdt.gob.mx,dotgob-mx,activo:https,atdt
 www.odeca.altamira.gob.mx,dotgob-mx,activo:https,altamira
 www.ofcm.cultura.cdmx.gob.mx,nuestro-CT,,cdmx
@@ -12411,7 +12456,9 @@ www.pbancoqro.gob.mx,dotgob-mx,inactivo,pbancoqro
 www.pdelegacionales.cdmx.gob.mx,nuestro-CT,,cdmx
 www.pdh.cdmx.gob.mx,nuestro-CT,,cdmx
 www.ped.chiapas.gob.mx,nuestro-CT,,chiapas
+www.pediatria.gob.mx,cnartys-tramites,,pediatria
 www.penitenciario.cdmx.gob.mx,nuestro-CT,,cdmx
+www.pensionesdurango.gob.mx,cnartys-tramites,,pensionesdurango
 www.pequenapropiedadganadera.atdt.gob.mx,dotgob-mx,activo:https,atdt
 www.periodico.altamira.gob.mx,dotgob-mx,activo:https,altamira
 www.periodico23.altamira.gob.mx,dotgob-mx,inactivo,altamira
@@ -12455,6 +12502,7 @@ www.presidencia.aguililla.gob.mx,dotgob-mx,activo:https,aguililla
 www.presidencia.gob.mx,dotgob-mx,activo:https,presidencia
 www.presidenta.gob.mx,dotgob-mx,activo:https,presidenta
 www.presupuestoparticipativo.aguaprieta.gob.mx,dotgob-mx,inactivo,aguaprieta
+www.procadist.stps.gob.mx,cnartys-tramites,,stps
 www.procdmx.cdmx.gob.mx,nuestro-CT,,cdmx
 www.procine.cdmx.gob.mx,nuestro-CT,,cdmx
 www.procuraduriatrabajo.cdmx.gob.mx,nuestro-CT,,cdmx
@@ -12552,6 +12600,7 @@ www.s2018.asen.gob.mx,dotgob-mx,activo:https,asen
 www.saaene.jalisco.gob.mx,nuestro-CT,,jalisco
 www.sacmex.cdmx.gob.mx,nuestro-CT,,cdmx
 www.salud.cdmx.gob.mx,nuestro-CT,,cdmx
+www.sanmartintexmelucan.gob.mx,cnartys-tramites,,sanmartintexmelucan
 www.santamariadeloro.nayarit.gob.mx,nuestro-CT,,nayarit
 www.santiagohuajolotitlan.gob.mx,dotgob-mx,activo:http,santiagohuajolotitlan
 www.santuariomily.bajacalifornia.gob.mx,nuestro-CT,,baja-california
@@ -12640,8 +12689,10 @@ www.slp.gob.mx,nuestro-CT,,slp
 www.sm1.cdmx.gob.mx,nuestro-CT,,cdmx
 www.smdif.almoloyadelrio.gob.mx,dotgob-mx,activo:https,almoloyadelrio
 www.snd.gob.mx,dotgob-mx,activo:https,snd
+www.snice.gob.mx,cnartys-tramites,,snice
 www.snics-dpocs.atdt.gob.mx,dotgob-mx,activo:https,atdt
 www.snx.shf.gob.mx,dotgob-mx,inactivo,shf
+www.snyce.gob.mx,cnartys-tramites,,snyce
 www.soaa.nayarit.gob.mx,nuestro-CT,,nayarit
 www.soberaniaenergetica.gob.mx,dotgob-mx,activo:https,soberaniaenergetica
 www.solicitarcodigo.atdt.gob.mx,dotgob-mx,activo:https,atdt
@@ -12689,6 +12740,7 @@ www.test.atenguillo.gob.mx,dotgob-mx,activo:https,atenguillo
 www.testamentos.apodaca.gob.mx,dotgob-mx,activo:https,apodaca
 www.tianguisdigital.cdmx.gob.mx,nuestro-CT,,cdmx
 www.tiendaaripo.oaxaca.gob.mx,nuestro-CT,,oaxaca
+www.tjaqroo.gob.mx,cnartys-tramites,,tjaqroo
 www.tlaxcala.gob.mx,nuestro-CT,,tlaxcala
 www.tmp.altamira.gob.mx,dotgob-mx,activo:https,altamira
 www.todospodemos.apodaca.gob.mx,dotgob-mx,inactivo,apodaca
@@ -12727,6 +12779,7 @@ www.transparencia.cultura-bcs.gob.mx,dotgob-mx,activo:https,cultura-bcs
 www.transparenciacultural.asechiapas.gob.mx,dotgob-mx,activo:https,asechiapas
 www.transparenciamun.asechiapas.gob.mx,dotgob-mx,activo:https,asechiapas
 www.transporte.altamira.gob.mx,dotgob-mx,activo:https,altamira
+www.tribunalqro.gob.mx,cnartys-tramites,,tribunalqro
 www.turismo.ahome.gob.mx,dotgob-mx,activo:http,ahome
 www.turismo.amanalco.gob.mx,dotgob-mx,activo:https,amanalco
 www.turismo.arriaga.gob.mx,dotgob-mx,activo:https,arriaga
@@ -12776,12 +12829,14 @@ www.zapopan.gob.mx,dotgob-mx,activo:https,zapopan
 www1.shf.gob.mx,dotgob-mx,inactivo,shf
 www16.cdmx.gob.mx,nuestro-CT,,cdmx
 www2.queretaro.gob.mx,nuestro-CT,,queretaro
+www2.repuve.gob.mx,cnartys-tramites,,repuve
 www2.shf.gob.mx,dotgob-mx,inactivo,shf
 www54.sat.gob.mx,nuestro-CT,,sat
 www6.qroo.gob.mx,nuestro-CT,,quintana-roo
 www84.juarez.gob.mx,dotgob-mx,inactivo,juarez
 www93.juarez.gob.mx,dotgob-mx,activo:https,juarez
 wwwcms2.cdmx.gob.mx,nuestro-CT,,cdmx
+wwwiedm2.morelos.gob.mx,cnartys-tramites,,morelos
 wwwmat.sat.gob.mx,nuestro-CT,,sat
 wwwportal.cdmx.gob.mx,nuestro-CT,,cdmx
 wwwtranspa.cdmx.gob.mx,nuestro-CT,,cdmx

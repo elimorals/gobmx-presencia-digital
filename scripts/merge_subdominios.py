@@ -1,6 +1,8 @@
 """Reconstruye sitios/subdominios-consolidado.csv desde cero.
 
-Fuentes: nuestros CT (sitios/subdominios/*.txt) + dotgob-mx (si su clon está en /tmp/dotgob-mx).
+Fuentes: nuestros CT (sitios/subdominios/*.txt) + dotgob-mx (si su clon está en /tmp/dotgob-mx)
++ hosts .gob.mx citados en el Catálogo Nacional de trámites (servicios/cnartys/hosts.txt, fuente=cnartys-tramites).
+OJO: sin el clon de dotgob-mx en /tmp, las filas dotgob-mx desaparecen del consolidado.
 uso: python3 -I scripts/merge_subdominios.py
 """
 import csv
@@ -39,14 +41,19 @@ if DOTGOB.exists():
         if h.endswith(".gob.mx"):
             activo[h] = f"activo:{esquema}"
 
-todos_hosts = sorted(set(nuestros) | set(activo))
+# hosts citados en trámites del CNARTyS (los escribe scripts/cnartys.py)
+f_tram = RAIZ / "servicios/cnartys/hosts.txt"
+de_tramites = {norm(h) for h in (f_tram.read_text().splitlines() if f_tram.exists() else []) if h.strip()}
+
+todos_hosts = sorted(set(nuestros) | set(activo) | de_tramites)
 filas = 0
 with (RAIZ / "sitios/subdominios-consolidado.csv").open("w", newline="") as fh:
     w = csv.writer(fh)
     w.writerow(["host", "fuente", "activo_dotgob", "dependencia_o_estado"])
     for h in todos_hosts:
         en_n, en_d = h in nuestros, h in activo
-        fuente = "ambos" if en_n and en_d else "nuestro-CT" if en_n else "dotgob-mx"
+        fuente = ("ambos" if en_n and en_d else "nuestro-CT" if en_n else "dotgob-mx" if en_d
+                  else "cnartys-tramites")
         dep = nuestros.get(h) or (h.split(".gob.mx")[0].split(".")[-1] if ".gob.mx" in h else "")
         w.writerow([h, fuente, activo.get(h, ""), dep])
         filas += 1
