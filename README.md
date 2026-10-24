@@ -10,13 +10,13 @@ ni login con credenciales ajenas, ni envío de datos personales.
 
 🔗 **Web:** https://gobmx-presencia-digital.vercel.app (Vercel; la versión de GitHub Pages se retiró el 2026-10-24)
 
-## Cifras (corte 2026-10-21)
+## Cifras (corte 2026-10-24; trámites al 2026-10-23)
 
 | | |
 |---|---:|
 | Apps móviles | **519** (387 Android · 371 iOS · 274 en ambas) |
 | Sitios web | **394** portales |
-| Subdominios `.gob.mx` | **12,812** (CT + dotgob-mx) |
+| Subdominios `.gob.mx` | **12,867** (CT + dotgob-mx + citados en trámites) |
 | Servicios / trámites | **35,810**: 31,802 del Catálogo Nacional (CNARTyS, corte 2026-10-23: 5,583 federales · **14,608 estatales** · **11,611 municipales**) + 3,992 federales de la SFP que no están en él + 16 brechas/clave |
 | Apps con análisis de permisos | **387** (todas las que tienen Android; 338 con permisos peligrosos) |
 
@@ -61,14 +61,32 @@ gobmx-presencia-digital/
 
 ## Web (Vercel) — `webapp/`
 
-**https://gobmx-presencia-digital.vercel.app** · Next.js 16. Buscador de los ~32 mil trámites (filtros por orden, entidad, municipio y canal),
-ficha por trámite, comparación de las 32 entidades con ficha por entidad, brechas por volumen, apps y
-`/api/tramites` (JSON). Los trámites se leen en el servidor (`servicios/cnartys/tramites.json`, copiado
-en `prebuild`); el resto viene de `webapp/data/inventario.json`, que genera `scripts/build_web_data.py`
-con las mismas funciones de `gobmx.py`.
+**https://gobmx-presencia-digital.vercel.app** · Next.js 16 · tema claro, oscuro o automático · mobile first.
+
+| Sección | Qué hay |
+|---|---|
+| `/tramites` | Buscador de ~35.8 mil trámites (registro nacional + SFP): texto, entidad, municipio, ¿en línea?, orden por solicitudes o fecha |
+| `/tramites/[id]` | Ficha: canales, dependencia, homoclave, solicitudes, sitios citados y botón a la ficha oficial `gob.mx/public/tramites/detalleTramite.xhtml?homoclave=…` (30/30 al azar abren; algunos de CDMX dan 404 y la ficha lo explica) |
+| `/entidades`, `/municipios` | Comparar de 2 a 6 lado a lado (absolutos, trámites, por habitante, por egreso INEGI, PEF Ramo 28+33, población); dispersión "Digitalización vs presupuesto" con ejes elegibles, abreviaturas de estado y puntos que se tocan para agregarlos; tabla ordenable. El orden federal no se compara |
+| `/entidades/[estado]` | Ficha estatal: trámites más solicitados, municipios, apps y sitios |
+| `/apps`, `/apps/[app]` | 519 apps con filtros (entidad, sector, estatus, permisos peligrosos) y ficha con permisos, rastreadores y calificaciones |
+| `/sitios` | 394 portales: plataforma, anti-bot, acceso y evidencia fechada |
+| `/subdominios` | 12.8 mil hosts `.gob.mx` con búsqueda y filtros de fuente, actividad y entidad |
+| `/brechas` | Mucha demanda sin opción en línea (200), brechas por canal y trámites federales clave |
+| `/guia`, `/acerca` | CLI, MCP, API y datos crudos; fuentes y metodología |
+| `/api/tramites` | JSON: `q`, `orden`, `poder`, `estado`, `municipio`, `en_linea`, `orden_por`, `pagina` |
+
+**Filtro común orden × poder.** En trámites, apps, sitios y el inicio, la matriz Federal/Estatal/Municipal/Nacional ×
+Ejecutivo/Legislativo/Judicial/Autónomo filtra al tocar una celda, muestra los ceros (borde punteado: no hay registros
+en ese cruce; en apps y sitios respaldados por `apps/inventario/BUSQUEDA-PODERES.md`) y enlaza el mismo ámbito en las
+otras secciones.
+
+**Datos.** Los trámites se leen en el servidor (`servicios/cnartys/tramites.json`, copiado en `prebuild`); lo demás
+viene de `webapp/data/` (`inventario.json`, `subdominios.json`, `sfp.json`), que genera `scripts/build_web_data.py` con
+las mismas funciones de `gobmx.py`.
 
 ```bash
-python3 -I scripts/build_web_data.py      # regenera webapp/data/inventario.json
+python3 -I scripts/build_web_data.py      # regenera webapp/data/*.json
 cd webapp && npm install && npm run dev   # http://localhost:3000
 ```
 
@@ -77,9 +95,8 @@ Despliegue: proyecto de Vercel con **Root Directory = `webapp`** conectado al re
 
 ### Dashboard estático anterior — `web/`
 
-Ya no se publica. Sigue funcionando local (`cd web && python3 -m http.server`) y conserva lo que la web
-nueva aún no tiene: pestaña de subdominios, permisos por app y matrices orden×poder. El dato lo empaqueta
-`scripts/build_dashboard_data.py` en `web/data.js`.
+Ya no se publica (GitHub Pages se retiró el 2026-10-24). Todo lo que mostraba está en la web nueva. Sigue
+funcionando local (`cd web && python3 -m http.server`); lo empaqueta `scripts/build_dashboard_data.py` en `web/data.js`.
 
 ## CLI — `gobmx`
 

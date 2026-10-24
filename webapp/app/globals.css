@@ -143,6 +143,8 @@ a.chip:hover { border-color: var(--guinda); color: var(--guinda); }
 .grafica .etq { fill: var(--ink); font-family: var(--f-sans), sans-serif; font-size: 12px; font-weight: 600; }
 .grafica .p { fill: var(--guinda); fill-opacity: .7; }
 .grafica .p.sel { fill: var(--oro-punto); fill-opacity: 1; }
+.grafica a { cursor: pointer; }
+.grafica a:hover .p, .grafica a:focus-visible .p { fill-opacity: 1; stroke: var(--ink); stroke-width: 1.5; }
 
 /* barras */
 .barras { display: grid; gap: 10px; }
