@@ -8,7 +8,7 @@ Todo se construye con **observación pasiva** de fuentes públicas (tiendas de a
 Certificate Transparency, páginas públicas) y búsqueda web. No hay escaneo intrusivo,
 ni login con credenciales ajenas, ni envío de datos personales.
 
-🔗 **Dashboard en vivo:** https://elimorals.github.io/gobmx-presencia-digital/
+🔗 **Web:** https://gobmx-presencia-digital.vercel.app (Vercel; la versión de GitHub Pages se retiró el 2026-10-24)
 
 ## Cifras (corte 2026-10-21)
 
@@ -29,8 +29,7 @@ aunque con cobertura muy desigual por entidad (ver `servicios/harvest-subnaciona
 ```
 gobmx-presencia-digital/
 ├── README.md                    ← este archivo
-├── index.html                   ← redirect de GitHub Pages al dashboard
-├── llms.txt · robots.txt · sitemap.xml   ← SEO / GEO (descubrimiento por buscadores y LLMs)
+├── llms.txt                     ← resumen para LLMs (robots y sitemap los sirve la web)
 ├── apps/
 │   ├── inventario/*.json        ← apps por segmento (federal, autónomos, estatal A/B/C+CDMX+municipal)
 │   ├── apps.json                ← consolidado + métricas de tienda (genera consolidar_incremental.py)
@@ -53,20 +52,34 @@ gobmx-presencia-digital/
 │   ├── comparacion.md           ← documento final: comparación a detalle
 │   ├── seguridad.md             ← hallazgos transversales (paquetes de prueba, anti-bot, incidentes)
 │   ├── benchmark-existentes.md  ← qué otros directorios/catálogos existen y qué les falta
-├── web/                         ← dashboard (index.html + data.js) y bundler
+├── webapp/                      ← web en Vercel (Next.js); datos en webapp/data/inventario.json
+├── web/                         ← dashboard estático anterior (ya no se publica)
 ├── gobmx.py                     ← CLI para consultar el inventario
 ├── mcp-server/                  ← MCP server (FastMCP) con 8 tools de consulta + README y prueba e2e
 └── scripts/                     ← helpers (tiendas, CT, consolidar, qa, stats, regenerar) + esquemas
 ```
 
-## Dashboard web
+## Web (Vercel) — `webapp/`
 
-Navegador visual del inventario, en **https://elimorals.github.io/gobmx-presencia-digital/**
-(claro/oscuro, responsive). Pestañas: Apps, Sitios, Servicios, Subdominios y **Guía** (documentación
-del CLI y el MCP). Las barras filtran al hacer clic; cada app abre una ficha con sus permisos.
+**https://gobmx-presencia-digital.vercel.app** · Next.js 16. Buscador de los ~32 mil trámites (filtros por orden, entidad, municipio y canal),
+ficha por trámite, comparación de las 32 entidades con ficha por entidad, brechas por volumen, apps y
+`/api/tramites` (JSON). Los trámites se leen en el servidor (`servicios/cnartys/tramites.json`, copiado
+en `prebuild`); el resto viene de `webapp/data/inventario.json`, que genera `scripts/build_web_data.py`
+con las mismas funciones de `gobmx.py`.
 
-Para correrlo local: `cd web && python3 -m http.server` y abre `http://localhost:8000/`.
-El dato lo empaqueta `scripts/build_dashboard_data.py` en `web/data.js`.
+```bash
+python3 -I scripts/build_web_data.py      # regenera webapp/data/inventario.json
+cd webapp && npm install && npm run dev   # http://localhost:3000
+```
+
+Despliegue: proyecto de Vercel con **Root Directory = `webapp`** conectado al repo; cada push a `main`
+(incluidos los commits diarios del workflow de trámites) redepliega. `NEXT_PUBLIC_SITIO` fija la URL canónica.
+
+### Dashboard estático anterior — `web/`
+
+Ya no se publica. Sigue funcionando local (`cd web && python3 -m http.server`) y conserva lo que la web
+nueva aún no tiene: pestaña de subdominios, permisos por app y matrices orden×poder. El dato lo empaqueta
+`scripts/build_dashboard_data.py` en `web/data.js`.
 
 ## CLI — `gobmx`
 

@@ -30,5 +30,6 @@ $PY -I scripts/stats.py | head -6
 
 echo "==> 6/6 dashboard (web/data.js)"
 $PY -I scripts/build_dashboard_data.py
+$PY -I scripts/build_web_data.py
 
 echo "listo. Revisa git diff antes de commitear."

@@ -22,7 +22,7 @@ Cifras del corte: 519 apps móviles (387 Android, 371 iOS), 394 sitios web, 12,8
 
 ## Herramientas
 
-- [Dashboard web](https://elimorals.github.io/gobmx-presencia-digital/web/): navegador visual del inventario (claro/oscuro, responsive).
+- [Web](https://gobmx-presencia-digital.vercel.app): buscador de trámites de los tres órdenes, comparación de entidades, brechas y apps. API JSON: `https://gobmx-presencia-digital.vercel.app/api/tramites?q=predial&estado=Yucatán`.
 - [CLI gobmx](https://raw.githubusercontent.com/elimorals/gobmx-presencia-digital/main/gobmx.py): consulta por terminal (`python3 gobmx.py stats|apps|sitios|dep`).
 - [MCP server](https://raw.githubusercontent.com/elimorals/gobmx-presencia-digital/main/mcp-server/README.md): 10 herramientas consultables (incluye comparar entidades o municipios, brechas de trámites por volumen y el corte del catálogo de trámites) desde Claude u otro cliente MCP.
 - [README del repositorio](https://raw.githubusercontent.com/elimorals/gobmx-presencia-digital/main/README.md): metodología y estructura.

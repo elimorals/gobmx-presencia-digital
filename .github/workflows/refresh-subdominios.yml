@@ -45,11 +45,12 @@ jobs:
           python3 -I scripts/merge_subdominios.py
           python3 -I scripts/qa.py || true
           python3 -I scripts/build_dashboard_data.py   # regenera web/data.js para el dashboard
+          python3 -I scripts/build_web_data.py         # webapp/data/inventario.json (web en Vercel)
 
       - name: Commit si hubo cambios
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add sitios/ web/data.js
+          git add sitios/ web/data.js webapp/data/inventario.json
           git diff --cached --quiet || git commit -m "chore: refresh mensual de subdominios (CT) + dashboard"
           git push
