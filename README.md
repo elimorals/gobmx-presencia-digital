@@ -163,7 +163,19 @@ EFIPEM). Sin dato, las tasas son `null`, nunca 0. CLI (`comparar`), MCP (`compar
 
 ## MCP — `gobmx-inventario`
 
-Servidor [MCP](https://modelcontextprotocol.io) de solo lectura: expone el inventario como 10 tools
+**Remoto, sin instalar nada:** `https://gobmx-presencia-digital.vercel.app/mcp` (Streamable HTTP, sin cuenta, solo
+lectura; lo sirve la web en `webapp/app/mcp/route.ts` con `mcp-handler`). 10 tools: `stats`, `buscar_tramites`,
+`tramite` (con enlace a la ficha oficial de gob.mx), `matriz_orden_poder_tramites`, `brechas_volumen`, `comparar`
+(rechaza federal), `buscar_apps` (con permisos), `buscar_sitios`, `buscar_subdominio`, `catalogo_tramites`.
+
+```bash
+claude mcp add --transport http gobmx https://gobmx-presencia-digital.vercel.app/mcp
+# Claude web/escritorio: Configuración → Conectores → conector personalizado con esa URL
+# Cursor y otros: { "mcpServers": { "gobmx": { "url": "https://gobmx-presencia-digital.vercel.app/mcp" } } }
+.venv/bin/python -I mcp-server/test_remoto.py   # prueba end-to-end contra producción
+```
+
+**Local (Python):** servidor [MCP](https://modelcontextprotocol.io) de solo lectura: expone el inventario como 10 tools
 consultables desde Claude u otro cliente. Instalación, referencia de tools y prueba end-to-end en
 [`mcp-server/README.md`](mcp-server/README.md).
 

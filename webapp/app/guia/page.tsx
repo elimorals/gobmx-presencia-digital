@@ -5,6 +5,9 @@ export const metadata: Metadata = { title: "Guía: CLI, MCP y API", description:
 const RAW = "https://raw.githubusercontent.com/elimorals/gobmx-presencia-digital/main";
 const SITIO = process.env.NEXT_PUBLIC_SITIO ?? "https://gobmx-presencia-digital.vercel.app";
 
+const REMOTO = ["stats", "buscar_tramites", "tramite", "matriz_orden_poder_tramites", "brechas_volumen", "comparar",
+  "buscar_apps", "buscar_sitios", "buscar_subdominio", "catalogo_tramites"];
+
 const TOOLS: [string, string][] = [
   ["stats()", "Totales, conteos por nivel/sector/estatus, matrices orden×poder de apps, sitios y servicios, y el corte de trámites."],
   ["buscar_servicios(texto, orden, poder, estado, municipio, en_linea, min_frecuencia, por_frecuencia, limite)", "Trámites de los tres órdenes. en_linea: si · no · sin_dato."],
@@ -30,6 +33,26 @@ export default function Guia() {
 #          en_linea (si|no|sin_dato), orden_por (reciente), pagina
 # respuesta: { total, paginas, pagina, items: [ ... ] }  · 25 por página`}</pre>
 
+      <h2>MCP remoto (sin instalar nada)</h2>
+      <p>
+        El inventario como herramientas para Claude, Cursor u otro cliente MCP, servido desde este sitio por Streamable HTTP,
+        sin cuenta y solo de lectura. Herramientas: {REMOTO.join(", ")}.
+      </p>
+      <pre>{`# URL del servidor
+${SITIO}/mcp
+
+# Claude Code
+claude mcp add --transport http gobmx ${SITIO}/mcp
+
+# Claude (web y escritorio): Configuración → Conectores → Agregar conector personalizado → pega la URL
+
+# Cursor, Windsurf y otros (mcp.json)
+{ "mcpServers": { "gobmx": { "url": "${SITIO}/mcp" } } }
+
+# clientes que solo hablan stdio
+{ "mcpServers": { "gobmx": { "command": "npx", "args": ["-y", "mcp-remote", "${SITIO}/mcp"] } } }`}</pre>
+      <p className="dim">Prueba: “busca trámites de licencia en Tabasco y dame la ficha oficial del más solicitado”.</p>
+
       <h2>CLI — gobmx</h2>
       <p>Python 3, sin dependencias externas.</p>
       <pre>{`git clone https://github.com/elimorals/gobmx-presencia-digital
@@ -45,8 +68,8 @@ python3 gobmx.py comparar --orden estatal --ordenar pct_tramites_en_linea
 python3 gobmx.py permisos --busca IMSS
 python3 gobmx.py dep IMSS`}</pre>
 
-      <h2>MCP — gobmx-inventario</h2>
-      <p>Servidor de solo lectura para consultar el inventario en lenguaje natural desde Claude u otro cliente MCP.</p>
+      <h2>MCP local — gobmx-inventario</h2>
+      <p>La versión que corre en tu máquina desde el repositorio (Python), con las herramientas de abajo.</p>
       <pre>{`uv venv .venv && VIRTUAL_ENV=.venv uv pip install "mcp<2"
 claude mcp add gobmx-inventario -- \\
   /ruta/al/repo/.venv/bin/python -I /ruta/al/repo/mcp-server/server.py

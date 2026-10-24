@@ -1,5 +1,10 @@
 # mcp-server — `gobmx-inventario`
 
+> **¿Sin clonar el repo?** Usa el MCP remoto: `https://gobmx-presencia-digital.vercel.app/mcp`
+> (Streamable HTTP, sin cuenta). `claude mcp add --transport http gobmx https://gobmx-presencia-digital.vercel.app/mcp`.
+> Lo sirve la web (`webapp/app/mcp/route.ts`); prueba con `.venv/bin/python -I mcp-server/test_remoto.py`.
+> Sus tools tienen nombres propios (`buscar_tramites`, `tramite`…); este README documenta el servidor local.
+
 MCP server (FastMCP) **de solo lectura** sobre el inventario de este repo: expone las apps,
 sitios, servicios y subdominios como tools para consultarlos desde Claude u otro cliente MCP.
 Mismo dato que el CLI `gobmx.py`; reusa su lógica (`import gobmx`), no duplica código.
