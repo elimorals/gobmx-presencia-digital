@@ -1,0 +1,6 @@
+ 182 xposed
+  39 rootbeer
+  25 RootBeer
+  12 isRooted
+   1 Frida
+   1 FRIDA

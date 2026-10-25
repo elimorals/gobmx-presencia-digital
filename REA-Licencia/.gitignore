@@ -1,0 +1,9 @@
+# Material propietario de SCT/SICT (Licencia Federal Digital) — NO redistribuir
+*.apk
+*.xapk
+*.so
+*.dex
+decoded/
+# permitir docs y metadatos
+!.gitignore
+.DS_Store

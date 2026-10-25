@@ -1,0 +1,88 @@
+I: Using Apktool 3.0.3 on base.apk with 8 threads
+I: Baksmaling classes.dex...
+I: Loading resource table...
+I: Baksmaling classes2.dex...
+I: Baksmaling classes3.dex...
+I: Decoding value resources...
+I: Loading resource table from file: /Users/elias/Library/apktool/framework/1.apk
+I: Decoding file resources...
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080034, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080033, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08009c, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800d1, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08002e, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08002d, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800ab, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080148, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080072, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080072, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080071, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080140, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08013f, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080142, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080141, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080050, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004f, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080055, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080055, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004e, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080054, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080054, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004e, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08005d, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08005d, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08005f, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08005e, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080055, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080055, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004e, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080054, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080054, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004e, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080051, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004f, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08006c, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080036, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080035, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080072, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080065, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080071, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080065, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080061, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080060, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080060, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080073, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080073, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080074, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080074, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08009f, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080091, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800a0, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08008d, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800a0, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08009f, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080088, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800a0, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080096, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800a0, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08009f, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800a0, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800a0, type=ref}
+I: Generating values XMLs...
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004d, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004d, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080058, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004d, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08004d, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080058, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080059, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080028, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f08006a, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f080040, type=ref}
+I: Decoding AndroidManifest.xml with resources...
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800b4, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800b4, type=ref}
+W: Unresolved resource reference: ResReference{pkg=ResPackage{id=0x7f, name=gob.bancodelbienestar.bcobienapp}, id=0x7f0800b5, type=ref}
+I: Copying original files...
+I: Copying assets...
+I: Copying unknown files...

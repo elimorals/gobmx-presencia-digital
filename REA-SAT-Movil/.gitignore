@@ -1,0 +1,19 @@
+# Material propietario del SAT — NO redistribuir
+*.apk
+*.xapk
+*.so
+*.dex
+*.cer
+*.key
+*.ttf
+*.env
+*.env.*
+evidence/
+res-decoded/
+assets-extract/
+flutter_assets/
+analisis/runtime/
+*.png
+# permitir docs y decompilado mínimo
+!.gitignore
+.DS_Store

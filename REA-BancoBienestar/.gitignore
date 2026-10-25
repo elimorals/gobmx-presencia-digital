@@ -1,0 +1,10 @@
+# Material propietario del Banco del Bienestar — NO redistribuir
+*.apk
+*.xapk
+*.so
+*.dex
+_apk/
+decoded/
+# permitir docs, manifiesto y hashes
+!.gitignore
+.DS_Store

@@ -1,0 +1,8 @@
+# SHA-256 — bundle com.miruta.mty (Urbani 3.1.5 / vc 430)
+# APKs del App Bundle (fuente SSD):
+639655b1fed590ade9356765e72ed6dfd21ec5faafbd2ba820fd36ea3a29b852  base.apk
+23f58a152ae47c1fc443829cd0fd3aadbd3596cf65272ffdece6f233d8ec6de9  config.armeabi_v7a.apk
+75d5ac51131a9ce23251487878f90a588085c138e5e1ab880b1897b83c71b481  config.xhdpi.apk
+# Librerías nativas extraídas de config.armeabi_v7a.apk:
+8289ee77cee0ca8d4c01c7c6ea576ff7542901111efdaa0aff3eca582f389daa  libapp.so
+cc952031db9f03cf93c0d5f29438c29099c1ac19296d21c7c9747b88b2ea39f4  libflutter.so

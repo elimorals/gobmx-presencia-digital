@@ -1,0 +1,13 @@
+# Material propietario de IMSS — NO redistribuir
+*.apk
+*.xapk
+*.so
+*.blob
+*.dll
+evidence/
+res-decoded/
+assemblies/
+# permitir docs y endpoints extraídos (rutas de API, no secretos)
+!.gitignore
+!decompiled/endpoints.txt
+.DS_Store
