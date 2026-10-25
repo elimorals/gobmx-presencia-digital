@@ -1,0 +1,13 @@
+# Material propietario de Procesar/CONSAR (AforeMovil) — NO redistribuir
+*.apk
+*.xapk
+*.so
+*.bks
+*.pem
+*.dex
+evidence/
+res-decoded/
+assets-extract/
+# permitir docs y decompilado mínimo
+!.gitignore
+.DS_Store

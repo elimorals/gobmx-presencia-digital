@@ -1,0 +1,7 @@
+_apk/
+decompiled/
+res-decoded/
+*.so
+# Crudos con PII del usuario (sesión real): NO versionar
+evidence/logcat-*.txt
+evidence/pantalla-*.png

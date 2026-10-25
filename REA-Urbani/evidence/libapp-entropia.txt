@@ -1,0 +1,3 @@
+libapp.so: tamano=29016941 bytes, entropia=7.9954 bits/byte
+magic snapshot Dart (f5f5dcdc): 0 ocurrencias
+=> alta entropia uniforme + 0 secciones snapshot => Dart AOT cifrado por packer

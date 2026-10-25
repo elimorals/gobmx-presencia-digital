@@ -1,0 +1,17 @@
+# Artefactos pesados extraídos del APK (regenerables; no redistribuir contenido con derechos)
+so-extract/
+assets-extract/
+evidence/assets/bin/Data/data.unity3d
+evidence/assets/bin/Data/Managed/Metadata/global-metadata.dat
+evidence/easyar-key.txt
+decompiled/il2cppdumper-out/dump.cs
+decompiled/il2cppdumper-out/il2cpp.h
+decompiled/il2cppdumper-out/script.json
+# Árboles pesados derivados del APK (regenerables) — NO redistribuir
+*.apk
+*.xapk
+*.so
+*.dex
+decompiled/
+evidence/
+.DS_Store

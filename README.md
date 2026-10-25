@@ -10,6 +10,10 @@ ni login con credenciales ajenas, ni envío de datos personales.
 
 🔗 **Web:** https://gobmx-presencia-digital.vercel.app (Vercel; la versión de GitHub Pages se retiró el 2026-10-24)
 
+Además del inventario, el repo incluye **ingeniería inversa a fondo de 10 apps** del catálogo
+(carpetas `REA-*/`): pila tecnológica, red, criptografía, protección y hallazgos de seguridad de
+cada una. Ver [§ Ingeniería inversa de apps](#ingeniería-inversa-de-apps-rea).
+
 ## Cifras (corte 2026-10-24; trámites al 2026-10-23)
 
 | | |
@@ -29,6 +33,7 @@ aunque con cobertura muy desigual por entidad (ver `servicios/harvest-subnaciona
 ```
 gobmx-presencia-digital/
 ├── README.md                    ← este archivo
+├── REA-*/                       ← ingeniería inversa de 10 apps gob.mx (una carpeta por app, con su README)
 ├── llms.txt                     ← resumen para LLMs (robots y sitemap los sirve la web)
 ├── apps/
 │   ├── inventario/*.json        ← apps por segmento (federal, autónomos, estatal A/B/C+CDMX+municipal)
@@ -210,6 +215,34 @@ y [`/guia/api`](https://gobmx-presencia-digital.vercel.app/guia/api) (API, campo
 Un **GitHub Action** (`.github/workflows/refresh-subdominios.yml`) refresca los subdominios por
 Certificate Transparency y reconstruye `web/data.js` una vez al mes. Otro
 (`.github/workflows/refresh-tramites.yml`) baja a diario el corte del Catálogo Nacional de trámites.
+
+## Ingeniería inversa de apps REA
+
+Análisis a fondo de **10 apps** del inventario (carpetas `REA-*/`), una carpeta por app, cada una con su propio README e
+índice de documentos (identidad, manifiesto, autenticación, red/endpoints, criptografía, almacenamiento,
+protección/ofuscación, SDKs, firma y hallazgos). El método base es **estático** con REA (JADX headless
+0.7.1 + apktool 3.0.3) sobre el APK; cuando se indica, hay además un **pase dinámico** en dispositivo
+físico (sin root salvo nota). Todas las afirmaciones llevan evidencia y se verificó el package real
+**antes** de documentar, tras detectar un artefacto mal nombrado en el acervo (ver Banco del Bienestar).
+
+| App | Package | Dependencia | Pila / protección | Hallazgo o rasgo clave |
+|---|---|---|---|---|
+| [AforeMóvil](REA-AforeMovil/README.md) 6.0.15 | `mx.com.procesar.aforemovil` | Procesar / CONSAR (SAR–AFORE) | Nativa, R8 + anti-tamper (`toolChecker`), ocultamiento nativo de claves | Biometría Daon (FIDO/UAF, liveness), `api.esar.io`, **sin TLS pinning**; firma auténtica de Play (`O=procesar`) |
+| [App CDMX](REA-App-CDMX/README.md) 4.5.2 | `mx.gob.cdmx.adip.apps` | GCDMX / ADIP | Nativa, license check **PairIP** · estático + dinámico | Super-app con ~24 servicios (pagos, Mi Taxi, Llave CDMX, NFC de transporte, botón de pánico) |
+| [Banco del Bienestar](REA-BancoBienestar/README.md) 7.17.0 | `gob.bancodelbienestar.bcobienapp` | Banco del Bienestar | Low-code **Veritran** (Duktape/`.szip`), **RASP fuerte** (root/Xposed/Frida/emulador/packer nativo) | Lógica bancaria interpretada, no decompilable; **sin endpoints en claro**; el APK del acervo era Aptoide mal nombrado → se reextrajo de Play |
+| [BilletesMx](REA-BilletesMx/README.md) 5.5 | `org.banxico.dge.movil` | Banxico | **Unity IL2CPP** 6000.2.7f2 + EasyAR · estático + dinámico (Il2CppDumper) | RA que explica la seguridad de los billetes de la familia G |
+| [CFE Contigo](REA-CFE-Contigo/README.md) 7.0.0 | `mx.com.cfe.cfecontigo` | CFE | Nativa, **ofuscada con DexGuard** | App **#1 por instalaciones** del inventario (~37.45 M); backend oculto por la ofuscación |
+| [IMSS Digital](REA-IMSS-Digital/README.md) 8.7.4 | `st.android.imsspublico` | IMSS | **Xamarin/.NET** (C# descomprimible) | **#3 por instalaciones** (~32.25 M); se recuperaron **83 endpoints reales** y el stack de identidad — el análisis más revelador del lote |
+| [Mi Cuenta Infonavit](REA-Infonavit/README.md) 5.3.48 | `com.infonavit.micuentainfonavit` | INFONAVIT | Nativa (Kotlin/Java) | **Crítico:** el build de producción **desactiva validación de certificado y hostname TLS** (`getUnsafeOkHttpClient`, sin pinning) → MITM sobre auth, pagos y PII |
+| [Licencia Federal Digital](REA-Licencia/README.md) 1.0.49 | `mx.sct.licencia` | SCT / SICT | **Híbrida Capacitor/Ionic/Angular** (JS legible, sin hardening) | Guarda licencia + CURP/RFC/email/password/PIN en **SQLCipher con llave = PIN**, y existe una **ruta que abre la DB sin llave**; backend `wslfd.sct.gob.mx` |
+| [SAT Móvil](REA-SAT-Movil/README.md) 2.4.4 | `mx.gob.sat` | SAT | **Flutter** (Dart AOT) · estático + dinámico acotado | e.firma portable + SAT ID; lógica y endpoints en `libapp.so`, no en el DEX |
+| [Urbani / MiRuta](REA-Urbani/README.md) 3.1.5 | `com.miruta.mty` | Municipal (MTY, Nuevo León) | **Flutter** cifrado por **packer Baidu** · estático + dinámico (logcat) | Transporte público del AMM; backend privado `urbani.io` recuperado del logcat; APK re-firmado (`CN=Android`) |
+
+> **Alcance y ética.** Mismo principio que el inventario: observación de artefactos públicos obtenidos de
+> tiendas oficiales, sin atacar infraestructura en vivo ni usar credenciales ajenas. El desempacado de
+> binarios endurecidos (Veritran, packer Baidu), el volcado de snapshots Dart cifrados y los cuerpos de
+> endpoints autenticados quedan fuera de alcance cuando requieren root. Cada hallazgo de seguridad es
+> responsable y está fechado; el propósito es documentar la postura de seguridad del software público.
 
 ## Créditos y fuentes
 

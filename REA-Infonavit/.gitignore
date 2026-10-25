@@ -1,0 +1,14 @@
+# Material propietario del INFONAVIT (Mi Cuenta Infonavit) — NO redistribuir
+_apk/
+*.apk
+*.xapk
+*.so
+*.dex
+*.pem
+*.bks
+evidence/smali/
+evidence/mitm/
+decompiled/
+# permitir docs, recursos decodificados pequeños y evidencia textual
+!.gitignore
+.DS_Store
