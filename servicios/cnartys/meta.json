@@ -1,18 +1,18 @@
 {
  "fuente": "Catálogo Nacional de Regulaciones, Trámites y Servicios (CONAMER), CSV público diario",
- "url": "https://www.catalogonacional.gob.mx/sujetosobligados/TramitesPublicadosCSV/tramites_publicados_28_10_2026.csv",
- "archivo": "tramites_publicados_28_10_2026.csv",
- "fecha_corte": "2026-10-28",
- "normalizado": "2026-10-29T11:02:22+00:00",
- "sha256": "e4440114536f05925fc3a25132ffe46ac898cc25618e43220d68bb07e8595fce",
- "registros": 31764,
+ "url": "https://www.catalogonacional.gob.mx/sujetosobligados/TramitesPublicadosCSV/tramites_publicados_29_10_2026.csv",
+ "archivo": "tramites_publicados_29_10_2026.csv",
+ "fecha_corte": "2026-10-29",
+ "normalizado": "2026-10-30T10:58:54+00:00",
+ "sha256": "99258aeec254234dc95f74cb3886929bfedaeded0f6191be39780beb43a17e1b",
+ "registros": 31762,
  "por_orden": {
-  "federal": 5545,
+  "federal": 5543,
   "estatal": 14608,
   "municipal": 11611
  },
  "por_poder": {
-  "ejecutivo": 30956,
+  "ejecutivo": 30954,
   "judicial": 534,
   "autonomo": 218,
   "legislativo": 56
