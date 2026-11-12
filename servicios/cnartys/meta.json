@@ -1,28 +1,28 @@
 {
  "fuente": "Catálogo Nacional de Regulaciones, Trámites y Servicios (CONAMER), CSV público diario",
- "url": "https://www.catalogonacional.gob.mx/sujetosobligados/TramitesPublicadosCSV/tramites_publicados_10_11_2026.csv",
- "archivo": "tramites_publicados_10_11_2026.csv",
- "fecha_corte": "2026-11-10",
- "normalizado": "2026-11-11T12:03:04+00:00",
- "sha256": "6753e14f1f8967ede7a140af10ba60b27d59ce3c15c2d9db39efe49812a4e052",
- "registros": 31750,
+ "url": "https://www.catalogonacional.gob.mx/sujetosobligados/TramitesPublicadosCSV/tramites_publicados_11_11_2026.csv",
+ "archivo": "tramites_publicados_11_11_2026.csv",
+ "fecha_corte": "2026-11-11",
+ "normalizado": "2026-11-12T13:07:27+00:00",
+ "sha256": "f2b176a21862f67c5e074cdddd48c4b76765f1e2414da075ccc91a8d90cdcb88",
+ "registros": 31733,
  "por_orden": {
-  "federal": 5531,
+  "federal": 5514,
   "estatal": 14608,
   "municipal": 11611
  },
  "por_poder": {
-  "ejecutivo": 30942,
+  "ejecutivo": 30925,
   "judicial": 534,
   "autonomo": 218,
   "legislativo": 56
  },
  "entidades_con_registros": 31,
  "municipios_con_registros": 76,
- "con_canal_en_linea": 5135,
+ "con_canal_en_linea": 5120,
  "sin_dato_de_canal": 1543,
  "duplicados_internos_quitados": 362,
- "ligados_sfp_por_homoclave": 1961,
+ "ligados_sfp_por_homoclave": 1953,
  "ligados_sfp_por_nombre_siglas": 157,
  "hosts_gob_mx": 68,
  "regla_descarga": "el archivo del día D aparece ~02:31 UTC del día D+1; el servidor guarda solo los 2 últimos"
