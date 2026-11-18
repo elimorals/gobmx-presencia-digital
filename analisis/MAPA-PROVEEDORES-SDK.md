@@ -263,6 +263,61 @@ estático; no se afirma ninguna confirmación dinámica no obtenida.
 
 ---
 
+## Adenda — Lote 5 (banda 50k–100k: licencias, pánico, tier medio)
+
+Detalle completo en `analisis/LOTE5-BANDA-50-100k.md`. Dos pruebas sistémicas:
+
+### Clúster B (Cosmocolor) — ahora 3 estados + cruce de 5 vendors
+
+El **trust-all es exclusivo del producto Cosmocolor.** Se analizaron 5 vendors de licencia de
+conducir: **Cosmocolor Chiapas** (`...movapp.chp`) confirmado como **3er estado** (mismo
+`ServiceGenerator` + backend `licenciamanejo.com` + residuo EDOMEX; trust-all A-CONFIRMAR por builder
+R8-ofuscado). Los otros 4 vendors —ZTK (Guanajuato), licdig (Chihuahua), validatulicencia (Oaxaca),
+DC Soluciones (Tlaxcala)— **sanos de trust-all**. → El defecto no generaliza a "apps de licencia";
+es del producto Cosmocolor. Clúster B: **EDOMEX ✓, Jalisco ✓, Chiapas (a-confirmar)**.
+
+### Hipótesis "pánico → cleartext" — REFUTADA como patrón general
+
+De las apps de pánico/emergencia (lotes 4+5), solo **Veracruz Mujer Alerta** (CRÍTICA) y las **911**
+usan cleartext. Sanas: Escudo Urbano, Jalisco Alerta, **Llamada Segura Hidalgo, GN Reporta, Mujeres
+Seguras, Alerta Ciudadana Veracruz**. El cleartext es **por despliegue de dependencia, no inherente
+al tipo de app**. "Patrón Veracruz" también refutado: C4 Veracruz sano vs SSP/SEV cleartext → no es
+política estatal.
+
+### Matiz metodológico confirmado
+
+Un `usesCleartextTraffic="true"` en el manifest **no implica uso real**: GN Reporta lo tiene en
+`true` pero su backend es 100% HTTPS (flag vestigial). Por eso el triage marca "cleartext=true" como
+señal a confirmar, no como hallazgo. (Igual: Mujeres Seguras tenía el `SendLocation` http **comentado**.)
+
+### Clúster G (dev/test en prod) — nuevo
+
+Mujeres Seguras → endpoint `/mstest2` en el build de producción.
+
+### Corpus total: 67 apps con RE a fondo + 17 triadas (banda media).
+
+### Análisis dinámico — emulador rooteado (2026-11-18)
+
+El teléfono Motorola físico **no se puede rootear** (variante China Mobile `cmcc`, bootloader
+bloqueado, sin desbloqueo de OEM). Se montó en su lugar un **emulador arm64 rooteado** (AVD
+`google_apis`, `frida-server` 17.24.3) — pipeline verificado: los hooks de frida disparan y leen
+TrustManagers/endpoints en runtime.
+
+**Hallazgo dinámico (Chiapas Cosmocolor):** al arranque la app usa `RootTrustManager` (el del
+sistema, validación correcta). El trust-all de Cosmocolor vive en `ServiceGenerator.createService`,
+que **solo se ejecuta al hacer una llamada API**, y esa llamada está **detrás de un formulario
+(folio/CURP)**. → trust-all de Chiapas sigue **A-CONFIRMAR** (el arranque está limpio; el path
+defectuoso es gated por formulario).
+
+**Muro honesto del dinámico:** el root quita la barrera de interceptar TLS, pero **no** la de que
+estas apps de gobierno no llaman a su backend hasta recibir datos reales (folio/login) — es diseño
+de la app. Confirmar los `A-CONFIRMAR` restantes requeriría **credenciales/folios de prueba
+reales**, que no se fabrican por ética. Para Flutter/Hermes (Escudo Urbano `APP_KEY`, Internet
+Bienestar) el secreto se descifra en Dart/Hermes, fuera del alcance de los hooks Java de frida.
+**No se afirma ninguna confirmación dinámica no obtenida.**
+
+---
+
 ## Qué sigue (si se decide continuar)
 
 1. **Informe de divulgación sistémico** del clúster A (antipatrón TLS endémico) dirigido a un CERT
