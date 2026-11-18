@@ -296,6 +296,26 @@ Mujeres Seguras → endpoint `/mstest2` en el build de producción.
 
 ### Corpus total: 67 apps con RE a fondo + 17 triadas (banda media).
 
+### Análisis dinámico — emulador rooteado (2026-11-18)
+
+El teléfono Motorola físico **no se puede rootear** (variante China Mobile `cmcc`, bootloader
+bloqueado, sin desbloqueo de OEM). Se montó en su lugar un **emulador arm64 rooteado** (AVD
+`google_apis`, `frida-server` 17.24.3) — pipeline verificado: los hooks de frida disparan y leen
+TrustManagers/endpoints en runtime.
+
+**Hallazgo dinámico (Chiapas Cosmocolor):** al arranque la app usa `RootTrustManager` (el del
+sistema, validación correcta). El trust-all de Cosmocolor vive en `ServiceGenerator.createService`,
+que **solo se ejecuta al hacer una llamada API**, y esa llamada está **detrás de un formulario
+(folio/CURP)**. → trust-all de Chiapas sigue **A-CONFIRMAR** (el arranque está limpio; el path
+defectuoso es gated por formulario).
+
+**Muro honesto del dinámico:** el root quita la barrera de interceptar TLS, pero **no** la de que
+estas apps de gobierno no llaman a su backend hasta recibir datos reales (folio/login) — es diseño
+de la app. Confirmar los `A-CONFIRMAR` restantes requeriría **credenciales/folios de prueba
+reales**, que no se fabrican por ética. Para Flutter/Hermes (Escudo Urbano `APP_KEY`, Internet
+Bienestar) el secreto se descifra en Dart/Hermes, fuera del alcance de los hooks Java de frida.
+**No se afirma ninguna confirmación dinámica no obtenida.**
+
 ---
 
 ## Qué sigue (si se decide continuar)
