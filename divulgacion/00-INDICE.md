@@ -29,6 +29,10 @@ sus propios datos de contacto (marcados `[TUS DATOS]`).
 | 06 | FiREL | Consejo de la Judicatura Federal (CJF) + FielNet/IQSEC | **ALTA (a confirmar)** | [06-firel-cjf.md](06-firel-cjf.md) |
 | 07 | Guía Pemex | Petróleos Mexicanos (Pemex) | **MEDIA-ALTA** | [07-guia-pemex.md](07-guia-pemex.md) |
 | 08 | **Sistémico** — antipatrón TLS trust-all en el ecosistema gob.mx | CERT-MX (coordinador) + dependencias/proveedores | **CRÍTICA (sistémica)** | [08-sistemico-tls-trust-all-CERT.md](08-sistemico-tls-trust-all-CERT.md) |
+| 09 | Veracruz Mujer Alerta | SSP Veracruz (prod. Artech/GeneXus) | **CRÍTICA** | [09-veracruz-mujer-alerta-ssp.md](09-veracruz-mujer-alerta-ssp.md) |
+| 10 | SEV Empleado | Secretaría de Educación de Veracruz (SEV) | **ALTA** | [10-sev-empleado-veracruz.md](10-sev-empleado-veracruz.md) |
+| 11 | 911 Móvil BC | C4 Baja California | **ALTA** | [11-911movil-bc-c4.md](11-911movil-bc-c4.md) |
+| 12 | CAASIM | Agua Hidalgo (CAASIM) | **ALTA** | [12-caasim-hidalgo.md](12-caasim-hidalgo.md) |
 
 > **El informe 08 es el recomendado para enviar primero.** Agrupa el patrón que se repite en los
 > casos 01/02/03/06 y lo dirige a un CERT nacional: ataca la causa raíz del ecosistema, no 4 apps

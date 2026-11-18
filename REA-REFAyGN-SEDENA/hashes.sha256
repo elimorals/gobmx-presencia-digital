@@ -1,0 +1,11 @@
+# Hashes REFAyGN (SEDENA)
+## XAPK descargado (APKPure)
+d996c3624c084e15321eeb61e65035a0c80c1d422605a3b6bd4b0ade504c7fa7  /Users/elias/Downloads/gob-mx-reverse-engineering/descargas-apk/lote4/com.sedena.refam/com.sedena.refam@arm64-v8a.xapk
+## Base APK (dentro del xapk)
+b037c6b5262ce9bc411ad240e337d2d9ca3afbec68cb5f6840be999a021901c8  /private/tmp/claude-501/-Users-elias-Downloads-gob-mx-reverse-engineering/e4f8a4e6-4f67-45a5-8321-7a30b44862f7/scratchpad/refam/com.sedena.refam.apk
+## Splits
+35e3ed9aec0a0f388963b1d1515f8698042bc93318e0418781d2b477923c944f  /private/tmp/claude-501/-Users-elias-Downloads-gob-mx-reverse-engineering/e4f8a4e6-4f67-45a5-8321-7a30b44862f7/scratchpad/refam/config.arm64_v8a.apk
+256d1c9dd406113c2bd65f1cccb45607e8149a6129187a2d3ad3c05b60cbf7ba  /private/tmp/claude-501/-Users-elias-Downloads-gob-mx-reverse-engineering/e4f8a4e6-4f67-45a5-8321-7a30b44862f7/scratchpad/refam/config.en.apk
+d117e9b54039cebc60d2f41d8e754794b96343b1e566e5bd94878c2070201319  /private/tmp/claude-501/-Users-elias-Downloads-gob-mx-reverse-engineering/e4f8a4e6-4f67-45a5-8321-7a30b44862f7/scratchpad/refam/config.fr.apk
+9df34032a569fac1cb22f2a7474d26acdda8f779eef741a5acf04acd254d2bcc  /private/tmp/claude-501/-Users-elias-Downloads-gob-mx-reverse-engineering/e4f8a4e6-4f67-45a5-8321-7a30b44862f7/scratchpad/refam/config.mdpi.apk
+## Cert firma (SHA-256): ebc36a3a256a00e83caac50e6af5141dbd1eee7e0e6bd85d0d2b5dad250a9ca8
