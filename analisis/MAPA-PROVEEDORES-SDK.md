@@ -204,6 +204,65 @@ Proveedores y frameworks identificados por namespace/strings (señal, no exhaust
 
 ---
 
+## Adenda — Lote 4 (13 apps ≥100k nuevas, total corpus = 58)
+
+RE de las 13 apps ≥100k que faltaban del top por instalaciones. Hallazgos cruzados con los clústeres:
+
+### Nuevos en clúster D (cleartext / HTTP en claro, CWE-319)
+
+| App | Dependencia | Detalle | Severidad |
+|-----|-------------|---------|-----------|
+| **Veracruz Mujer Alerta** | SSP Veracruz (prod. GeneXus) | alerta de **violencia de género + ubicación** por `http://alertagenero.sspver.gob.mx` | **CRÍTICA** |
+| **SEV Empleado** | SEV Veracruz | **nómina + RFC** por `http://sirhportal.sev.gob.mx` (login sí HTTPS) | **ALTA** |
+| **911Móvil BC** | C4 Baja California | NSC cleartext en 4 dominios backend de emergencias | **ALTA** |
+| **CAASIM** | Agua Hidalgo | NSC reabre cleartext para API de **pagos de agua** | **ALTA** |
+| **Internet Bienestar** | Qvantel/Altan | `usesCleartextTraffic=true` global (telecom/pagos) | MEDIA |
+
+**Patrón Veracruz:** 2 dependencias del mismo estado (SSP + SEV) con cleartext confirmado.
+**Hipótesis "pánico→cleartext":** mixta — Veracruz Mujer Alerta y 911Móvil BC ✓; Escudo Urbano y
+Jalisco Alerta ✗. No universal.
+
+### Clúster C (backends/pasarelas compartidas) — nuevo cruce
+
+- **Adquira México** (pasarela de pago): **Tesorería CDMX** (`adquiracloud.mx`) ↔ **CAASIM Hidalgo**
+  (`adquiramexico.com.mx`) — mismo procesador, dos gobiernos.
+
+### Clúster G (dev/test en producción, CWE-489) — nuevos
+
+Tuzobús (`apis-tests.hidalgo.gob.mx`), 911Móvil BC (`tijuana.c4bcdev.gob.mx`), Internet Bienestar
+(`mapp-altan-dev.qvantel.systems`), Preinscripciones Coahuila (`jsonplaceholder`/`pokeapi` de plantilla).
+
+### Proveedores / pilas nuevas
+
+- **Nueva clase de muro — React Native/Hermes:** Internet Bienestar, Jalisco Alerta, 911Móvil BC,
+  eSIT Hidalgo, Tuzobús. (Antes solo Flutter/Veritran/.NET eran muros.) El bytecode Hermes se
+  rompe parcialmente con decompilación del string table (ver `REA-Internet-Bienestar/05`).
+- **GeneXus cruce resuelto:** Veracruz Mujer Alerta (`CN=Artech Genexus`) **no** comparte el defecto
+  de SEG-Móvil — GeneXus no mete trust-all; el cleartext de Mujer Alerta es despliegue de SSP.
+- Vendors: Qvantel/Altan, Indra (Tren Maya), LUCA (Preinscripciones), Erlia (Jalisco Alerta).
+- Pasarelas: Clip/Stripe (Tren Maya), OpenPay+OXXO+Paynet (Internet Bienestar), Adquira (CAASIM).
+
+### Contraejemplos sanos del lote 4 (revisados, sin defecto)
+
+REFAyGN/SEDENA (Flutter, red impecable), Descarga Cultura UNAM (la más limpia), Tren Maya (Clip/Stripe,
+sin trust-all), eSIT Hidalgo, Jalisco Alerta. Preinscripciones Coahuila: PII de menores en Azure del
+vendor (gobernanza, no seguridad).
+
+### Candidatas nuevas a `divulgacion/`
+
+Veracruz Mujer Alerta (CRÍTICA), SEV Empleado (ALTA), 911Móvil BC (ALTA), CAASIM (ALTA).
+
+### Nota del análisis dinámico (device Motorola, sin root)
+
+El MITM sin root topó muros: **Escudo Urbano** usa un engine Flutter **Shorebird no soportado** por
+reflutter; **Internet Bienestar** (RN) quedó en blanco sin emitir su backend por el proxy. El
+cleartext crítico de la mayoría es **post-login** → no confirmable sin credenciales reales (límite
+ético). Lo que sí rindió: **decompilación estática del bytecode Hermes** (endpoints/topología). El
+camino limpio para los `A-CONFIRMAR` restantes es **rootear el device** (frida-server) o Hermes/Dart
+estático; no se afirma ninguna confirmación dinámica no obtenida.
+
+---
+
 ## Qué sigue (si se decide continuar)
 
 1. **Informe de divulgación sistémico** del clúster A (antipatrón TLS endémico) dirigido a un CERT

@@ -10,7 +10,7 @@ ni login con credenciales ajenas, ni envío de datos personales.
 
 🔗 **Web:** https://gobmx-presencia-digital.vercel.app (Vercel; la versión de GitHub Pages se retiró el 2026-10-24)
 
-Además del inventario, el repo incluye **ingeniería inversa a fondo de 45 apps** del catálogo
+Además del inventario, el repo incluye **ingeniería inversa a fondo de 58 apps** del catálogo
 (carpetas `REA-*/`): pila tecnológica, red, criptografía, protección y hallazgos de seguridad de
 cada una. Ver [§ Ingeniería inversa de apps](#ingeniería-inversa-de-apps-rea).
 
@@ -218,7 +218,7 @@ Certificate Transparency y reconstruye `web/data.js` una vez al mes. Otro
 
 ## Ingeniería inversa de apps REA
 
-Análisis a fondo de **45 apps** del inventario (carpetas `REA-*/`), una carpeta por app, cada una con su propio README e
+Análisis a fondo de **58 apps** del inventario (carpetas `REA-*/`), una carpeta por app, cada una con su propio README e
 índice de documentos (identidad, manifiesto, autenticación, red/endpoints, criptografía, almacenamiento,
 protección/ofuscación, SDKs, firma y hallazgos). El método base es **estático** con REA (JADX headless
 0.7.1 + apktool 3.0.3) sobre el APK; cuando se indica, hay además un **pase dinámico** en dispositivo
@@ -271,6 +271,19 @@ físico (sin root salvo nota). Todas las afirmaciones llevan evidencia y se veri
 | [Lotería de México](REA-Loteria-Mexico/README.md) | `loterianacional.mx` | Lotenal | Nativa (GemesGroup, ES) | **White-label multi-país** (trae endpoints de ONCE España + Santa Casa Portugal); **resultados por HTTP desde un tercero** (`nacionalloteria.com`) → MITM altera el número ganador; chequeo de versión por Dropbox público |
 | [CFE Proveedores](REA-CFE-Proveedores/README.md) | `mx.com.cfe.proveedores` | CFE (B2G) | **Xamarin.Forms** (.NET) | Codebase interno **"DemoCFE"** ("Demo") en producción; `usesCleartextTraffic` + **2 IPs internas de la CFE** en el NSC (fuga de topología); TLS estándar sin bypass; portal de proveedores |
 | [Seguridad Inmediata](REA-Seguridad-Inmediata/README.md) | `com.alertacontigo.mx` | Ayto. Puebla (pánico) | **.NET MAUI AOT + PairIP** (doble muro) | Botón de pánico: payload/backend no recuperables (AOT nativo + PairIP); **ubicación a OneSignal** (tercero) + **`usesCleartextTraffic` global** (a confirmar) + permisos extremos (`CALL_PRIVILEGED`); re-firmada |
+| [Veracruz Mujer Alerta](REA-Mujer-Alerta-Veracruz/README.md) | `com.artech.nuevoalerta.alertamujer` | SSP Veracruz (prod. GeneXus) | **GeneXus** (`com.artech`) | **CRÍTICA (CWE-319):** alerta de **violencia de género + ubicación** por `http://alertagenero.sspver.gob.mx`; GeneXus no mete trust-all (cleartext es despliegue de SSP); firma del vendor `O=Artech` |
+| [911Móvil BC](REA-911Movil-BC/README.md) | `com.c4bc.alerta066m` | C4 Baja California | **React Native/Hermes** | **ALTA:** NSC cleartext en 4 dominios backend de emergencias (`066movilbc.seguridadbc.gob.mx`…); subdominio dev `c4bcdev` en prod; **firma auténtica C4 BC** |
+| [SEV Empleado](REA-SEV-Empleado/README.md) | `mx.gob.sev.empleados` | SEV Veracruz | Cordova/Ionic 1 (JS legible) | **ALTA:** **nómina + RFC** por `http://sirhportal.sev.gob.mx` (login sí HTTPS); `targetSdk 22`; firma auténtica SEV |
+| [CAASIM](REA-CAASIM/README.md) | `mx.gob.hidalgo.caasim.app` | Agua Hidalgo | Nativa Kotlin | **ALTA:** NSC reabre cleartext para API de **pagos de agua**; pasarela **Adquira** = mismo procesador que Tesorería CDMX; sin trust-all; re-firmada |
+| [Internet para el Bienestar](REA-Internet-Bienestar/README.md) | `com.qvantel.bienestar.preprod` | Qvantel/Altan | **React Native/Hermes** | Sobre-permisos de operador (`READ_SMS`/`READ_CALL_LOG`/`BIND_CARRIER_SERVICES`); cleartext global; build `.preprod`+endpoint `-dev` en prod; Keycloak+OpenPay; re-firmada |
+| [REFAyGN (SEDENA)](REA-REFAyGN-SEDENA/README.md) | `com.sedena.refam` | SEDENA (registro de armas) | **Flutter** (Dart AOT) | **Sano:** HTTPS exclusivo a `reefam.sedena.gob.mx`, solo permiso INTERNET, sin secretos; contraejemplo federal limpio; re-firmada |
+| [Tren Maya Boletos](REA-Tren-Maya/README.md) | `com.indra.trenmaya.pro` | Indra / Tren Maya | Nativa Kotlin | **Sano:** sin trust-all, pago **Clip/Stripe** sin secretos en claro; telemetría/ads de terceros (privacidad); re-firmada |
+| [Tuzobús](REA-Tuzobus/README.md) | `com.tuzobus` | Gobierno de Hidalgo | **React Native/Hermes** | **MEDIA:** endpoint de **pruebas** `apis-tests.hidalgo.gob.mx` en prod; red sana (cleartext=false); **firma auténtica Hidalgo** |
+| [eSIT Hidalgo](REA-eSIT-Hidalgo/README.md) | `com.esitmovil` | Tributario Hidalgo | **React Native/Hermes** | **Sano** en TLS/cleartext; permiso `DUMP` declarado (manifiesto descuidado); suite Bluetooth (lector POS); re-firmada |
+| [Preinscripciones Coahuila](REA-Preinscripciones-Coahuila/README.md) | `com.luca.preinscripciones` | SEDU Coahuila (vendor LUCA) | **Flutter** (Dart AOT) | PII de **menores** (CURP) en **Azure genérico del vendor** (no gob.mx); endpoints de plantilla (`jsonplaceholder`) en prod; sin cleartext; re-firmada |
+| [Descarga Cultura UNAM](REA-Descarga-Cultura-UNAM/README.md) | `mx.unam.codc.android.descargaculturaunam` | UNAM | Nativa Kotlin (CertificatePinner) | **La más limpia del lote:** sin trust-all, sin secretos, permisos mínimos; **firma auténtica UNAM** |
+| [Jalisco Alerta](REA-Jalisco-Alerta/README.md) | `mx.erlia.jal.android` | Jalisco (vendor Erlia) | **React Native/Expo/Hermes** | **Sano:** no repite el cleartext de 911-CDMX; backend HTTPS del proveedor; Sentry DSN público (menor); re-firmada |
+| [Escudo Urbano Jalisco](REA-Escudo-Urbano-Jal/README.md) | `com.c5.boton_auxilio_jalisco_flutter` | C5 Jalisco (pánico) | **Flutter** (Dart AOT) | `.env` con `APP_KEY` + endpoints cifrados en el cliente (a-confirmar dinámico); TLS/cleartext sano; re-firmada |
 
 > **Alcance y ética.** Mismo principio que el inventario: observación de artefactos públicos obtenidos de
 > tiendas oficiales, sin atacar infraestructura en vivo ni usar credenciales ajenas. El desempacado de

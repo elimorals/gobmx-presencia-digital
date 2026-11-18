@@ -1,0 +1,16 @@
+# Material propietario / artefactos pesados — NO redistribuir
+*.apk
+*.xapk
+*.so
+*.dex
+*.arsc
+*.der
+*.pem
+*.bks
+evidence/
+res-decoded/
+assets-extract/
+decompiled/
+# permitir docs y artefactos de metadatos
+!.gitignore
+.DS_Store
