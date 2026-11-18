@@ -1,0 +1,6 @@
+# SHA-256 — ICVNL (com.icv.app) 2.4 (vc 45)
+cff309d663d50bae7df741c7af6aea2dc6e080e82504f3903b761de7417503b0  xapk:com.icv.app@arm64-v8a.xapk
+63a2aa0f56fbe0f8a816e2f209275293128eb1a9d6f5ce829f4ad27db0c13f29  apk-base:com.icv.app.apk
+5697029cdb09da1939528f34cd4276471fe840c2a13842040ef2cda4382f6c8f  apk-split-arm64:config.arm64_v8a.apk
+e5aa88afc2e783a2fd436ceeb8bb4021ee1d1587c12f07340fa474f65eb3883d  libassembly-store.so
+859d3d37aee16a550289573937067d6d3760751fad63bcb96ca117e31d63ea11  ICV_APP.dll

@@ -10,7 +10,7 @@ ni login con credenciales ajenas, ni envío de datos personales.
 
 🔗 **Web:** https://gobmx-presencia-digital.vercel.app (Vercel; la versión de GitHub Pages se retiró el 2026-10-24)
 
-Además del inventario, el repo incluye **ingeniería inversa a fondo de 10 apps** del catálogo
+Además del inventario, el repo incluye **ingeniería inversa a fondo de 25 apps** del catálogo
 (carpetas `REA-*/`): pila tecnológica, red, criptografía, protección y hallazgos de seguridad de
 cada una. Ver [§ Ingeniería inversa de apps](#ingeniería-inversa-de-apps-rea).
 
@@ -218,7 +218,7 @@ Certificate Transparency y reconstruye `web/data.js` una vez al mes. Otro
 
 ## Ingeniería inversa de apps REA
 
-Análisis a fondo de **10 apps** del inventario (carpetas `REA-*/`), una carpeta por app, cada una con su propio README e
+Análisis a fondo de **25 apps** del inventario (carpetas `REA-*/`), una carpeta por app, cada una con su propio README e
 índice de documentos (identidad, manifiesto, autenticación, red/endpoints, criptografía, almacenamiento,
 protección/ofuscación, SDKs, firma y hallazgos). El método base es **estático** con REA (JADX headless
 0.7.1 + apktool 3.0.3) sobre el APK; cuando se indica, hay además un **pase dinámico** en dispositivo
@@ -237,6 +237,21 @@ físico (sin root salvo nota). Todas las afirmaciones llevan evidencia y se veri
 | [Licencia Federal Digital](REA-Licencia/README.md) 1.0.49 | `mx.sct.licencia` | SCT / SICT | **Híbrida Capacitor/Ionic/Angular** (JS legible, sin hardening) | Guarda licencia + CURP/RFC/email/password/PIN en **SQLCipher con llave = PIN**, y existe una **ruta que abre la DB sin llave**; backend `wslfd.sct.gob.mx` |
 | [SAT Móvil](REA-SAT-Movil/README.md) 2.4.4 | `mx.gob.sat` | SAT | **Flutter** (Dart AOT) · estático + dinámico acotado | e.firma portable + SAT ID; lógica y endpoints en `libapp.so`, no en el DEX |
 | [Urbani / MiRuta](REA-Urbani/README.md) 3.1.5 | `com.miruta.mty` | Municipal (MTY, Nuevo León) | **Flutter** cifrado por **packer Baidu** · estático + dinámico (logcat) | Transporte público del AMM; backend privado `urbani.io` recuperado del logcat; APK re-firmado (`CN=Android`) |
+| [911 CDMX](REA-911-CDMX/README.md) | `com.desarrollo.c5.app_066_android_2` | C5 / CAEPCCM (CDMX) | Nativa Kotlin/Java (Volley), sin ofuscar | **Backend de emergencias 100% HTTP en claro** (ubicación, tipo de sangre, OTP, alerta de auxilio) → MITM; IP interna + secreto Twitter en claro; firma auténtica (`O=CAEPCCM`) |
+| [Apoyo Ciudadano INE](REA-Apoyo-Ciudadano-INE/README.md) | `mx.ine.apoyociudadano` | INE | Nativa Kotlin/Java + OpenCV/cardIO/tesseract | Sube PII electoral empaquetada en ZIP; llaves Twitter + endpoints cifrados **AES-ECB** en el APK; cripto débil; firma auténtica del INE |
+| [BanjeCel](REA-BanjeCel/README.md) 7.10.3 | `mx.com.banjercito.model.common.VTUserApplicationBJCTMB` | Banjército | Low-code **Veritran** (Duktape), **RASP** (`tool-checker`), SQLCipher | Biometría on-device **facial (liveness/anti-spoof) + voz** (SMMA); lógica interpretada, no decompilable; **firma auténtica de Banjército** |
+| [ICVNL](REA-ICVNL/README.md) | `com.icv.app` | Control Vehicular NL | **.NET MAUI/Xamarin** (425 DLL del AssemblyStore) | Cleartext + WebView con puente JS→C#; sin cripto de app; pagos y liveness en portal web; firma auténtica del ICVNL |
+| [Licencia Digital EDOMEX](REA-Licencia-EDOMEX/README.md) | `mx.com.cosmocolor.movapp` | SEMOV Edomex | Nativa Kotlin/Java (SQLCipher) | **Crítico: `TrustManager` vacío + `hostnameVerifier=true`** (TLS desactivado) sobre pago/CVV/OTP/facial; restos de Chiapas (white-label Cosmocolor); re-firmada |
+| [Mi Policía CDMX](REA-Mi-Policia-CDMX/README.md) | `com.moobky.MiPolicia` | SSC CDMX | **Flutter** (Dart AOT) | Token Bearer + API token **hardcodeados** en `libapp.so`; app de seguridad **firmada por un dev individual** (`CN=Saul Espinosa Ruiz`), no la SSC |
+| [Pemex ASISTE](REA-Pemex-ASISTE/README.md) 3.1.19 | `com.pemex.asiste` | Pemex | **Flutter** (Dart AOT) + `flutter_dotenv` | `.env` en claro con backend `api-cloud.pemex.com` + clave de Application Insights (telemetría); lógica en `libapp.so`; re-firmada |
+| [SEG Móvil](REA-SEG-Movil/README.md) 1.0.32 | `com.artech.sdsigueme.sigueme` | SEG (Educación Guanajuato) | **GeneXus / .NET** | Config completa en `appsettings.json`: 6 backends HTTPS + **Azure AD B2C** (sin secreto); `paseLista` en `azurewebsites.net`; posible **IDOR** en descarga de certificados por `{folio}` |
+| [Tarjeta Rosa](REA-Tarjeta-Rosa/README.md) 1.0.5 | `gob.guanajuato.TarjetaRosa` | GEG (Guanajuato) | Nativa, wrapper de **WebView** | Puente JS `openUrl` abre **intents arbitrarios sin validar** + navegación no acotada; **no desactiva TLS** (sin `onReceivedSslError`); PII en el servidor; re-firmada |
+| [Tesorería CDMX](REA-Tesoreria-CDMX/README.md) | `mx.wdd.sefin` | SAF (CDMX) | **Híbrida Capacitor/Angular** (backend Laravel) | **Credenciales de comercio Banorte + `client_secret` de Passport hardcodeados** en el bundle JS; cleartext a pagos; firma auténtica (`O=cweb`) |
+| [Valida INE-QR](REA-Valida-INE-QR/README.md) | `mx.ine.rfe.lectorqr` | INE | Nativa Kotlin/Java + SDK nativo **Scandit** | **Validación 100% local** (sin permiso `INTERNET`, cero red); muro nativo para el QR; **firma auténtica del INE** — de las mejores posturas del acervo |
+| [Va-y-Ven](REA-VaYVen/README.md) | `gob.yucatan.vayven` | ATY (Yucatán) | Nativa Kotlin/Java + WebView React (pago) · white-label **Vinden**/MRP | Cleartext HTTP en pagos; **sin TLS pinning**; Google API key en `.so`; credencial **TEST de MercadoPago** en el source map; re-firmada |
+| [CONALITEG Digital](REA-CONALITEG/README.md) 1.25 | `gob.mx.conaliteg.bibliotecadigital` | CONALITEG (SEP) | Nativa Kotlin/Java (biblioteca digital) | **NSC permite cleartext HTTP** a la API de producción **y confía en CAs del usuario** (`src="user"` → MITM trivial); IP privada + subdominio `pruebasistemas` en producción; re-firmada |
+| [Qrobús](REA-Qrobus/README.md) 12.7.9 | `mx.gob.iqt.qrobus` | IQT (Querétaro) | **Flutter** (Dart AOT) | Backend en **dominio de proveedor** (`admin.qrobici.com`, no gob.mx); pagos por **Stripe**; ubicación en segundo plano + NFC; re-firmada |
+| [UNE / Bus Sonora](REA-UNE-Sonora/README.md) 5.7.2 | `com.bigbangdev.bussonora` | Sonora (UNE/IMTES) | **Flutter** (Dart AOT) | **Firma de dev individual** (`O=Bus Sonora`), no estatal; **AdServices** (atribución de publicidad) + Sentry + reCAPTCHA; biometría local |
 
 > **Alcance y ética.** Mismo principio que el inventario: observación de artefactos públicos obtenidos de
 > tiendas oficiales, sin atacar infraestructura en vivo ni usar credenciales ajenas. El desempacado de
