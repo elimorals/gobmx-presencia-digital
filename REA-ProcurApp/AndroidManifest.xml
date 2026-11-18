@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="35" android:compileSdkVersionCodename="15" android:requiredSplitTypes="base__density" android:splitTypes="" package="mx.gob.pgjguanajuato.procurapp" platformBuildVersionCode="35" platformBuildVersionName="15">
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.WRITE_PROFILE"/>
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+            <data android:mimeType="vnd.android.cursor.dir/contact"/>
+        </intent>
+    </queries>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-feature android:glEsVersion="0x20000" android:required="true"/>
+    <application android:allowBackup="true" android:extractNativeLibs="true" android:icon="@null" android:label="@string/app_name" android:networkSecurityConfig="@xml/network_security_config" android:requestLegacyExternalStorage="true" android:roundIcon="@null" android:supportsRtl="true" android:theme="@style/AppTheme">
+        <activity android:exported="false" android:name="mx.gob.pgjguanajuato.procurapp.investigacion.view.InvestigacionTabs"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.utils.ViewerActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:exported="true" android:name="mx.gob.pgjguanajuato.procurapp.registro.view.CompleteEmailActivity"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.registro.view.RecoverPassActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.citas.view.PapeletaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.perfil_genetico.view.TerminatePerfilGeneticoActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.perfil_genetico.view.AgendarCitaPerfilGeneticoActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.perfil_genetico.view.ListPersonaMuestraActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.perfil_genetico.view.AddPersonaMuestraActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.perfil_genetico.view.AddPerfilGeneticoActivity" android:theme="@style/AppTheme.NoActionBar" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.perfil_genetico.view.PerfilGeneticoActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.denuncia_casahabitacion.view.MisDenunciasCasaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.denuncia_casahabitacion.view.DenunciaCasaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.registro.view.MenuLoginActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.MainActivity" android:screenOrientation="portrait" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.denuncia_genero.view.MisDenunciasGeneroActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.denuncia_genero.view.DenunciaGeneroActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.panico.view.ContactosPanicoActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.registro.view.ProfileActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.registro.view.LoginActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.citas.view.CancelarCitaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.citas.view.BuscarCitaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.citas.view.TerminarAgendarCitaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.citas.view.AgendarCitaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.antecedentes.view.CartasGeneralesActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.revision_vehicular.view.RevisionGeneralesActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.citas.view.CitasActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.revision_vehicular.view.RevisionActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.notificaciones.view.NvehiculoDetailActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.investigacion.view.QrActivity"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.investigacion.view.InvestigacionActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.investigacion.view.SeguimientosActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.extorcion.view.MisExtorcionesActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.denuncia.view.MisDenunciasActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.vehiculo_robado.view.MisVehiculosActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.persona_desaparecida.view.MisPersonasActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:label="@string/title_activity_npersona" android:name="mx.gob.pgjguanajuato.procurapp.notificaciones.view.NpersonaDetailActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.antecedentes.view.CartasActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.quejas_sugerencias.view.MisQuejasActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.vehiculo_robado.view.VehiculoActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.quejas_sugerencias.view.QuejasSugerenciasActivity"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.extorcion.view.ExtorcionActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.quehacer.view.HacerDetailActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.quehacer.view.HacerActivity"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.persona_desaparecida.view.PersonaDesaparecidaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.emergencias.view.EmergenciasActivity"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.agencia.view.AgenciaDetailActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.agencia.view.AgenciaActivity"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.denuncia.view.DenunciaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.citas.view.AyudaCitasActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.denuncia.view.AyudaDenunciaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.extorcion.view.AyudaExtorcionActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.vehiculo_robado.view.AyudaVehiculoActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.persona_desaparecida.view.AyudaPersonaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.perfil_genetico.view.AyudaPerfilGeneticoActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.revision_vehicular.view.AyudaRevisionVehicularActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.quejas_sugerencias.view.AyudaQuejasActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.antecedentes.view.AyudaAntecedentesActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.denuncia_casahabitacion.view.AyudaHabitacionActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.investigacion.view.AyudaInvestigacionActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.denuncia_genero.view.AyudaGeneroActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:exported="true" android:name="mx.gob.pgjguanajuato.procurapp.SplashActivity" android:theme="@style/SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="mx.gob.pgjguanajuato.procurapp.registro.view.RegistroActivity"/>
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize" android:label="@string/app_name" android:name="com.facebook.FacebookActivity" android:theme="@style/com_facebook_activity_theme"/>
+        <activity android:exported="true" android:name="com.facebook.CustomTabActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="@string/fb_login_protocol_scheme"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="cct.mx.gob.pgjguanajuato.procurapp" android:scheme="fbconnect"/>
+            </intent-filter>
+        </activity>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_maps_key"/>
+        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@null"/>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/colorAccent"/>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="@string/default_notification_channel_id"/>
+        <provider android:authorities="mx.gob.pgjguanajuato.procurapp.fileprovider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/provider_paths"/>
+        </provider>
+        <service android:exported="false" android:name="mx.gob.pgjguanajuato.procurapp.utils.firebase.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+        <service android:enabled="true" android:exported="true" android:name="mx.gob.pgjguanajuato.procurapp.utils.services.tracking.TrackingService"/>
+        <provider android:authorities="mx.gob.pgjguanajuato.procurapp.provider" android:exported="false" android:grantUriPermissions="true" android:name="androidx.core.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"/>
+        </provider>
+        <activity android:name="com.facebook.CustomTabMainActivity"/>
+        <service android:directBootAware="true" android:exported="false" android:name="com.google.firebase.messaging.FirebaseMessagingService">
+            <intent-filter android:priority="-500">
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:directBootAware="true" android:exported="false" android:name="com.google.firebase.components.ComponentDiscoveryService">
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.iid.Registrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.remoteconfig.RemoteConfigRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+            <meta-data android:name="com.google.firebase.components:com.google.firebase.abt.component.AbtRegistrar" android:value="com.google.firebase.components.ComponentRegistrar"/>
+        </service>
+        <service android:exported="false" android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery">
+            <meta-data android:name="backend:com.google.android.datatransport.cct.CctBackendFactory" android:value="cct"/>
+        </service>
+        <service android:exported="false" android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <receiver android:exported="false" android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"/>
+        <activity android:excludeFromRecents="true" android:exported="false" android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <service android:exported="true" android:name="com.google.android.gms.auth.api.signin.RevocationBoundService" android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" android:visibleToInstantApps="true"/>
+        <provider android:authorities="mx.gob.pgjguanajuato.procurapp.FacebookInitProvider" android:exported="false" android:name="com.facebook.internal.FacebookInitProvider"/>
+        <receiver android:exported="false" android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementReceiver"/>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementService"/>
+        <service android:enabled="true" android:exported="false" android:name="com.google.android.gms.measurement.AppMeasurementJobService" android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <receiver android:exported="true" android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </receiver>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <activity android:exported="false" android:name="com.google.android.gms.common.api.GoogleApiActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <provider android:authorities="mx.gob.pgjguanajuato.procurapp.firebaseinitprovider" android:directBootAware="true" android:exported="false" android:initOrder="100" android:name="com.google.firebase.provider.FirebaseInitProvider"/>
+        <provider android:authorities="mx.gob.pgjguanajuato.procurapp.androidx-startup" android:exported="false" android:name="androidx.startup.InitializationProvider">
+            <meta-data android:name="androidx.lifecycle.ProcessLifecycleInitializer" android:value="androidx.startup"/>
+            <meta-data android:name="androidx.profileinstaller.ProfileInstallerInitializer" android:value="androidx.startup"/>
+        </provider>
+        <service android:directBootAware="true" android:exported="false" android:name="androidx.room.MultiInstanceInvalidationService"/>
+        <receiver android:directBootAware="false" android:enabled="true" android:exported="true" android:name="androidx.profileinstaller.ProfileInstallReceiver" android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SKIP_FILE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION"/>
+            </intent-filter>
+        </receiver>
+        <meta-data android:name="com.android.vending.splits.required" android:value="true"/>
+        <meta-data android:name="com.android.stamp.source" android:value="https://play.google.com/store"/>
+        <meta-data android:name="com.android.stamp.type" android:value="STAMP_TYPE_DISTRIBUTION_APK"/>
+        <meta-data android:name="com.android.vending.splits" android:resource="@xml/splits0"/>
+        <meta-data android:name="com.android.vending.derived.apk.id" android:value="2"/>
+    </application>
+</manifest>

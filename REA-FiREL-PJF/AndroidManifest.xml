@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="36" android:compileSdkVersionCodename="16" package="gob.mx.android.firel" platformBuildVersionCode="36" platformBuildVersionName="16">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.hardware.camera.autofocus"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
+    <uses-feature android:name="android.hardware.location.gps" android:required="true"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <permission android:name="gob.mx.android.firel.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="signature"/>
+    <uses-permission android:name="gob.mx.android.firel.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECORD_VIDEO"/>
+    <uses-permission android:name="android.permission.BATTERY_STATS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <application android:allowBackup="false" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:dataExtractionRules="@xml/data_extraction_rules" android:extractNativeLibs="false" android:focusableInTouchMode="true" android:fullBackupContent="false" android:hardwareAccelerated="true" android:icon="@mipmap/ic_new_launcher_cjf" android:label="@string/app_name" android:largeHeap="true" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.utils.AppID" android:roundIcon="@mipmap/ic_launcer_round_logo_cjf" android:supportsRtl="true" android:theme="@style/AppTheme" android:usesCleartextTraffic="true">
+        <activity android:exported="false" android:hardwareAccelerated="false" android:name="com.identy.IntroActivity" android:resizeableActivity="false" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.getgps.GetLocationActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.captureID.CaptureIdentificacionActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.captureCredential.CredentialActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.faceIdenty.FaceIdentyActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.captureFingerPrint.instructionCaptureFinger.MenuFinger" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.scannerQR.ScannerQRActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.finishedProcess.view.SuccessProcessActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.noticePrivacy.view.PrivacyAndAgreementActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.cancellationRequest.CancellationRequestActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.noticePrivacy.NoticePrivacyActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.processError.ProcessErrorActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.finishedProcess.DocumentRequestFirelActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.identityUser.VerificationIdentityActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.autographSignature.HandwrittenSignatureActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.captureFingerPrint.CaptureFingerActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.checkFaceSimilarity.FaceSimilarityActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.documentReviewOCR.DocumentReviewOcrActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.instruction.InstructionActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="false" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.userDetail.UserDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:exported="true" android:name="com.fielnet.notificaciones_colegio_notarios_mvvm.ui.login.LoginActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.karumi.dexter.DexterActivity" android:theme="@style/Dexter.Internal.Theme.Transparent"/>
+        <activity android:exported="false" android:name="com.google.android.gms.common.api.GoogleApiActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <provider android:authorities="gob.mx.android.firel.androidx-startup" android:exported="false" android:name="androidx.startup.InitializationProvider">
+            <meta-data android:name="androidx.emoji2.text.EmojiCompatInitializer" android:value="androidx.startup"/>
+            <meta-data android:name="androidx.lifecycle.ProcessLifecycleInitializer" android:value="androidx.startup"/>
+            <meta-data android:name="okhttp3.internal.platform.PlatformInitializer" android:value="androidx.startup"/>
+            <meta-data android:name="androidx.profileinstaller.ProfileInstallerInitializer" android:value="androidx.startup"/>
+        </provider>
+        <uses-library android:name="androidx.window.extensions" android:required="false"/>
+        <uses-library android:name="androidx.window.sidecar" android:required="false"/>
+        <receiver android:directBootAware="false" android:enabled="true" android:exported="true" android:name="androidx.profileinstaller.ProfileInstallReceiver" android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SKIP_FILE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION"/>
+            </intent-filter>
+        </receiver>
+        <activity android:configChanges="orientation" android:name="com.identy.Enroll4FActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.Enroll2TActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.EnrollFingersActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.Verify4FActivity" android:resizeableActivity="false"/>
+        <activity android:name="com.identy.Verify2TActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.VerifyFingersActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.Capture4FActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.CaptureFingersActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.CaptureThumbActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.EnrollThumbActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.VerifyThumbActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.Capture2TActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.Capture2IndexActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.Enroll2IndexActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.Verify2IndexActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.CaptureRolledFingersActivity" android:resizeableActivity="false"/>
+        <activity android:configChanges="orientation" android:name="com.identy.CaptureRolledThumbActivity" android:resizeableActivity="false"/>
+        <activity android:name="com.identy.face.CaptureFaceActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.identy.face.EnrollFaceActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.identy.face.EnrollFace1toNActivity"/>
+        <activity android:name="com.identy.face.VerifyFaceActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.identy.face.VerifyFace1toNActivity"/>
+        <activity android:name="com.identy.face.FaceIntroActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.identy.face.GCTestActivity" android:screenOrientation="portrait"/>
+        <meta-data android:name="com.android.vending.derived.apk.id" android:value="1"/>
+    </application>
+</manifest>
