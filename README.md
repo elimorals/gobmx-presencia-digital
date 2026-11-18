@@ -10,7 +10,7 @@ ni login con credenciales ajenas, ni envío de datos personales.
 
 🔗 **Web:** https://gobmx-presencia-digital.vercel.app (Vercel; la versión de GitHub Pages se retiró el 2026-10-24)
 
-Además del inventario, el repo incluye **ingeniería inversa a fondo de 25 apps** del catálogo
+Además del inventario, el repo incluye **ingeniería inversa a fondo de 45 apps** del catálogo
 (carpetas `REA-*/`): pila tecnológica, red, criptografía, protección y hallazgos de seguridad de
 cada una. Ver [§ Ingeniería inversa de apps](#ingeniería-inversa-de-apps-rea).
 
@@ -218,7 +218,7 @@ Certificate Transparency y reconstruye `web/data.js` una vez al mes. Otro
 
 ## Ingeniería inversa de apps REA
 
-Análisis a fondo de **25 apps** del inventario (carpetas `REA-*/`), una carpeta por app, cada una con su propio README e
+Análisis a fondo de **45 apps** del inventario (carpetas `REA-*/`), una carpeta por app, cada una con su propio README e
 índice de documentos (identidad, manifiesto, autenticación, red/endpoints, criptografía, almacenamiento,
 protección/ofuscación, SDKs, firma y hallazgos). El método base es **estático** con REA (JADX headless
 0.7.1 + apktool 3.0.3) sobre el APK; cuando se indica, hay además un **pase dinámico** en dispositivo
@@ -252,6 +252,25 @@ físico (sin root salvo nota). Todas las afirmaciones llevan evidencia y se veri
 | [CONALITEG Digital](REA-CONALITEG/README.md) 1.25 | `gob.mx.conaliteg.bibliotecadigital` | CONALITEG (SEP) | Nativa Kotlin/Java (biblioteca digital) | **NSC permite cleartext HTTP** a la API de producción **y confía en CAs del usuario** (`src="user"` → MITM trivial); IP privada + subdominio `pruebasistemas` en producción; re-firmada |
 | [Qrobús](REA-Qrobus/README.md) 12.7.9 | `mx.gob.iqt.qrobus` | IQT (Querétaro) | **Flutter** (Dart AOT) | Backend en **dominio de proveedor** (`admin.qrobici.com`, no gob.mx); pagos por **Stripe**; ubicación en segundo plano + NFC; re-firmada |
 | [UNE / Bus Sonora](REA-UNE-Sonora/README.md) 5.7.2 | `com.bigbangdev.bussonora` | Sonora (UNE/IMTES) | **Flutter** (Dart AOT) | **Firma de dev individual** (`O=Bus Sonora`), no estatal; **AdServices** (atribución de publicidad) + Sentry + reCAPTCHA; biometría local |
+| [CoDi Banxico](REA-CoDi-Banxico/README.md) | `org.banxico.dgspim.mobile.codi` | Banxico | Nativa Kotlin (R8) | **Mejor postura TLS del acervo:** certificate pinning correcto (validación de sistema + SHA-256 del cert hoja) + AndroidKeyStore con biometría obligatoria; firma auténtica de Banxico |
+| [Bienvenido a México](REA-Bienvenido-Mexico/README.md) | `com.tcs.programapaisano` | SAT/ANAM (Paisano) | Nativa (TCS, legacy) | **Cleartext HTTP al SAT** + ambientes **dev/UAT/QA** embebidos (Azure dev, QA en `gear.host`); firma auténtica del SAT |
+| [Gasoapp](REA-Gasoapp/README.md) | `cre.comercializacion.mobile` | CRE | **Xamarin.Forms** (.NET, 2020 EOL) | QA + dominio Azure crudo embebidos; subida de evidencia a Blob; TLS estándar sin bypass; firma auténtica de la CRE |
+| [ProcurApp](REA-ProcurApp/README.md) | `mx.gob.pgjguanajuato.procurapp` | FGE Guanajuato | Nativa Kotlin/Java | **CRÍTICO: `UnsafeOkHttpClient` (TLS desactivado) en los clientes de producción, genética (ADN) y citas** (xref verificado) → MITM sobre denuncias, botón de pánico y perfil genético; firma auténtica de la FGE |
+| [Identidad Digital BC](REA-Identidad-Digital-BC/README.md) | `com.gobbc.identidaddigital` | Baja California | Nativa Kotlin (MVP) | **`HttpLoggingInterceptor` BODY en producción** vuelca a logcat CURP, licencia, tarjeta de circulación, OTP y tokens; sin pinning (sin trust-all); re-firmada |
+| [APPrende Jalisco](REA-APPrende-Jalisco/README.md) | `mx.gob.jalisco.edu.apprende` | SEJ (Educación Jalisco) | **Ionic/Angular + Cordova** | `ApiKey` hardcodeado + **proyecto Firebase de prueba** (`apprende-prueba`) en producción + RTDB para datos educativos (incl. salud); re-firmada |
+| [CESPT](REA-CESPT/README.md) | `com.cespt.cesptApp` | CESPT (agua Tijuana) | **Capacitor/Ionic** | **NSC con cleartext GLOBAL + confianza en CAs del usuario** → MITM trivial; pago delegado a BBVA Bancomer (sin tarjeta en la app); Google Maps key embebida |
+| [Licencia Digital Jalisco](REA-Licencia-Jalisco/README.md) | `mx.com.cosmocolor.movapp.jal` | Transporte Jalisco | Nativa Kotlin (SQLCipher) | **CRÍTICO: replica IDÉNTICO el defecto TLS de EDOMEX** (mismo `ServiceGenerator` de Cosmocolor, `checkServerTrusted` vacío + `hostnameVerifier=true`) → **defecto de producto multi-estado**; re-firmada |
+| [JMAS Móvil](REA-JMAS/README.md) | `mx.gob.jmasmovil` | JMAS (agua Chihuahua) | Nativa Kotlin (Compose/Hilt) | De las mejor construidas; pago delegado a BBVA; **TLS estándar sin trust-all ni cleartext**; JWT en SharedPreferences planas (menor); re-firmada |
+| [Japay](REA-Japay/README.md) | `mx.gob.yucatan.japay.japaymovil` | JAPAY (agua Yucatán) | **Cordova** | **Guarda el PAN en el servidor sin cifrado de cliente** (preocupación PCI); 3DS en gateway tercero `egbs5`; sin pinning pero sin cleartext; re-firmada |
+| [Guía Pemex](REA-Guia-Pemex/README.md) | `com.pemex.guiapemex` | Pemex | **Flutter** (Dart AOT) | **`.env` filtra la API key del backend propio de Pemex** (`APP_SERVICES_API_KEY`) + llaves de Google Maps y TomTom en claro; firma auténtica de Pemex |
+| [FiREL PJF](REA-FiREL-PJF/README.md) | `gob.mx.android.firel` | CJF (Poder Judicial) | Nativa Kotlin/MVVM | **White-label de una app de "Colegio de Notarios"** (FielNet/IQSEC, backend fuera de gob.mx); enrolamiento biométrico extremo (INE+rostro+huella+firma+video) a 3 terceros (uno extranjero); TLS contradictorio (a confirmar); re-firmada |
+| [IPN Oficial](REA-IPN/README.md) | `com.ipnmx.AppIPN` | IPN | **Flutter** (Dart AOT) | Keycloak+Azure AD; backend maneja **credencial del alumno, NSS y pagos Banco Azteca**; **NSC pinnea `www.ipn.mx` pero NO `auth.dsi.ipn.mx`** (el canal sensible); white-label de MyCampus Digital; re-firmada |
+| [Mi Aguah](REA-Mi-Aguah/README.md) | `mx.gob.aguadehermosillo.miaguah` | Agua de Hermosillo | **Flutter** (Dart AOT) | Captura de tarjeta in-app sin SDK/claves de pasarela visibles (muro Dart); AdServices; backend `agua.gob.mx` HTTPS; re-firmada |
+| [Aguascalientes Digital](REA-Aguascalientes-Digital/README.md) | `mx.gob.ags.refrendo` | GEA (Aguascalientes) | Nativa Kotlin (Hilt/Room) | Super-app con pagos tokenizados (ePagos/CitiBanamex) y TLS no desactivado, pero **NSC permite cleartext a producción incl. el gateway de pagos y C5 emergencias**; `HttpLogging` BODY a logcat; firma auténtica del GEA |
+| [Directorio INEGI (DENUE)](REA-Directorio-INEGI/README.md) | `mx.org.inegi.denuemv` | INEGI | Nativa Kotlin (R8) | Datos públicos (DENUE), bajo riesgo; Google Maps key embebida (riesgo de robo de cuota) + ads/analytics con `AD_ID`; TLS OK; firma auténtica del INEGI |
+| [Lotería de México](REA-Loteria-Mexico/README.md) | `loterianacional.mx` | Lotenal | Nativa (GemesGroup, ES) | **White-label multi-país** (trae endpoints de ONCE España + Santa Casa Portugal); **resultados por HTTP desde un tercero** (`nacionalloteria.com`) → MITM altera el número ganador; chequeo de versión por Dropbox público |
+| [CFE Proveedores](REA-CFE-Proveedores/README.md) | `mx.com.cfe.proveedores` | CFE (B2G) | **Xamarin.Forms** (.NET) | Codebase interno **"DemoCFE"** ("Demo") en producción; `usesCleartextTraffic` + **2 IPs internas de la CFE** en el NSC (fuga de topología); TLS estándar sin bypass; portal de proveedores |
+| [Seguridad Inmediata](REA-Seguridad-Inmediata/README.md) | `com.alertacontigo.mx` | Ayto. Puebla (pánico) | **.NET MAUI AOT + PairIP** (doble muro) | Botón de pánico: payload/backend no recuperables (AOT nativo + PairIP); **ubicación a OneSignal** (tercero) + **`usesCleartextTraffic` global** (a confirmar) + permisos extremos (`CALL_PRIVILEGED`); re-firmada |
 
 > **Alcance y ética.** Mismo principio que el inventario: observación de artefactos públicos obtenidos de
 > tiendas oficiales, sin atacar infraestructura en vivo ni usar credenciales ajenas. El desempacado de
