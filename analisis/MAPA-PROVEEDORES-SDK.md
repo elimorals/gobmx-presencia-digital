@@ -263,6 +263,41 @@ estático; no se afirma ninguna confirmación dinámica no obtenida.
 
 ---
 
+## Adenda — Lote 5 (banda 50k–100k: licencias, pánico, tier medio)
+
+Detalle completo en `analisis/LOTE5-BANDA-50-100k.md`. Dos pruebas sistémicas:
+
+### Clúster B (Cosmocolor) — ahora 3 estados + cruce de 5 vendors
+
+El **trust-all es exclusivo del producto Cosmocolor.** Se analizaron 5 vendors de licencia de
+conducir: **Cosmocolor Chiapas** (`...movapp.chp`) confirmado como **3er estado** (mismo
+`ServiceGenerator` + backend `licenciamanejo.com` + residuo EDOMEX; trust-all A-CONFIRMAR por builder
+R8-ofuscado). Los otros 4 vendors —ZTK (Guanajuato), licdig (Chihuahua), validatulicencia (Oaxaca),
+DC Soluciones (Tlaxcala)— **sanos de trust-all**. → El defecto no generaliza a "apps de licencia";
+es del producto Cosmocolor. Clúster B: **EDOMEX ✓, Jalisco ✓, Chiapas (a-confirmar)**.
+
+### Hipótesis "pánico → cleartext" — REFUTADA como patrón general
+
+De las apps de pánico/emergencia (lotes 4+5), solo **Veracruz Mujer Alerta** (CRÍTICA) y las **911**
+usan cleartext. Sanas: Escudo Urbano, Jalisco Alerta, **Llamada Segura Hidalgo, GN Reporta, Mujeres
+Seguras, Alerta Ciudadana Veracruz**. El cleartext es **por despliegue de dependencia, no inherente
+al tipo de app**. "Patrón Veracruz" también refutado: C4 Veracruz sano vs SSP/SEV cleartext → no es
+política estatal.
+
+### Matiz metodológico confirmado
+
+Un `usesCleartextTraffic="true"` en el manifest **no implica uso real**: GN Reporta lo tiene en
+`true` pero su backend es 100% HTTPS (flag vestigial). Por eso el triage marca "cleartext=true" como
+señal a confirmar, no como hallazgo. (Igual: Mujeres Seguras tenía el `SendLocation` http **comentado**.)
+
+### Clúster G (dev/test en prod) — nuevo
+
+Mujeres Seguras → endpoint `/mstest2` en el build de producción.
+
+### Corpus total: 67 apps con RE a fondo + 17 triadas (banda media).
+
+---
+
 ## Qué sigue (si se decide continuar)
 
 1. **Informe de divulgación sistémico** del clúster A (antipatrón TLS endémico) dirigido a un CERT

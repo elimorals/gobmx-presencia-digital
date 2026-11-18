@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:compileSdkVersion="33" android:compileSdkVersionCodename="13" package="sspc.gn.cientifica" platformBuildVersionCode="33" platformBuildVersionName="13">
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_VIDEO"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <application android:allowBackup="true" android:appComponentFactory="android.support.v4.app.CoreComponentFactory" android:extractNativeLibs="false" android:hardwareAccelerated="false" android:icon="@mipmap/icon_app" android:isSplitRequired="true" android:label="@string/app_name" android:largeHeap="true" android:name="android.support.multidex.MultiDexApplication" android:roundIcon="@mipmap/icon_app" android:supportsRtl="true" android:theme="@style/AppTheme.Launcher" android:usesCleartextTraffic="true">
+        <activity android:exported="true" android:label="@string/app_name" android:launchMode="singleTask" android:name="sspc.gn.cientifica.gnmovil.PrincipalActivity" android:theme="@style/AppTheme.Launcher" android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="sspc.gn.cientifica.gnmovil.Menu.ListReportesHechos" android:theme="@style/AppThemeN"/>
+        <activity android:name="sspc.gn.cientifica.gnmovil.Multimedia.AudioRecordingActivity" android:theme="@style/AppTheme"/>
+        <activity android:name="sspc.gn.cientifica.gnmovil.Menu.MenuActivity" android:theme="@style/AppThemeN"/>
+        <activity android:name="sspc.gn.cientifica.gnmovil.Reportes.QSFActivity" android:theme="@style/AppThemeN"/>
+        <activity android:name="sspc.gn.cientifica.gnmovil.Reportes.ReporteActivity" android:theme="@style/AppThemeN"/>
+        <activity android:name="sspc.gn.cientifica.gnmovil.Reportes.SolicitudActivity" android:theme="@style/AppThemeN"/>
+        <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>
+        <provider android:authorities="@string/file_provider_authority" android:exported="false" android:grantUriPermissions="true" android:name="android.support.v4.content.FileProvider">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_provider_paths"/>
+        </provider>
+        <receiver android:exported="true" android:name="sspc.gn.cientifica.gnmovil.Widgets.CallWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/call_widget_info"/>
+        </receiver>
+        <receiver android:exported="true" android:name="sspc.gn.cientifica.gnmovil.Widgets.ReportWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/report_widget_info"/>
+        </receiver>
+        <receiver android:exported="true" android:name="sspc.gn.cientifica.gnmovil.Widgets.NewAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/new_app_widget_info"/>
+        </receiver>
+        <meta-data android:name="com.android.vending.splits.required" android:value="true"/>
+        <meta-data android:name="com.android.stamp.source" android:value="https://play.google.com/store"/>
+        <meta-data android:name="com.android.stamp.type" android:value="STAMP_TYPE_DISTRIBUTION_APK"/>
+        <meta-data android:name="com.android.vending.splits" android:resource="@xml/splits0"/>
+        <meta-data android:name="com.android.vending.derived.apk.id" android:value="3"/>
+    </application>
+</manifest>

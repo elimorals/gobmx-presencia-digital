@@ -10,7 +10,7 @@ ni login con credenciales ajenas, ni envío de datos personales.
 
 🔗 **Web:** https://gobmx-presencia-digital.vercel.app (Vercel; la versión de GitHub Pages se retiró el 2026-10-24)
 
-Además del inventario, el repo incluye **ingeniería inversa a fondo de 58 apps** del catálogo
+Además del inventario, el repo incluye **ingeniería inversa a fondo de 67 apps** del catálogo
 (carpetas `REA-*/`): pila tecnológica, red, criptografía, protección y hallazgos de seguridad de
 cada una. Ver [§ Ingeniería inversa de apps](#ingeniería-inversa-de-apps-rea).
 
@@ -218,7 +218,7 @@ Certificate Transparency y reconstruye `web/data.js` una vez al mes. Otro
 
 ## Ingeniería inversa de apps REA
 
-Análisis a fondo de **58 apps** del inventario (carpetas `REA-*/`), una carpeta por app, cada una con su propio README e
+Análisis a fondo de **67 apps** del inventario (carpetas `REA-*/`), una carpeta por app, cada una con su propio README e
 índice de documentos (identidad, manifiesto, autenticación, red/endpoints, criptografía, almacenamiento,
 protección/ofuscación, SDKs, firma y hallazgos). El método base es **estático** con REA (JADX headless
 0.7.1 + apktool 3.0.3) sobre el APK; cuando se indica, hay además un **pase dinámico** en dispositivo
@@ -284,6 +284,17 @@ físico (sin root salvo nota). Todas las afirmaciones llevan evidencia y se veri
 | [Descarga Cultura UNAM](REA-Descarga-Cultura-UNAM/README.md) | `mx.unam.codc.android.descargaculturaunam` | UNAM | Nativa Kotlin (CertificatePinner) | **La más limpia del lote:** sin trust-all, sin secretos, permisos mínimos; **firma auténtica UNAM** |
 | [Jalisco Alerta](REA-Jalisco-Alerta/README.md) | `mx.erlia.jal.android` | Jalisco (vendor Erlia) | **React Native/Expo/Hermes** | **Sano:** no repite el cleartext de 911-CDMX; backend HTTPS del proveedor; Sentry DSN público (menor); re-firmada |
 | [Escudo Urbano Jalisco](REA-Escudo-Urbano-Jal/README.md) | `com.c5.boton_auxilio_jalisco_flutter` | C5 Jalisco (pánico) | **Flutter** (Dart AOT) | `.env` con `APP_KEY` + endpoints cifrados en el cliente (a-confirmar dinámico); TLS/cleartext sano; re-firmada |
+| [Licencia Digital Chiapas](REA-Licencia-Chiapas/README.md) | `mx.com.cosmocolor.movapp.chp` | Chiapas (prod. **Cosmocolor**) | nativa Kotlin | **3er estado Cosmocolor confirmado** (mismo `ServiceGenerator` + `licenciamanejo.com` + residuo EDOMEX); trust-all a-confirmar (builder R8); cleartext=false; re-firmada |
+| [Licencia Digital Guanajuato](REA-Licencia-Guanajuato/README.md) | `com.ztk.licencia.digital.gto` | Guanajuato (vendor **ZTK**) | **Flutter** | **Sano:** sin trust-all, sin cleartext; backend Firebase/App Engine (no gob.mx); **≠ Cosmocolor** |
+| [Licencia Digital Chihuahua](REA-Licencia-Chihuahua/README.md) | `com.gob.licdig` | SSP Chihuahua | **Capacitor** | Sin trust-all; `cleartext=true`+`allowMixedContent` (config permisiva, backend HTTPS); **≠ Cosmocolor** |
+| [Licencia Digital Oaxaca](REA-Licencia-Oaxaca/README.md) | `com.gobiernooaxaca.licenciadigital` | Oaxaca (vendor validatulicencia) | **Flutter** | **Sano:** sin trust-all, sin cleartext; **≠ Cosmocolor** |
+| [Licencia Digital Tlaxcala](REA-Licencia-Tlaxcala/README.md) | `com.dcsoluciones.licenciadigitalglobal` | Tlaxcala (vendor **DC Soluciones**) | **Capacitor/Vue** | Sin trust-all; "global" ≠ multi-estado; pago OpenPay; residuo DNS dinámico `servehttp.com`; **≠ Cosmocolor** |
+| [Alerta Ciudadana Veracruz](REA-Alerta-Veracruz/README.md) | `mx.gob.veracruz.c4.emrgcyveracruz` | C4 Veracruz | nativa | **Sano:** 100% HTTPS, sin trust-all; refuta "patrón Veracruz" (C4 sano vs SSP/SEV cleartext); firma dev individual |
+| [Mujeres Seguras (Sonora)](REA-Mujeres-Seguras-Sonora/README.md) | `mx.gob.segobsonora.mujersegura` | SEGOB Sonora (pánico) | Cordova | **Sano:** `SendLocation` http **comentado**, tráfico HTTPS; 🟡 endpoint `/mstest2` en prod; re-firmada |
+| [Llamada Segura Hidalgo](REA-Llamada-Segura-Hidalgo/README.md) | `mx.gob.hidalgo.nomasextorsion` | C5i Hidalgo (anti-extorsión) | nativa | **Sano:** HTTPS exclusivo, sin trust-all; permisos coherentes; **firma auténtica Hidalgo** |
+| [GN Reporta](REA-GN-Reporta/README.md) | `sspc.gn.cientifica` | Guardia Nacional / SSPC | nativa (Volley+Couchbase) | **Sano:** denuncia por HTTPS; `cleartext=true` **no usado** (vestigial); re-firmada |
+
+> Banda media 50k–100k (17 apps con triage, sin carpeta propia): ver [`analisis/LOTE5-BANDA-50-100k.md`](analisis/LOTE5-BANDA-50-100k.md).
 
 > **Alcance y ética.** Mismo principio que el inventario: observación de artefactos públicos obtenidos de
 > tiendas oficiales, sin atacar infraestructura en vivo ni usar credenciales ajenas. El desempacado de
